@@ -122,6 +122,7 @@ foreach ($rid in $RuntimeIdentifier) {
 $sums = Get-ChildItem $release -File | Where-Object Name -ne 'SHA256SUMS.txt' | Sort-Object Name | ForEach-Object {
     "{0}  {1}" -f (Get-FileHash -Algorithm SHA256 $_.FullName).Hash.ToLowerInvariant(), $_.Name
 }
-Set-Content -Path (Join-Path $release 'SHA256SUMS.txt') -Value $sums -Encoding ascii
+# LF line endings so `sha256sum -c SHA256SUMS.txt` works on Linux, macOS and Git Bash.
+[IO.File]::WriteAllText((Join-Path $release 'SHA256SUMS.txt'), (($sums -join "`n") + "`n"), [Text.Encoding]::ASCII)
 Write-Host ""
 Get-ChildItem $release | Format-Table Name, @{ n = 'Size (MB)'; e = { [math]::Round($_.Length / 1MB, 1) } } -AutoSize
