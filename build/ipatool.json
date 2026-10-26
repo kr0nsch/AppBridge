@@ -1,0 +1,15 @@
+{
+  "version": "2.7.0",
+  "source": "https://github.com/majd/ipatool/releases",
+  "license": "MIT",
+  "assets": {
+    "win-x64": {
+      "file": "ipatool-2.7.0-windows-amd64.tar.gz",
+      "sha256": "b729608716908be287c2e6972f9e8cd05f879810ae5d182fc856c9e57cca0dd5"
+    },
+    "win-arm64": {
+      "file": "ipatool-2.7.0-windows-arm64.tar.gz",
+      "sha256": "85ab35a268b47e1729412178063fe11621cae1135f33d3b9ab5233d436bf2562"
+    }
+  }
+}

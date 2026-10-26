@@ -1,0 +1,46 @@
+name: Bug report
+description: Something doesn't work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please never paste your Apple Account password, verification codes or full device identifiers.
+  - type: input
+    id: version
+    attributes:
+      label: FreeReturn version
+      description: Settings → About → Version
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: edition
+    attributes:
+      label: Edition
+      options: [Installer, Portable]
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: "Windows 11 24H2"
+  - type: input
+    id: iphones
+    attributes:
+      label: iPhone models and iOS versions
+      placeholder: "Source: iPhone 11, iOS 18.6 — Target: iPhone 17 Pro, iOS 26.1"
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Diagnostic log
+      description: Settings → Diagnostic logs → Show. Attach or paste the relevant part of the latest log.
+      render: text

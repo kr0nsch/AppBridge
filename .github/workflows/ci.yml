@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      DOTNET_NOLOGO: "1"
+      DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Fetch ipatool (checksum-verified)
+        shell: pwsh
+        run: ./build/Get-Ipatool.ps1 -RuntimeIdentifier win-x64
+
+      - name: Test
+        run: dotnet test tests/FreeReturn.Core.Tests/FreeReturn.Core.Tests.csproj -c Release --logger "console;verbosity=normal"
+
+      - name: Build app (x64)
+        run: dotnet build src/FreeReturn/FreeReturn.csproj -c Release -p:Platform=x64
+
+      - name: Build app (ARM64)
+        run: dotnet build src/FreeReturn/FreeReturn.csproj -c Release -p:Platform=ARM64

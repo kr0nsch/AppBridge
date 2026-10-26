@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <!-- CI overrides this from the release tag: dotnet publish -p:Version=1.2.3 -->
+    <Version>1.0.0</Version>
+    <Product>FreeReturn</Product>
+    <Company>FreeReturn contributors</Company>
+    <Authors>FreeReturn contributors</Authors>
+    <Copyright>Copyright (c) 2026 FreeReturn contributors</Copyright>
+    <RepositoryUrl>https://github.com/kr0nsch/FreeReturn</RepositoryUrl>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+    <SatelliteResourceLanguages>en;ru</SatelliteResourceLanguages>
+  </PropertyGroup>
+</Project>

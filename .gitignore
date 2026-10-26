@@ -1,0 +1,30 @@
+# Build output
+bin/
+obj/
+artifacts/
+publish/
+*.user
+*.suo
+.vs/
+.idea/
+*.binlog
+TestResults/
+
+# Downloaded third-party binaries (fetched and checksum-verified by build/build.ps1)
+/ipatool.exe
+/tools/
+ipatool*.tar.gz
+
+# Python prototype environment
+.venv/
+__pycache__/
+*.pyc
+
+# Personal data: device reports and one-off scripts must never be published
+legacy/python/reports/
+legacy/python/download_selected_apps.*
+reports/
+
+# App packages
+*.ipa
+*.ipa.tmp

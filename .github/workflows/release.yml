@@ -1,0 +1,80 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to build, e.g. 1.2.3 (creates a draft release)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    env:
+      DOTNET_NOLOGO: "1"
+      DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Determine version
+        id: version
+        shell: pwsh
+        run: |
+          $version = if ("${{ github.event_name }}" -eq "workflow_dispatch") { "${{ inputs.version }}" } else { "${{ github.ref_name }}".TrimStart("v") }
+          if ($version -notmatch '^\d+\.\d+\.\d+$') { throw "Invalid version '$version'" }
+          "value=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Ensure Inno Setup
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) { choco install innosetup --no-progress -y }
+
+      - name: Build installer and portable ZIP
+        shell: pwsh
+        run: ./build/build.ps1 -Version ${{ steps.version.outputs.value }}
+
+      - name: Release notes from CHANGELOG
+        shell: pwsh
+        run: |
+          $version = "${{ steps.version.outputs.value }}"
+          $lines = Get-Content CHANGELOG.md
+          $start = ($lines | Select-String -Pattern "^## \[$([regex]::Escape($version))\]").LineNumber
+          $notes = if ($start) {
+            $rest = $lines[$start..($lines.Count - 1)]
+            $end = ($rest | Select-String -Pattern '^## \[|^\[\d' | Select-Object -First 1).LineNumber
+            if ($end) { $rest[0..($end - 2)] } else { $rest }
+          } else { @("FreeReturn $version") }
+          $body = @($notes) + @(
+            "",
+            "### Downloads",
+            "- **FreeReturn-$version-setup-x64.exe** — installer (recommended, no administrator rights needed)",
+            "- **FreeReturn-$version-portable-x64.zip** — portable version, unzip and run ``FreeReturn.exe``",
+            "",
+            "Requires Windows 10 version 2004 or later, or Windows 11, and the Apple Devices app from Microsoft Store.",
+            "The files are not code-signed yet; if SmartScreen warns, choose **More info → Run anyway**. Checksums are in ``SHA256SUMS.txt``.")
+          Set-Content -Path artifacts/release-notes.md -Value $body -Encoding utf8
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: FreeReturn-${{ steps.version.outputs.value }}
+          path: artifacts/release/*
+
+      - name: Publish GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = "${{ steps.version.outputs.value }}"
+          $files = Get-ChildItem artifacts/release -File | ForEach-Object { $_.FullName }
+          $draft = if ("${{ github.event_name }}" -eq "workflow_dispatch") { @("--draft", "--target", "${{ github.sha }}") } else { @("--verify-tag") }
+          gh release create "v$version" @files --title "FreeReturn $version" --notes-file artifacts/release-notes.md @draft
