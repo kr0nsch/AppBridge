@@ -27,6 +27,12 @@ public enum TransferFailure
     NotTrusted,
     DeviceLocked,
     InstallFailed,
+
+    /// <summary>A saved app's file was moved or deleted since the list was read.</summary>
+    FileMissing,
+
+    /// <summary>A saved app's file can't be read or holds a different app.</summary>
+    FileDamaged,
     Unknown,
 }
 

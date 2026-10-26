@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using AppBridge.Core;
 using AppBridge.Core.Devices;
+using AppBridge.Core.Library;
 using AppBridge.Core.Transfer;
 using AppBridge.Services;
 using Microsoft.UI.Dispatching;
@@ -16,13 +17,17 @@ public enum InstallState
     Finished,
 }
 
-/// <summary>Step 4: download every selected app from Apple and install it on the target iPhone.</summary>
+/// <summary>
+/// The last step of every flow: download and install (Transfer Now), download only (saving for
+/// later) or install saved files (installing later), with per-app progress.
+/// </summary>
 public sealed partial class InstallViewModel : ObservableObject
 {
     private readonly AppServices _services;
     private readonly IconCache _icons;
     private readonly DispatcherQueue _dispatcher;
     private readonly ConcurrentDictionary<string, TransferUpdate> _lastUpdate = new();
+    private readonly Dictionary<string, SavedApp> _saved = new(StringComparer.Ordinal);
     private CancellationTokenSource? _run;
     private string? _targetUdid;
 
@@ -54,6 +59,9 @@ public sealed partial class InstallViewModel : ObservableObject
 
     [ObservableProperty]
     public partial string TargetName { get; set; } = "iPhone";
+
+    /// <summary>Which kind of run the items belong to.</summary>
+    public Flow Flow { get; private set; }
 
     public bool IsReady => State == InstallState.Ready;
 
@@ -96,34 +104,51 @@ public sealed partial class InstallViewModel : ObservableObject
         set => UpdateSetting(s => s.KeepDownloads = value);
     }
 
-    public async Task StartAsync(IReadOnlyList<InstalledApp> apps, DeviceItemViewModel target)
+    /// <summary>Transfer Now: download from the App Store and install on <paramref name="target"/>.</summary>
+    public Task StartAsync(IReadOnlyList<InstalledApp> apps, DeviceItemViewModel target) => BeginAsync(Flow.Now, apps, target);
+
+    /// <summary>Transfer Later, part one: download into the saved-apps folder.</summary>
+    public Task StartSaveAsync(IReadOnlyList<InstalledApp> apps) => BeginAsync(Flow.Save, apps, null);
+
+    /// <summary>Transfer Later, part two: install saved files on <paramref name="target"/>; no sign-in needed.</summary>
+    public Task StartInstallSavedAsync(IReadOnlyList<SavedApp> apps, DeviceItemViewModel target)
     {
-        if (_retryPending)
-        {
-            _retryPending = false;
-            _targetUdid = target.Udid;
-            TargetName = target.Name;
-            await RetryAsync();
-            return;
-        }
-
-        _targetUdid = target.Udid;
-        TargetName = target.Name;
-        Items.Clear();
-        _lastUpdate.Clear();
-        for (var i = 0; i < apps.Count; i++)
-        {
-            var icon = await _icons.GetAsync(apps[i].BundleId);
-            Items.Add(new TransferItemViewModel(apps[i], icon) { ShowSeparator = i > 0 });
-        }
-
-        await RunAsync(apps);
+        _saved.Clear();
+        foreach (var app in apps)
+            _saved[app.BundleId] = app;
+        return BeginAsync(Flow.InstallSaved, apps.Select(a => a.ToInstalledApp()).ToList(), target);
     }
 
     public Task RetryAsync()
     {
         var retry = Items.Where(i => i.IsFailed || i.Stage == TransferStage.Canceled).Select(i => i.App).ToList();
-        return retry.Count == 0 || _targetUdid is null ? Task.CompletedTask : RunAsync(retry);
+        return retry.Count == 0 || (_targetUdid is null && Flow != Flow.Save) ? Task.CompletedTask : RunAsync(retry);
+    }
+
+    private async Task BeginAsync(Flow flow, IReadOnlyList<InstalledApp> apps, DeviceItemViewModel? target)
+    {
+        _targetUdid = target?.Udid;
+        TargetName = target?.Name ?? "iPhone";
+        if (_retryPending && Flow == flow)
+        {
+            _retryPending = false;
+            await RetryAsync();
+            return;
+        }
+
+        _retryPending = false;
+        Flow = flow;
+        // Busy from the first moment, so a second click can't start another run while icons load.
+        State = InstallState.Running;
+        Items.Clear();
+        _lastUpdate.Clear();
+        for (var i = 0; i < apps.Count; i++)
+        {
+            var icon = await _icons.GetAsync(apps[i].BundleId);
+            Items.Add(new TransferItemViewModel(apps[i], icon, flow) { ShowSeparator = i > 0 });
+        }
+
+        await RunAsync(apps);
     }
 
     public void Cancel() => _run?.Cancel();
@@ -160,11 +185,23 @@ public sealed partial class InstallViewModel : ObservableObject
             _services.Settings.Current.VersionPolicy,
             _services.Settings.Current.AcquireFreeLicenses);
 
-        AppLog.Info($"Installing {apps.Count} app(s).");
+        AppLog.Info($"{Flow}: {apps.Count} app(s).");
         KeepAwake.Enable();
         try
         {
-            await _services.Transfers.RunAsync(apps, _targetUdid!, options, Report, _run.Token);
+            switch (Flow)
+            {
+                case Flow.Save:
+                    Directory.CreateDirectory(options.DownloadDirectory);
+                    await _services.Transfers.SaveAsync(apps, options with { KeepDownloads = true }, Report, _run.Token);
+                    break;
+                case Flow.InstallSaved:
+                    await _services.Transfers.InstallSavedAsync(apps.Select(a => _saved[a.BundleId]).ToList(), _targetUdid!, Report, _run.Token);
+                    break;
+                default:
+                    await _services.Transfers.RunAsync(apps, _targetUdid!, options, Report, _run.Token);
+                    break;
+            }
         }
         catch (OperationCanceledException)
         {
@@ -174,6 +211,8 @@ public sealed partial class InstallViewModel : ObservableObject
         catch (Exception ex)
         {
             AppLog.Error("The installation run failed.", ex);
+            foreach (var item in Items.Where(i => !i.IsCompleted && !i.IsFailed))
+                item.Apply(new TransferUpdate(TransferStage.Failed, Failure: TransferFailure.Unknown, Detail: ex.Message));
         }
         finally
         {
@@ -184,7 +223,7 @@ public sealed partial class InstallViewModel : ObservableObject
         await Task.Delay(150);
         Recount();
         State = InstallState.Finished;
-        AppLog.Info($"Finished: {CompletedCount} installed, {FailedCount} failed.");
+        AppLog.Info($"Finished: {CompletedCount} done, {FailedCount} failed.");
     }
 
     private void Report(InstalledApp app, TransferUpdate update)

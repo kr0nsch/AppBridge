@@ -96,14 +96,8 @@
   <data name="Apps_Search.PlaceholderText" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="Apps_Loading.Text" xml:space="preserve">
-    <value>Reading apps from your iPhone…</value>
-  </data>
   <data name="Apps_TryAgain.Content" xml:space="preserve">
     <value>Try Again</value>
-  </data>
-  <data name="Apps_Empty.Text" xml:space="preserve">
-    <value>No apps from the App Store were found on this iPhone.</value>
   </data>
   <data name="Apps_NoMatches.Text" xml:space="preserve">
     <value>No matching apps</value>
@@ -324,9 +318,6 @@
   <data name="Options_KeepHint.Text" xml:space="preserve">
     <value>Saves the .ipa files so you can install them again later.</value>
   </data>
-  <data name="Options_Footnote.Text" xml:space="preserve">
-    <value>Only apps your Apple Account can get from the App Store can be installed. Keep both iPhones unlocked and connected.</value>
-  </data>
   <data name="Transfer_Waiting" xml:space="preserve">
     <value>Waiting</value>
   </data>
@@ -517,5 +508,221 @@ Details were saved to the diagnostic log.</value>
   </data>
   <data name="Settings_Disclaimer.Text" xml:space="preserve">
     <value>AppBridge is free, open-source software. It is not affiliated with or endorsed by Apple Inc. iPhone and App Store are trademarks of Apple Inc.</value>
+  </data>
+  <data name="Apps_LoadingText" xml:space="preserve">
+    <value>Reading apps from your iPhone…</value>
+  </data>
+  <data name="Apps_EmptyText" xml:space="preserve">
+    <value>No apps from the App Store were found on this iPhone.</value>
+  </data>
+  <data name="Now_Footnote" xml:space="preserve">
+    <value>Only apps your Apple Account can get from the App Store can be installed. Keep both iPhones unlocked and connected.</value>
+  </data>
+  <data name="Start_Title.Text" xml:space="preserve">
+    <value>Transfer Your Apps</value>
+  </data>
+  <data name="Start_Subtitle.Text" xml:space="preserve">
+    <value>From your old iPhone to your new one, now or later.</value>
+  </data>
+  <data name="Start_Now.Title" xml:space="preserve">
+    <value>Transfer Now</value>
+  </data>
+  <data name="Start_NowSubtitle" xml:space="preserve">
+    <value>Both iPhones are here. Apps install right away.</value>
+  </data>
+  <data name="Start_Later.Title" xml:space="preserve">
+    <value>Transfer Later</value>
+  </data>
+  <data name="Start_LaterSubtitle" xml:space="preserve">
+    <value>Save your apps now, install them on your new iPhone later.</value>
+  </data>
+  <data name="Start_SavedCount_One" xml:space="preserve">
+    <value>{0} app saved</value>
+  </data>
+  <data name="Start_SavedCount_Few" xml:space="preserve">
+    <value>{0} apps saved</value>
+  </data>
+  <data name="Start_SavedCount_Many" xml:space="preserve">
+    <value>{0} apps saved</value>
+  </data>
+  <data name="Start_Footer" xml:space="preserve">
+    <value>Moves App Store apps, not their data.</value>
+  </data>
+  <data name="Choice_ToolMissing" xml:space="preserve">
+    <value>A component is missing. Reinstall AppBridge.</value>
+  </data>
+  <data name="Later_Title.Text" xml:space="preserve">
+    <value>Transfer Later</value>
+  </data>
+  <data name="Later_Subtitle.Text" xml:space="preserve">
+    <value>Two steps, as far apart as you like.</value>
+  </data>
+  <data name="Later_Save.Title" xml:space="preserve">
+    <value>Save Apps</value>
+  </data>
+  <data name="Later_SaveSubtitle" xml:space="preserve">
+    <value>From your old iPhone to this PC. Requires Apple Account sign-in.</value>
+  </data>
+  <data name="Later_Install.Title" xml:space="preserve">
+    <value>Install on New iPhone</value>
+  </data>
+  <data name="Later_SaveFirst" xml:space="preserve">
+    <value>Save your apps first</value>
+  </data>
+  <data name="Later_FolderMissing" xml:space="preserve">
+    <value>Folder not available</value>
+  </data>
+  <data name="Later_Folder.Text" xml:space="preserve">
+    <value>Folder:</value>
+  </data>
+  <data name="Later_ChangeFolder.Content" xml:space="preserve">
+    <value>Change…</value>
+  </data>
+  <data name="Folder_Downloads" xml:space="preserve">
+    <value>Downloads</value>
+  </data>
+  <data name="Old_Title" xml:space="preserve">
+    <value>Connect Your Old iPhone</value>
+  </data>
+  <data name="New_Title" xml:space="preserve">
+    <value>Connect Your New iPhone</value>
+  </data>
+  <data name="New_Subtitle" xml:space="preserve">
+    <value>Connect with USB and tap Trust. No Apple Account sign-in needed.</value>
+  </data>
+  <data name="Apps_SubtitleSave" xml:space="preserve">
+    <value>Apps from the App Store on {0}. Select the ones to save.</value>
+  </data>
+  <data name="Apps_AlreadySaved" xml:space="preserve">
+    <value>Already saved</value>
+  </data>
+  <data name="Saved_Subtitle" xml:space="preserve">
+    <value>Saved on this PC. Select the ones to install on {0}.</value>
+  </data>
+  <data name="Saved_Loading" xml:space="preserve">
+    <value>Checking what's already on your iPhone…</value>
+  </data>
+  <data name="Saved_Empty" xml:space="preserve">
+    <value>There are no saved apps in “{0}”.</value>
+  </data>
+  <data name="Saved_NothingCompatible" xml:space="preserve">
+    <value>Nothing here works on this iPhone</value>
+  </data>
+  <data name="Saved_NotEnoughSpace" xml:space="preserve">
+    <value>Needs {0}, {1} available on iPhone</value>
+  </data>
+  <data name="Saved_NeedsIos" xml:space="preserve">
+    <value>Requires iOS {0} or later</value>
+  </data>
+  <data name="Saved_IPadOnly" xml:space="preserve">
+    <value>iPad only</value>
+  </data>
+  <data name="Saved_IncompatibleHeader" xml:space="preserve">
+    <value>NOT AVAILABLE ON THIS IPHONE</value>
+  </data>
+  <data name="Saved_OlderVersion" xml:space="preserve">
+    <value>Version {0}; {1} needs iOS {2}</value>
+  </data>
+  <data name="Saved_AlreadyInstalled" xml:space="preserve">
+    <value>Already on iPhone</value>
+  </data>
+  <data name="Saved_Updates" xml:space="preserve">
+    <value>Updates {0} → {1}</value>
+  </data>
+  <data name="Saved_UpdateIos" xml:space="preserve">
+    <value>Update the iPhone in Settings › General › Software Update.</value>
+  </data>
+  <data name="Saved_Unreadable" xml:space="preserve">
+    <value>Files that couldn't be opened: {0}</value>
+  </data>
+  <data name="Save_Title_Ready" xml:space="preserve">
+    <value>Ready to Save</value>
+  </data>
+  <data name="Save_Subtitle_Ready" xml:space="preserve">
+    <value>{0} will be downloaded from the App Store to this PC.</value>
+  </data>
+  <data name="Save_Subtitle_SignIn" xml:space="preserve">
+    <value>Apps are downloaded from Apple, so sign in with the Apple Account that got them.</value>
+  </data>
+  <data name="Save_Title_Running" xml:space="preserve">
+    <value>Saving Apps</value>
+  </data>
+  <data name="Save_Subtitle_Running" xml:space="preserve">
+    <value>You can disconnect your old iPhone.</value>
+  </data>
+  <data name="Save_Title_Done" xml:space="preserve">
+    <value>Your Apps Are Saved</value>
+  </data>
+  <data name="Save_Subtitle_Done" xml:space="preserve">
+    <value>{0} saved on this PC.</value>
+  </data>
+  <data name="Save_Title_Problems" xml:space="preserve">
+    <value>Some Apps Weren't Saved</value>
+  </data>
+  <data name="Save_Subtitle_Problems" xml:space="preserve">
+    <value>{0} saved, {1} not saved. Check the reasons below.</value>
+  </data>
+  <data name="Save_Title_Stopped" xml:space="preserve">
+    <value>Saving Stopped</value>
+  </data>
+  <data name="Save_Footnote" xml:space="preserve">
+    <value>Only apps your Apple Account can get from the App Store can be saved.</value>
+  </data>
+  <data name="Footer_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Summary_Folder.Text" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="Summary_ThisPc" xml:space="preserve">
+    <value>This PC</value>
+  </data>
+  <data name="Summary_Accounts_One" xml:space="preserve">
+    <value>{0} account</value>
+  </data>
+  <data name="Summary_Accounts_Few" xml:space="preserve">
+    <value>{0} accounts</value>
+  </data>
+  <data name="Summary_Accounts_Many" xml:space="preserve">
+    <value>{0} accounts</value>
+  </data>
+  <data name="InstallSaved_Subtitle_Ready" xml:space="preserve">
+    <value>{0} will be installed on {1} from this PC.</value>
+  </data>
+  <data name="InstallSaved_Footnote" xml:space="preserve">
+    <value>The apps open when the iPhone is signed in to the App Store with {0}.</value>
+  </data>
+  <data name="InstallSaved_AccountCard" xml:space="preserve">
+    <value>If an app asks you to sign in, sign in to the App Store on the iPhone with {0}. You only need to do this once.</value>
+  </data>
+  <data name="InstallSaved_TheirAccount" xml:space="preserve">
+    <value>the Apple Account they were saved with</value>
+  </data>
+  <data name="SaveDone_Header.Text" xml:space="preserve">
+    <value>WHEN YOUR NEW IPHONE ARRIVES</value>
+  </data>
+  <data name="SaveDone_Step1" xml:space="preserve">
+    <value>Sign in to the App Store on it with {0}.</value>
+  </data>
+  <data name="SaveDone_YourAccount" xml:space="preserve">
+    <value>your Apple Account</value>
+  </data>
+  <data name="SaveDone_Step2.Text" xml:space="preserve">
+    <value>Connect it and open AppBridge.</value>
+  </data>
+  <data name="SaveDone_Step3.Text" xml:space="preserve">
+    <value>Choose Transfer Later → Install on New iPhone.</value>
+  </data>
+  <data name="SaveDone_Footnote" xml:space="preserve">
+    <value>Keep the “{0}” folder.</value>
+  </data>
+  <data name="Transfer_Saved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
+  <data name="Failure_FileMissing" xml:space="preserve">
+    <value>File not found</value>
+  </data>
+  <data name="Failure_FileDamaged" xml:space="preserve">
+    <value>File is damaged</value>
   </data>
 </root>

@@ -26,6 +26,7 @@ public sealed class AppServices : IDisposable
             Devices = backend;
             Watcher = backend;
             _demoDownloads = Path.Combine(Path.GetTempPath(), "AppBridgeDemo");
+            DemoBackend.PrepareSavedApps(_demoDownloads, HasFlag("--demo-saved") || Environment.GetEnvironmentVariable("APPBRIDGE_DEMO_SAVED") == "1");
         }
         else
         {
@@ -56,6 +57,9 @@ public sealed class AppServices : IDisposable
 
     public TransferRunner Transfers { get; }
 
+    /// <summary>Icons survive restarts so saved apps keep them; demo icons stay out of the real cache.</summary>
+    public string IconsDirectory => _demoDownloads is null ? Paths.IconsDirectory : Path.Combine(Path.GetTempPath(), "AppBridgeDemoIcons");
+
     public string DownloadDirectory =>
         _demoDownloads
         ?? (string.IsNullOrWhiteSpace(Settings.Current.DownloadDirectory) ? Paths.DefaultDownloadDirectory : Settings.Current.DownloadDirectory);
@@ -65,10 +69,11 @@ public sealed class AppServices : IDisposable
         var paths = AppPaths.Detect();
         paths.EnsureCreated();
         AppLog.Initialize(paths.LogsDirectory);
-        var demo = Environment.GetCommandLineArgs().Any(a => a.Equals("--demo", StringComparison.OrdinalIgnoreCase))
-                   || Environment.GetEnvironmentVariable("APPBRIDGE_DEMO") == "1";
+        var demo = HasFlag("--demo") || HasFlag("--demo-saved") || Environment.GetEnvironmentVariable("APPBRIDGE_DEMO") == "1";
         return new AppServices(paths, demo);
     }
 
     public void Dispose() => Watcher.Dispose();
+
+    private static bool HasFlag(string flag) => Environment.GetCommandLineArgs().Any(a => a.Equals(flag, StringComparison.OrdinalIgnoreCase));
 }

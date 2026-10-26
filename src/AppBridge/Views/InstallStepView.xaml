@@ -38,18 +38,34 @@
                 <TextBlock Style="{StaticResource RowBodyStyle}" Foreground="{ThemeResource AppSecondaryLabelBrush}" HorizontalAlignment="Right"
                            VerticalAlignment="Center" Text="{x:Bind ViewModel.SummaryFrom, Mode=OneWay}" />
               </Grid>
-              <Rectangle Style="{StaticResource SeparatorStyle}" Margin="0,0,-16,0" />
-              <Grid MinHeight="44">
-                <TextBlock x:Uid="Summary_To" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center" Text="To" />
-                <TextBlock Style="{StaticResource RowBodyStyle}" Foreground="{ThemeResource AppSecondaryLabelBrush}" HorizontalAlignment="Right"
-                           VerticalAlignment="Center" Text="{x:Bind ViewModel.SummaryTo, Mode=OneWay}" />
-              </Grid>
+              <StackPanel Visibility="{x:Bind ViewModel.ShowSummaryTo, Mode=OneWay}">
+                <Rectangle Style="{StaticResource SeparatorStyle}" Margin="0,0,-16,0" />
+                <Grid MinHeight="44">
+                  <TextBlock x:Uid="Summary_To" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center" Text="To" />
+                  <TextBlock Style="{StaticResource RowBodyStyle}" Foreground="{ThemeResource AppSecondaryLabelBrush}" HorizontalAlignment="Right"
+                             VerticalAlignment="Center" Text="{x:Bind ViewModel.SummaryTo, Mode=OneWay}" />
+                </Grid>
+              </StackPanel>
               <Rectangle Style="{StaticResource SeparatorStyle}" Margin="0,0,-16,0" />
               <Grid MinHeight="44">
                 <TextBlock x:Uid="Summary_Apps" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center" Text="Apps" />
                 <TextBlock Style="{StaticResource RowBodyStyle}" Foreground="{ThemeResource AppSecondaryLabelBrush}" HorizontalAlignment="Right"
                            VerticalAlignment="Center" Text="{x:Bind ViewModel.SummaryApps, Mode=OneWay}" />
               </Grid>
+              <StackPanel Visibility="{x:Bind ViewModel.ShowSummaryFolder, Mode=OneWay}">
+                <Rectangle Style="{StaticResource SeparatorStyle}" Margin="0,0,-16,0" />
+                <Grid MinHeight="44" ColumnSpacing="12">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+                  <TextBlock x:Uid="Summary_Folder" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center" Text="Folder" />
+                  <HyperlinkButton Grid.Column="1" HorizontalAlignment="Right" Padding="6,4" Margin="0,0,-6,0" Command="{x:Bind ViewModel.OpenFolderCommand}"
+                                   ToolTipService.ToolTip="{x:Bind ViewModel.Library.Folder, Mode=OneWay}">
+                    <TextBlock Text="{x:Bind ViewModel.FolderDisplay, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+                  </HyperlinkButton>
+                </Grid>
+              </StackPanel>
               <Rectangle Style="{StaticResource SeparatorStyle}" Margin="0,0,-16,0" />
               <Grid MinHeight="44" ColumnSpacing="12">
                 <Grid.ColumnDefinitions>
@@ -60,16 +76,17 @@
                 <TextBlock x:Uid="Summary_Account" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center" Text="Apple Account" />
                 <TextBlock Grid.Column="1" Style="{StaticResource RowBodyStyle}" Foreground="{ThemeResource AppSecondaryLabelBrush}"
                            HorizontalAlignment="Right" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"
-                           Text="{x:Bind ViewModel.Account.Email, Mode=OneWay}" />
+                           Text="{x:Bind ViewModel.SummaryAccount, Mode=OneWay}" />
                 <HyperlinkButton x:Uid="Summary_SignOut" Grid.Column="2" Padding="6,4" Content="Sign Out"
-                                 Command="{x:Bind ViewModel.Account.SignOutCommand}" />
+                                 Visibility="{x:Bind ViewModel.ShowSignOut, Mode=OneWay}" Command="{x:Bind ViewModel.Account.SignOutCommand}" />
               </Grid>
             </StackPanel>
           </Border>
 
           <!-- Options -->
-          <TextBlock x:Uid="Options_Header" Style="{StaticResource SectionHeaderStyle}" Text="OPTIONS" />
-          <Border Style="{StaticResource GroupCardStyle}" Padding="16,0">
+          <TextBlock x:Uid="Options_Header" Style="{StaticResource SectionHeaderStyle}" Text="OPTIONS"
+                     Visibility="{x:Bind ViewModel.ShowOptions, Mode=OneWay}" />
+          <Border Style="{StaticResource GroupCardStyle}" Padding="16,0" Visibility="{x:Bind ViewModel.ShowOptions, Mode=OneWay}">
             <StackPanel>
               <Grid MinHeight="52" ColumnSpacing="16">
                 <Grid.ColumnDefinitions>
@@ -103,8 +120,8 @@
                 <ToggleSwitch x:Uid="Options_FreeToggle" Grid.Column="1" OnContent="" OffContent="" MinWidth="0" VerticalAlignment="Center"
                               IsOn="{x:Bind ViewModel.Install.AcquireFreeLicenses, Mode=TwoWay}" />
               </Grid>
-              <Rectangle Style="{StaticResource SeparatorStyle}" Margin="0,0,-16,0" />
-              <Grid MinHeight="52" ColumnSpacing="16">
+              <Rectangle Style="{StaticResource SeparatorStyle}" Margin="0,0,-16,0" Visibility="{x:Bind ViewModel.ShowKeepOption, Mode=OneWay}" />
+              <Grid MinHeight="52" ColumnSpacing="16" Visibility="{x:Bind ViewModel.ShowKeepOption, Mode=OneWay}">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />
@@ -118,15 +135,75 @@
               </Grid>
             </StackPanel>
           </Border>
-          <TextBlock x:Uid="Options_Footnote" Style="{StaticResource FootnoteStyle}" Margin="16,8,16,0"
-                     Text="Only apps your Apple Account can get from the App Store can be installed. Keep both iPhones unlocked and connected." />
+          <TextBlock Style="{StaticResource FootnoteStyle}" Margin="16,8,16,0" Text="{x:Bind ViewModel.InstallFootnote, Mode=OneWay}" />
         </StackPanel>
       </StackPanel>
     </ScrollViewer>
 
-    <!-- Progress list -->
-    <Border Grid.Row="1" Margin="0,24,0,0" Style="{StaticResource GroupCardStyle}" Padding="0,4"
-            Visibility="{x:Bind ViewModel.Install.ShowItems, Mode=OneWay}">
+    <!-- Progress list, with what to do next once the run is over -->
+    <Grid Grid.Row="1" Margin="0,22,0,0" RowSpacing="16" Visibility="{x:Bind ViewModel.Install.ShowItems, Mode=OneWay}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <StackPanel Visibility="{x:Bind ViewModel.ShowSaveDoneCard, Mode=OneWay}">
+        <TextBlock x:Uid="SaveDone_Header" Style="{StaticResource SectionHeaderStyle}" Margin="16,0,16,6" Text="WHEN YOUR NEW IPHONE ARRIVES" />
+        <Border Style="{StaticResource GroupCardStyle}" Padding="16,2">
+          <StackPanel>
+            <Grid MinHeight="44" ColumnSpacing="12">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Grid Width="22" Height="22" VerticalAlignment="Center">
+                <Ellipse Fill="{ThemeResource AppBlueBrush}" />
+                <TextBlock Text="1" FontSize="12" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+              </Grid>
+              <TextBlock Grid.Column="1" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center" Text="{x:Bind ViewModel.SaveDoneStep1, Mode=OneWay}" />
+            </Grid>
+            <Rectangle Style="{StaticResource SeparatorStyle}" Margin="34,0,-16,0" />
+            <Grid MinHeight="44" ColumnSpacing="12">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Grid Width="22" Height="22" VerticalAlignment="Center">
+                <Ellipse Fill="{ThemeResource AppBlueBrush}" />
+                <TextBlock Text="2" FontSize="12" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+              </Grid>
+              <TextBlock x:Uid="SaveDone_Step2" Grid.Column="1" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center" Text="Connect it and open AppBridge." />
+            </Grid>
+            <Rectangle Style="{StaticResource SeparatorStyle}" Margin="34,0,-16,0" />
+            <Grid MinHeight="44" ColumnSpacing="12">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Grid Width="22" Height="22" VerticalAlignment="Center">
+                <Ellipse Fill="{ThemeResource AppBlueBrush}" />
+                <TextBlock Text="3" FontSize="12" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+              </Grid>
+              <TextBlock x:Uid="SaveDone_Step3" Grid.Column="1" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center"
+                         Text="Choose Transfer Later → Install on New iPhone." />
+            </Grid>
+          </StackPanel>
+        </Border>
+        <TextBlock Style="{StaticResource FootnoteStyle}" Margin="16,8,16,0" Text="{x:Bind ViewModel.SaveDoneFootnote, Mode=OneWay}" />
+      </StackPanel>
+
+      <Border Style="{StaticResource GroupCardStyle}" Padding="16,12" Visibility="{x:Bind ViewModel.ShowAccountCard, Mode=OneWay}">
+        <Grid ColumnSpacing="12">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <FontIcon Glyph="&#xE946;" FontSize="16" Foreground="{ThemeResource AppSecondaryLabelBrush}" VerticalAlignment="Top" Margin="0,1,0,0" />
+          <TextBlock Grid.Column="1" Style="{StaticResource FootnoteStyle}" FontSize="13" LineHeight="18" Text="{x:Bind ViewModel.AccountCardText, Mode=OneWay}" />
+        </Grid>
+      </Border>
+
+    <Border Grid.Row="1" Style="{StaticResource GroupCardStyle}" Padding="0,4">
       <ListView ItemsSource="{x:Bind ViewModel.Install.Items}" SelectionMode="None" ItemContainerStyle="{StaticResource InsetRowItemStyle}">
         <ListView.ItemContainerTransitions>
           <TransitionCollection>
@@ -179,5 +256,6 @@
         </ListView.ItemTemplate>
       </ListView>
     </Border>
+    </Grid>
   </Grid>
 </UserControl>

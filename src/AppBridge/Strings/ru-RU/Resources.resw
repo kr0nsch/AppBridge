@@ -96,14 +96,8 @@
   <data name="Apps_Search.PlaceholderText" xml:space="preserve">
     <value>Поиск</value>
   </data>
-  <data name="Apps_Loading.Text" xml:space="preserve">
-    <value>Читаем список приложений с iPhone…</value>
-  </data>
   <data name="Apps_TryAgain.Content" xml:space="preserve">
     <value>Повторить</value>
-  </data>
-  <data name="Apps_Empty.Text" xml:space="preserve">
-    <value>На этом iPhone не найдено приложений из App Store.</value>
   </data>
   <data name="Apps_NoMatches.Text" xml:space="preserve">
     <value>Ничего не найдено</value>
@@ -324,9 +318,6 @@
   <data name="Options_KeepHint.Text" xml:space="preserve">
     <value>Файлы .ipa останутся на компьютере для повторной установки.</value>
   </data>
-  <data name="Options_Footnote.Text" xml:space="preserve">
-    <value>Установить можно только приложения, доступные вашему Apple Account в App Store. Держите iPhone разблокированным и подключённым.</value>
-  </data>
   <data name="Transfer_Waiting" xml:space="preserve">
     <value>В очереди</value>
   </data>
@@ -517,5 +508,221 @@
   </data>
   <data name="Settings_Disclaimer.Text" xml:space="preserve">
     <value>AppBridge — бесплатная программа с открытым исходным кодом. Она не связана с Apple Inc. и не одобрена ею. iPhone и App Store — товарные знаки Apple Inc.</value>
+  </data>
+  <data name="Apps_LoadingText" xml:space="preserve">
+    <value>Читаем список приложений с iPhone…</value>
+  </data>
+  <data name="Apps_EmptyText" xml:space="preserve">
+    <value>На этом iPhone не найдено приложений из App Store.</value>
+  </data>
+  <data name="Now_Footnote" xml:space="preserve">
+    <value>Установить можно только приложения, доступные вашему Apple Account в App Store. Держите iPhone разблокированным и подключённым.</value>
+  </data>
+  <data name="Start_Title.Text" xml:space="preserve">
+    <value>Перенос приложений</value>
+  </data>
+  <data name="Start_Subtitle.Text" xml:space="preserve">
+    <value>Со старого iPhone на новый — сразу или позже.</value>
+  </data>
+  <data name="Start_Now.Title" xml:space="preserve">
+    <value>Перенести сейчас</value>
+  </data>
+  <data name="Start_NowSubtitle" xml:space="preserve">
+    <value>Оба iPhone под рукой — приложения установятся сразу.</value>
+  </data>
+  <data name="Start_Later.Title" xml:space="preserve">
+    <value>Перенести потом</value>
+  </data>
+  <data name="Start_LaterSubtitle" xml:space="preserve">
+    <value>Сохраните приложения сейчас, а установите на новый iPhone потом.</value>
+  </data>
+  <data name="Start_SavedCount_One" xml:space="preserve">
+    <value>Сохранено {0} приложение</value>
+  </data>
+  <data name="Start_SavedCount_Few" xml:space="preserve">
+    <value>Сохранено {0} приложения</value>
+  </data>
+  <data name="Start_SavedCount_Many" xml:space="preserve">
+    <value>Сохранено {0} приложений</value>
+  </data>
+  <data name="Start_Footer" xml:space="preserve">
+    <value>Переносятся приложения из App Store, без их данных.</value>
+  </data>
+  <data name="Choice_ToolMissing" xml:space="preserve">
+    <value>Не хватает компонента — переустановите AppBridge.</value>
+  </data>
+  <data name="Later_Title.Text" xml:space="preserve">
+    <value>Перенести потом</value>
+  </data>
+  <data name="Later_Subtitle.Text" xml:space="preserve">
+    <value>Два шага, хоть с перерывом в месяц.</value>
+  </data>
+  <data name="Later_Save.Title" xml:space="preserve">
+    <value>Сохранить приложения</value>
+  </data>
+  <data name="Later_SaveSubtitle" xml:space="preserve">
+    <value>Со старого iPhone на этот компьютер. Нужен вход в Apple Account.</value>
+  </data>
+  <data name="Later_Install.Title" xml:space="preserve">
+    <value>Установить на новый iPhone</value>
+  </data>
+  <data name="Later_SaveFirst" xml:space="preserve">
+    <value>Сначала сохраните приложения</value>
+  </data>
+  <data name="Later_FolderMissing" xml:space="preserve">
+    <value>Папка недоступна</value>
+  </data>
+  <data name="Later_Folder.Text" xml:space="preserve">
+    <value>Папка:</value>
+  </data>
+  <data name="Later_ChangeFolder.Content" xml:space="preserve">
+    <value>Изменить…</value>
+  </data>
+  <data name="Folder_Downloads" xml:space="preserve">
+    <value>Загрузки</value>
+  </data>
+  <data name="Old_Title" xml:space="preserve">
+    <value>Подключите старый iPhone</value>
+  </data>
+  <data name="New_Title" xml:space="preserve">
+    <value>Подключите новый iPhone</value>
+  </data>
+  <data name="New_Subtitle" xml:space="preserve">
+    <value>Подключите по USB и нажмите «Доверять». Входить в Apple Account не нужно.</value>
+  </data>
+  <data name="Apps_SubtitleSave" xml:space="preserve">
+    <value>Приложения из App Store на «{0}». Отметьте, что сохранить.</value>
+  </data>
+  <data name="Apps_AlreadySaved" xml:space="preserve">
+    <value>Уже сохранено</value>
+  </data>
+  <data name="Saved_Subtitle" xml:space="preserve">
+    <value>Сохранены на этом компьютере. Отметьте, что установить на «{0}».</value>
+  </data>
+  <data name="Saved_Loading" xml:space="preserve">
+    <value>Проверяем, что уже есть на iPhone…</value>
+  </data>
+  <data name="Saved_Empty" xml:space="preserve">
+    <value>В папке «{0}» нет сохранённых приложений.</value>
+  </data>
+  <data name="Saved_NothingCompatible" xml:space="preserve">
+    <value>Ничего не подходит для этого iPhone</value>
+  </data>
+  <data name="Saved_NotEnoughSpace" xml:space="preserve">
+    <value>Нужно {0}, на iPhone свободно {1}</value>
+  </data>
+  <data name="Saved_NeedsIos" xml:space="preserve">
+    <value>Нужна iOS {0} или новее</value>
+  </data>
+  <data name="Saved_IPadOnly" xml:space="preserve">
+    <value>Только для iPad</value>
+  </data>
+  <data name="Saved_IncompatibleHeader" xml:space="preserve">
+    <value>НЕ ПОДХОДЯТ ДЛЯ ЭТОГО IPHONE</value>
+  </data>
+  <data name="Saved_OlderVersion" xml:space="preserve">
+    <value>Версия {0}: для {1} нужна iOS {2}</value>
+  </data>
+  <data name="Saved_AlreadyInstalled" xml:space="preserve">
+    <value>Уже на iPhone</value>
+  </data>
+  <data name="Saved_Updates" xml:space="preserve">
+    <value>Обновит {0} → {1}</value>
+  </data>
+  <data name="Saved_UpdateIos" xml:space="preserve">
+    <value>Обновите iPhone: Настройки › Основные › Обновление ПО.</value>
+  </data>
+  <data name="Saved_Unreadable" xml:space="preserve">
+    <value>Не удалось открыть файлов: {0}</value>
+  </data>
+  <data name="Save_Title_Ready" xml:space="preserve">
+    <value>Всё готово к сохранению</value>
+  </data>
+  <data name="Save_Subtitle_Ready" xml:space="preserve">
+    <value>{0} будут скачаны из App Store на этот компьютер.</value>
+  </data>
+  <data name="Save_Subtitle_SignIn" xml:space="preserve">
+    <value>Приложения скачиваются у Apple, поэтому войдите с Apple Account, которым они были получены.</value>
+  </data>
+  <data name="Save_Title_Running" xml:space="preserve">
+    <value>Сохранение приложений</value>
+  </data>
+  <data name="Save_Subtitle_Running" xml:space="preserve">
+    <value>Старый iPhone можно отключить.</value>
+  </data>
+  <data name="Save_Title_Done" xml:space="preserve">
+    <value>Приложения сохранены</value>
+  </data>
+  <data name="Save_Subtitle_Done" xml:space="preserve">
+    <value>{0} сохранены на этом компьютере.</value>
+  </data>
+  <data name="Save_Title_Problems" xml:space="preserve">
+    <value>Не все приложения сохранены</value>
+  </data>
+  <data name="Save_Subtitle_Problems" xml:space="preserve">
+    <value>Сохранено: {0}, не сохранено: {1}. Причины указаны ниже.</value>
+  </data>
+  <data name="Save_Title_Stopped" xml:space="preserve">
+    <value>Сохранение остановлено</value>
+  </data>
+  <data name="Save_Footnote" xml:space="preserve">
+    <value>Сохранить можно только приложения, доступные вашему Apple Account в App Store.</value>
+  </data>
+  <data name="Footer_Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="Summary_Folder.Text" xml:space="preserve">
+    <value>Папка</value>
+  </data>
+  <data name="Summary_ThisPc" xml:space="preserve">
+    <value>Этот компьютер</value>
+  </data>
+  <data name="Summary_Accounts_One" xml:space="preserve">
+    <value>{0} аккаунт</value>
+  </data>
+  <data name="Summary_Accounts_Few" xml:space="preserve">
+    <value>{0} аккаунта</value>
+  </data>
+  <data name="Summary_Accounts_Many" xml:space="preserve">
+    <value>{0} аккаунтов</value>
+  </data>
+  <data name="InstallSaved_Subtitle_Ready" xml:space="preserve">
+    <value>{0} будут установлены на «{1}» с этого компьютера.</value>
+  </data>
+  <data name="InstallSaved_Footnote" xml:space="preserve">
+    <value>Приложения откроются, если на iPhone в App Store выполнен вход с {0}.</value>
+  </data>
+  <data name="InstallSaved_AccountCard" xml:space="preserve">
+    <value>Если приложение попросит войти, войдите в App Store на iPhone с {0}. Это нужно один раз.</value>
+  </data>
+  <data name="InstallSaved_TheirAccount" xml:space="preserve">
+    <value>тем Apple Account, с которым они сохранены</value>
+  </data>
+  <data name="SaveDone_Header.Text" xml:space="preserve">
+    <value>КОГДА ПОЯВИТСЯ НОВЫЙ IPHONE</value>
+  </data>
+  <data name="SaveDone_Step1" xml:space="preserve">
+    <value>Войдите на нём в App Store с {0}.</value>
+  </data>
+  <data name="SaveDone_YourAccount" xml:space="preserve">
+    <value>вашим Apple Account</value>
+  </data>
+  <data name="SaveDone_Step2.Text" xml:space="preserve">
+    <value>Подключите его и откройте AppBridge.</value>
+  </data>
+  <data name="SaveDone_Step3.Text" xml:space="preserve">
+    <value>Выберите «Перенести потом» → «Установить на новый iPhone».</value>
+  </data>
+  <data name="SaveDone_Footnote" xml:space="preserve">
+    <value>Не удаляйте папку «{0}».</value>
+  </data>
+  <data name="Transfer_Saved" xml:space="preserve">
+    <value>Сохранено</value>
+  </data>
+  <data name="Failure_FileMissing" xml:space="preserve">
+    <value>Файл не найден</value>
+  </data>
+  <data name="Failure_FileDamaged" xml:space="preserve">
+    <value>Файл повреждён</value>
   </data>
 </root>

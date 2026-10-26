@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <!-- CI overrides this from the release tag: dotnet publish -p:Version=1.2.3 -->
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Product>AppBridge</Product>
     <Company>AppBridge contributors</Company>
     <Authors>AppBridge contributors</Authors>

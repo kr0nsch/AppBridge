@@ -15,7 +15,7 @@ public sealed partial class AppsStepView : UserControl
 
     private void OnAppClick(object sender, ItemClickEventArgs e)
     {
-        if (e.ClickedItem is AppItemViewModel app)
+        if (e.ClickedItem is AppItemViewModel { IsSelectable: true } app)
             app.IsSelected = !app.IsSelected;
     }
 }

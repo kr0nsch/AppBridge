@@ -6,9 +6,11 @@ using Microsoft.UI.Xaml.Media;
 
 namespace AppBridge.ViewModels;
 
-public sealed partial class TransferItemViewModel(InstalledApp app, ImageSource? icon) : ObservableObject
+public sealed partial class TransferItemViewModel(InstalledApp app, ImageSource? icon, Flow flow = Flow.Now) : ObservableObject
 {
     public InstalledApp App { get; } = app;
+
+    public Flow Flow { get; } = flow;
 
     public string Name => App.Name;
 
@@ -56,16 +58,28 @@ public sealed partial class TransferItemViewModel(InstalledApp app, ImageSource?
 
     public bool IsIndeterminate => Stage == TransferStage.Preparing || (IsActive && Fraction is null);
 
-    /// <summary>Weight of this item in the overall progress, 0..1.</summary>
-    public double OverallFraction => Stage switch
+    /// <summary>Weight of this item in the overall progress, 0..1: saving is all download, installing a saved app all USB.</summary>
+    public double OverallFraction
     {
-        TransferStage.Completed or TransferStage.Failed => 1,
-        TransferStage.Downloading => 0.6 * (Fraction ?? 0),
-        TransferStage.Preparing or TransferStage.ReadyToInstall => 0.6,
-        TransferStage.Uploading => 0.6 + 0.25 * (Fraction ?? 0),
-        TransferStage.Installing => 0.85 + 0.15 * (Fraction ?? 0),
-        _ => 0,
-    };
+        get
+        {
+            var (download, upload) = Flow switch
+            {
+                Flow.Save => (0.95, 0.0),
+                Flow.InstallSaved => (0.0, 0.7),
+                _ => (0.6, 0.25),
+            };
+            return Stage switch
+            {
+                TransferStage.Completed or TransferStage.Failed => 1,
+                TransferStage.Downloading => download * (Fraction ?? 0),
+                TransferStage.Preparing or TransferStage.ReadyToInstall => download,
+                TransferStage.Uploading => download + upload * (Fraction ?? 0),
+                TransferStage.Installing => download + upload + (1 - download - upload) * (Fraction ?? 0),
+                _ => 0,
+            };
+        }
+    }
 
     public string StatusText => Stage switch
     {
@@ -74,10 +88,10 @@ public sealed partial class TransferItemViewModel(InstalledApp app, ImageSource?
         TransferStage.Downloading when BytesReceived > 0 => Loc.Format("Transfer_DownloadingBytes", Format.Bytes(BytesReceived)),
         TransferStage.Downloading => Loc.Get("Transfer_Downloading"),
         TransferStage.Preparing => Loc.Get("Transfer_Preparing"),
-        TransferStage.ReadyToInstall => Loc.Get("Transfer_ReadyToInstall"),
+        TransferStage.ReadyToInstall => Loc.Get(Flow == Flow.InstallSaved ? "Transfer_Waiting" : "Transfer_ReadyToInstall"),
         TransferStage.Uploading => Loc.Format("Transfer_Uploading", Math.Round((Fraction ?? 0) * 100)),
         TransferStage.Installing => Loc.Get("Transfer_Installing"),
-        TransferStage.Completed => Loc.Get("Transfer_Completed"),
+        TransferStage.Completed => Loc.Get(Flow == Flow.Save ? "Transfer_Saved" : "Transfer_Completed"),
         TransferStage.Canceled => Loc.Get("Transfer_NotStarted"),
         TransferStage.Failed => FailureText(Failure),
         _ => "",
@@ -96,6 +110,8 @@ public sealed partial class TransferItemViewModel(InstalledApp app, ImageSource?
         TransferFailure.NotTrusted => Loc.Get("Failure_NotTrusted"),
         TransferFailure.DeviceLocked => Loc.Get("Failure_DeviceLocked"),
         TransferFailure.InstallFailed => Loc.Get("Failure_InstallFailed"),
+        TransferFailure.FileMissing => Loc.Get("Failure_FileMissing"),
+        TransferFailure.FileDamaged => Loc.Get("Failure_FileDamaged"),
         _ => Loc.Get("Failure_Unknown"),
     };
 

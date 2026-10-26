@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using AppBridge.Core.Devices;
 using AppBridge.Core.Ipatool;
+using AppBridge.Core.Library;
 using AppBridge.Core.Transfer;
 
 namespace AppBridge.Core.Tests;
@@ -122,6 +123,71 @@ public sealed class TransferRunnerTests : IDisposable
 
         Assert.Equal(TransferStage.Canceled, _final["b"].Stage);
     }
+
+    [Fact]
+    public async Task SavingDownloadsWithReadableNamesAndInstallsNothing()
+    {
+        await new TransferRunner(_store, _devices).SaveAsync([App("a"), App("b")],
+            new TransferOptions(_downloads, true, VersionPolicy.Latest, AcquireFreeLicenses: true),
+            (app, update) => _final[app.BundleId] = update, CancellationToken.None);
+
+        Assert.All(new[] { "a", "b" }, id => Assert.Equal(TransferStage.Completed, _final[id].Stage));
+        Assert.Empty(_devices.Installed);
+        Assert.Equal(["App a 1.2.3.ipa", "App b 1.2.3.ipa"], Directory.GetFiles(_downloads, "*.ipa").Select(Path.GetFileName).Order());
+    }
+
+    [Fact]
+    public async Task SavedAppsInstallWithoutDownloading()
+    {
+        var saved = new[] { "a", "b", "c" }.Select(id => SavedAppLibrary.Read(TestIpa.Create(_downloads, id))).ToList();
+        File.Delete(saved[1].FilePath);
+
+        await new TransferRunner(_store, _devices).InstallSavedAsync(saved, "target", (app, update) => _final[app.BundleId] = update, CancellationToken.None);
+
+        Assert.Empty(_store.Requests);
+        Assert.Equal(["a", "c"], _devices.Installed);
+        Assert.Equal(TransferFailure.FileMissing, _final["b"].Failure);
+        Assert.True(File.Exists(saved[0].FilePath), "saved files are kept after installing");
+    }
+
+    [Fact]
+    public async Task SavingNeverOverwritesAnotherSavedVersion()
+    {
+        // A file kept by 1.0 under the package name, and a saved file with the readable name.
+        var old = TestIpa.Create(_downloads, "a", version: "0.9");
+        File.Move(old, Path.Combine(_downloads, TransferRunner.PackageFileName(App("a"), null)));
+        var clash = TestIpa.Create(_downloads, "other.app", version: "1.2.3");
+        File.Move(clash, Path.Combine(_downloads, "App a 1.2.3.ipa"));
+
+        await new TransferRunner(_store, _devices).SaveAsync([App("a")],
+            new TransferOptions(_downloads, true, VersionPolicy.Latest, AcquireFreeLicenses: true),
+            (app, update) => _final[app.BundleId] = update, CancellationToken.None);
+
+        var versions = Directory.GetFiles(_downloads, "*.ipa").Select(f => (Path.GetFileName(f), IpaPackage.Read(f).BundleId, IpaPackage.Read(f).Version)).Order().ToList();
+        Assert.Equal(
+            [($"a_{100 + 'a'}.ipa", "a", "0.9"), ("App a (2) 1.2.3.ipa", "a", "1.2.3"), ("App a 1.2.3.ipa", "other.app", "1.2.3")],
+            versions);
+    }
+
+    [Fact]
+    public async Task TransferWithoutKeepingNeverDeletesSavedFiles()
+    {
+        var saved = SavedAppLibrary.Read(TestIpa.Create(_downloads, "a"));
+        File.Move(saved.FilePath, Path.Combine(_downloads, TransferRunner.PackageFileName(App("a"), "ext-a")));
+
+        await Run([App("a")], policy: VersionPolicy.SameAsSource, keep: false);
+
+        Assert.Equal(TransferStage.Completed, _final["a"].Stage);
+        Assert.Single(Directory.GetFiles(_downloads, "*.ipa"));
+        Assert.Empty(Directory.GetFiles(Path.Combine(_downloads, TransferRunner.StagingFolderName)));
+    }
+
+    [Theory]
+    [InlineData("Weather", "2.1", "com.example", "Weather 2.1.ipa")]
+    [InlineData("A/B: C?", "1.0", "com.example", "A_B_ C_ 1.0.ipa")]
+    [InlineData("...", "", "com.example", "com.example.ipa")]
+    public void SavedNamesAreReadableAndSafe(string name, string version, string bundle, string expected) =>
+        Assert.Equal(expected, TransferRunner.SavedFileName(name, version, bundle));
 
     [Theory]
     [InlineData("com.example.app", null, "com.example.app_42.ipa")]

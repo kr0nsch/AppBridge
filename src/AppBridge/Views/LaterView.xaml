@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="AppBridge.Views.LaterView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:AppBridge.Controls">
+
+  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Disabled">
+    <StackPanel MaxWidth="560" Padding="24,0,24,32" VerticalAlignment="Center">
+      <controls:HeroBadge HorizontalAlignment="Center" Margin="0,0,0,10" Glyph="&#xE823;" Tone="Indigo" />
+      <TextBlock x:Uid="Later_Title" Style="{StaticResource LargeTitleStyle}" Text="Transfer Later" />
+      <TextBlock x:Uid="Later_Subtitle" Style="{StaticResource HeroSubtitleStyle}" Text="Two steps, as far apart as you like." />
+
+      <Border Style="{StaticResource GroupCardStyle}" Margin="0,30,0,0" Padding="4">
+        <StackPanel>
+          <controls:ChoiceRow x:Uid="Later_Save" Glyph="&#xE896;" Tone="Indigo" Title="Save Apps"
+                              Subtitle="{x:Bind ViewModel.SaveSubtitle, Mode=OneWay}"
+                              IsRowEnabled="{x:Bind ViewModel.CanDownload, Mode=OneWay}"
+                              Command="{x:Bind ViewModel.SaveAppsCommand}" />
+          <Rectangle Style="{StaticResource SeparatorStyle}" Margin="68,0,0,0" />
+          <controls:ChoiceRow x:Name="InstallRow" x:Uid="Later_Install" Glyph="&#xE8EA;" Tone="Teal" Title="Install on New iPhone"
+                              Subtitle="{x:Bind ViewModel.InstallSavedSubtitle, Mode=OneWay}"
+                              IsRowEnabled="{x:Bind ViewModel.CanInstallSaved, Mode=OneWay}"
+                              Command="{x:Bind ViewModel.InstallSavedAppsCommand}" />
+        </StackPanel>
+      </Border>
+
+      <!-- Where saved apps live -->
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0">
+        <TextBlock x:Uid="Later_Folder" Style="{StaticResource FootnoteStyle}" VerticalAlignment="Center" Text="Folder:" />
+        <HyperlinkButton Padding="5,2" FontSize="12" VerticalAlignment="Center" Command="{x:Bind ViewModel.OpenFolderCommand}"
+                         ToolTipService.ToolTip="{x:Bind ViewModel.Library.Folder, Mode=OneWay}">
+          <TextBlock Text="{x:Bind ViewModel.FolderDisplay, Mode=OneWay}" MaxWidth="320" TextTrimming="CharacterEllipsis" />
+        </HyperlinkButton>
+        <HyperlinkButton x:Uid="Later_ChangeFolder" Padding="5,2" FontSize="12" VerticalAlignment="Center" Content="Change…"
+                         Click="OnChangeFolderClick" />
+      </StackPanel>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

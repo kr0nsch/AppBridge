@@ -17,7 +17,7 @@
   <a href="README.md"><img src="https://img.shields.io/badge/README-%D0%BD%D0%B0%20%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%BC-lightgrey" alt="README на русском"></a>
 </p>
 
-**AppBridge** moves your App Store apps from one iPhone to another, right from a Windows PC. Connect both phones, tick the apps you want and press Install: AppBridge downloads the original apps from Apple with your Apple Account and installs them over USB. Free, no jailbreak, no ads.
+**AppBridge** moves your App Store apps from one iPhone to another, right from a Windows PC. Connect both phones, tick the apps you want and press Install: AppBridge downloads the original apps from Apple with your Apple Account and installs them over USB. No new iPhone yet? Save the apps to your PC now and install them later. Free, no jailbreak, no ads.
 
 <p align="center">
   <picture>
@@ -30,6 +30,10 @@
 
 ## How it works
 
+On the first screen, choose **Transfer Now** when both iPhones are at hand, or **Transfer Later** when the new phone comes later.
+
+### Transfer Now
+
 1. **Connect the iPhone with your apps.** AppBridge lists every app installed from the App Store.
 2. **Pick the apps.** Search and Select All are there when you need them.
 3. **Connect the other iPhone.** Keep both plugged in or swap them one after the other.
@@ -37,6 +41,20 @@
 
 <p align="center">
   <img src="docs/media/how-it-works-en.svg" width="880" alt="Diagram: iPhone with your apps → AppBridge on a PC ← App Store; AppBridge → your other iPhone">
+</p>
+
+### Transfer Later
+
+Two steps, as far apart as you like:
+
+1. **Save Apps.** Connect the old iPhone, tick the apps and sign in to the App Store. AppBridge downloads them to `Downloads\AppBridge`. This is also a way to keep apps that may disappear from the App Store.
+2. **Install on New iPhone.** Connect the new phone and AppBridge lists the saved apps: what is already installed, what gets updated and what won't run (for example, when it needs a newer iOS). You don't sign in to your Apple Account on the PC for this step.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/media/later-en-dark.gif">
+    <img src="docs/media/later-en-light.gif" width="760" alt="Transfer Later: installing saved apps on the new iPhone">
+  </picture>
 </p>
 
 ## Screenshots
@@ -90,9 +108,61 @@
   </tr>
 </table>
 
+**Transfer Later**
+
+<table>
+  <tr>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/en-dark/later-1-start.png">
+        <img src="docs/screenshots/en-light/later-1-start.png" alt="Start screen: transfer now or later">
+      </picture>
+      <br><sub><b>Start</b></sub>
+    </td>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/en-dark/later-2-hub.png">
+        <img src="docs/screenshots/en-light/later-2-hub.png" alt="Save apps or install them on the new iPhone">
+      </picture>
+      <br><sub><b>Transfer Later</b></sub>
+    </td>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/en-dark/save-3-done.png">
+        <img src="docs/screenshots/en-light/save-3-done.png" alt="Apps saved on this PC">
+      </picture>
+      <br><sub><b>Apps saved</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/en-dark/later-3-new-iphone.png">
+        <img src="docs/screenshots/en-light/later-3-new-iphone.png" alt="Connecting the new iPhone">
+      </picture>
+      <br><sub><b>New iPhone</b></sub>
+    </td>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/en-dark/later-4-saved.png">
+        <img src="docs/screenshots/en-light/later-4-saved.png" alt="Saved apps checked against the new iPhone">
+      </picture>
+      <br><sub><b>Saved apps</b></sub>
+    </td>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/en-dark/later-6-done.png">
+        <img src="docs/screenshots/en-light/later-6-done.png" alt="Saved apps installed">
+      </picture>
+      <br><sub><b>Installed</b></sub>
+    </td>
+  </tr>
+</table>
+
 ## Features
 
 - **Four simple steps**, one button per screen.
+- **Transfer now or later.** Save your apps to the PC while you still have the old iPhone and install them on the new one when it arrives, without signing in to your Apple Account on the PC. AppBridge picks the version that runs on the new phone's iOS.
 - **Original apps from Apple.** Every app is downloaded from Apple's servers with your Apple Account — nothing comes from third-party sites.
 - **All over USB.** No iTunes, Python or command line: AppBridge finds the iPhone, shows the "Trust This Computer?" prompt, reads the apps with their icons and installs them.
 - **Fast.** Downloads and installs run side by side, every app shows its progress, and if one can't be installed you see why, with a Try Again button.
@@ -147,6 +217,12 @@ The ones your Apple Account can get from the App Store. AppBridge can add free a
 </details>
 
 <details>
+<summary><b>I don't have the new iPhone yet. How do I transfer later?</b></summary>
+
+Choose Transfer Later → Save Apps, connect the old iPhone and save the apps you want. When the new phone arrives, open AppBridge, choose Transfer Later → Install on New iPhone and connect it. For the apps to open, sign in to the App Store on the new iPhone with the Apple Account they were saved with. `.ipa` files kept by version 1.0 or copied into the folder are listed too.
+</details>
+
+<details>
 <summary><b>Is it safe to enter my Apple Account password?</b></summary>
 
 Your password is passed straight to the bundled, open-source [ipatool](https://github.com/majd/ipatool), which signs in to Apple. AppBridge never stores it, never logs it and never sends it anywhere else. The App Store session is stored encrypted, with the key protected by Windows (DPAPI) for your user account; Sign Out removes it. AppBridge has no servers, ads or telemetry. See [SECURITY.md](SECURITY.md).
@@ -182,7 +258,8 @@ The app was downloaded with a different Apple Account. Sign in with that account
 | | Installer | Portable |
 |---|---|---|
 | Settings, logs, App Store session | `%LOCALAPPDATA%\AppBridge` | `Data\` next to `AppBridge.exe` |
-| Downloaded apps (`.ipa`) | `Downloads\AppBridge` (changeable in Settings) | `Data\Downloads` |
+| Downloaded and saved apps (`.ipa`) | `Downloads\AppBridge` (changeable in Settings) | `Data\Downloads` |
+| Icons of saved apps | `%LOCALAPPDATA%\AppBridge\Icons` | `Data\Icons` |
 
 Downloaded `.ipa` files contain your Apple Account email (Apple adds it to every purchase) — don't share them.
 </details>
@@ -208,10 +285,10 @@ dotnet test tests/AppBridge.Core.Tests
 dotnet run --project src/AppBridge -p:Platform=x64
 
 # Portable ZIP and installer into artifacts/release
-./build/build.ps1 -Version 1.0.0
+./build/build.ps1 -Version 1.1.0
 ```
 
-Start the app with `--demo` (or set `APPBRIDGE_DEMO=1`) for simulated iPhones and a simulated App Store — handy for UI work without devices or an Apple Account.
+Start the app with `--demo` (or set `APPBRIDGE_DEMO=1`) for simulated iPhones and a simulated App Store — handy for UI work without devices or an Apple Account. `--demo-saved` also adds a few saved apps for Transfer Later.
 
 Pushing a tag like `v1.2.3` runs [GitHub Actions](.github/workflows/release.yml): build, tests, and a release with the installer, the portable version and checksums.
 

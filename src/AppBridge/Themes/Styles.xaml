@@ -281,6 +281,47 @@
     <Setter Property="CornerRadius" Value="16" />
   </Style>
 
+  <!-- A tappable row inside a GroupCard (start screens): inset highlight, no button chrome. -->
+  <Style x:Key="ChoiceRowButtonStyle" TargetType="Button">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="Padding" Value="12,12" />
+    <Setter Property="CornerRadius" Value="8" />
+    <Setter Property="UseSystemFocusVisuals" Value="True" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Grid x:Name="Root" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding CornerRadius}">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource AppFillBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource AppFillBrush}" />
+                    <Setter Target="Presenter.Opacity" Value="0.7" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Disabled">
+                  <VisualState.Setters>
+                    <Setter Target="Presenter.Opacity" Value="0.42" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <ContentPresenter x:Name="Presenter" Padding="{TemplateBinding Padding}" Content="{TemplateBinding Content}"
+                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" />
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
   <!-- Circular checkmark, as in iOS selection lists. -->
   <Style x:Key="CircleCheckBoxStyle" TargetType="CheckBox">
     <Setter Property="MinWidth" Value="0" />

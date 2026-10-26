@@ -11,6 +11,8 @@ public static class Ui
 
     public static double DimIf(bool value) => value ? 0.45 : 1.0;
 
+    public static double DimUnless(bool value) => DimIf(!value);
+
     public static bool Not(bool value) => !value;
 
     private static readonly Brush ChosenTint = new SolidColorBrush(Color.FromArgb(0x1F, 0x00, 0x7A, 0xFF));

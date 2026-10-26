@@ -4,6 +4,25 @@ All notable changes to AppBridge are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - 2026-10-27
+
+### Added
+- A start screen with two choices: **Transfer Now** (both iPhones connected, as before) and **Transfer Later**.
+- **Transfer Later** works in two steps that can be weeks apart:
+  - **Save Apps** downloads the apps from the old iPhone to this PC (the downloads folder).
+  - **Install on New iPhone** installs saved apps over USB later, without signing in to the App Store on the PC.
+- Saved apps are listed with their icons and home-screen names, including `.ipa` files kept by 1.0 or copied into the folder.
+  - For each app, AppBridge picks the newest saved version that the new iPhone can run.
+  - Apps the iPhone can't run (iOS too old, iPad only) are listed separately with the reason.
+  - Apps already on the iPhone are marked and left unticked; older installed versions are updated.
+- Saved files get readable names such as `Telegram 12.1.ipa`, and different versions of an app are kept side by side.
+- Icons read from an iPhone are cached, so saved apps keep them after the phone is unplugged.
+
+### Changed
+- AppBridge opens on the start screen. Back from the first step and Done return to it.
+
+[1.1.0]: https://github.com/kr0nsch/AppBridge/releases/tag/v1.1.0
+
 ## [1.0.0] - 2026-10-26
 
 First release of the Windows app.

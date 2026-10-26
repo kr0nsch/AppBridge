@@ -3,6 +3,7 @@ using System.Text;
 using AppBridge.Core;
 using AppBridge.Core.Devices;
 using AppBridge.Core.Ipatool;
+using AppBridge.Core.Library;
 
 namespace AppBridge.Demo;
 
@@ -80,8 +81,18 @@ internal sealed class DemoBackend : IAppStoreClient, IDeviceService, IDeviceWatc
     public async Task<IReadOnlyList<InstalledApp>> GetUserAppsAsync(string udid, CancellationToken cancellationToken = default)
     {
         await Task.Delay(1200, cancellationToken);
+        if (udid == TargetUdid)
+        {
+            // The new iPhone already has two of the apps: one up to date, one older.
+            return
+            [
+                new InstalledApp(Catalog[1].Bundle, Catalog[1].Name, VersionOf(1), Catalog[1].Developer, 1_400_000_001, null, "anna@example.com", "16.0", Catalog[1].Size),
+                new InstalledApp(Catalog[8].Bundle, Catalog[8].Name, "1.0.0", Catalog[8].Developer, 1_400_000_008, null, "anna@example.com", "16.0", Catalog[8].Size),
+            ];
+        }
+
         var apps = Catalog.Select((a, i) => new InstalledApp(
-            a.Bundle, a.Name, $"{2 + i % 5}.{i * 3 % 10}.{i % 4}", a.Developer, 1_400_000_000 + i, $"8{i:000}000", "anna@example.com", "16.0", a.Size)).ToList();
+            a.Bundle, a.Name, VersionOf(i), a.Developer, 1_400_000_000 + i, $"8{i:000}000", "anna@example.com", "16.0", a.Size)).ToList();
         apps.Add(new InstalledApp("demo.testflight.beta", "Beta Build", "0.9", null, null, null, null, "17.0", 30_000_000));
         return apps;
     }
@@ -150,19 +161,73 @@ internal sealed class DemoBackend : IAppStoreClient, IDeviceService, IDeviceWatc
         return request.OutputPath;
     }
 
+    /// <summary>
+    /// Fills the demo folder with a few saved apps, as if "Transfer Later" had been used before.
+    /// Each demo launch starts from a clean folder so screenshots are repeatable.
+    /// </summary>
+    public static void PrepareSavedApps(string folder, bool withSavedApps)
+    {
+        try
+        {
+            if (Directory.Exists(folder))
+                Directory.Delete(folder, recursive: true);
+            Directory.CreateDirectory(folder);
+            if (!withSavedApps)
+                return;
+            foreach (var index in new[] { 0, 1, 3, 4, 6, 7, 8, 9, 10, 11, 12 })
+                WriteFakeIpa(Path.Combine(folder, $"{Catalog[index].Name} {VersionOf(index)}.ipa"), Catalog[index].Bundle);
+        }
+        catch (IOException)
+        {
+            // Another demo instance is using the folder; the list just stays as it is.
+        }
+    }
+
+    private static string VersionOf(int index) => $"{2 + index % 5}.{index * 3 % 10}.{index % 4}";
+
+    /// <summary>An .ipa with real-looking metadata and icon, so saved demo apps list like real ones.</summary>
     private static void WriteFakeIpa(string path, string bundleId)
     {
+        var index = Math.Max(0, Array.FindIndex(Catalog, a => a.Bundle == bundleId));
+        var app = Catalog[index];
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         using var zip = ZipFile.Open(path, ZipArchiveMode.Create);
-        var entry = zip.CreateEntry("Payload/Demo.app/Info.plist");
-        using var writer = new StreamWriter(entry.Open(), new UTF8Encoding(false));
-        writer.Write($"""
+        WriteText(zip, "Payload/Demo.app/Info.plist", $"""
             <?xml version="1.0" encoding="UTF-8"?>
             <plist version="1.0"><dict>
             <key>CFBundleIdentifier</key><string>{bundleId}</string>
-            <key>CFBundleShortVersionString</key><string>1.0</string>
+            <key>CFBundleDisplayName</key><string>{app.Name}</string>
+            <key>CFBundleShortVersionString</key><string>{VersionOf(index)}</string>
+            <key>MinimumOSVersion</key><string>{(index == 11 ? "27.0" : "16.0")}</string>
             </dict></plist>
             """);
+        WriteText(zip, "iTunesMetadata.plist", $"""
+            <?xml version="1.0" encoding="UTF-8"?>
+            <plist version="1.0"><dict>
+            <key>itemName</key><string>{app.Name}</string>
+            <key>artistName</key><string>{app.Developer.Replace("&", "&amp;")}</string>
+            <key>itemId</key><integer>{1_400_000_000 + index}</integer>
+            <key>apple-id</key><string>anna@example.com</string>
+            </dict></plist>
+            """);
+        WriteText(zip, "Payload/Demo.app/SC_Info/Demo.sinf", "demo");
+        using var icon = zip.CreateEntry("Payload/Demo.app/AppIcon60x60@2x.png").Open();
+        icon.Write(DemoIcons.Create(index));
+    }
+
+    /// <summary>Demo files are tiny; show the sizes the fictional apps would really have.</summary>
+    public static LibraryScan WithRealisticSizes(LibraryScan scan)
+    {
+        static SavedApp Resize(SavedApp a) => Array.FindIndex(Catalog, c => c.Bundle == a.BundleId) is var i and >= 0
+            ? a with { SizeBytes = Catalog[i].Size * 7 / 10 }
+            : a;
+        return scan with { Apps = scan.Apps.Select(Resize).ToList(), Versions = scan.Versions.Select(Resize).ToList() };
+    }
+
+    private static void WriteText(ZipArchive zip, string name, string text)
+    {
+        using var writer = new StreamWriter(zip.CreateEntry(name).Open(), new UTF8Encoding(false));
+        writer.Write(text);
     }
 
     private void Tick()

@@ -34,8 +34,9 @@ public sealed partial class MainWindow : Window
         ConfigureSize();
         ApplyTheme(services.Settings.Current.Theme);
 
+        // Indexed by WizardStep; the source and target steps share one device list.
         var deviceStep = new DeviceStepView(ViewModel);
-        _steps = [deviceStep, new AppsStepView(ViewModel), deviceStep, new InstallStepView(ViewModel)];
+        _steps = [new StartView(ViewModel), new LaterView(ViewModel), deviceStep, new AppsStepView(ViewModel), deviceStep, new InstallStepView(ViewModel)];
         BuildDots();
         ShowStep(ViewModel.Step);
 
@@ -162,11 +163,13 @@ public sealed partial class MainWindow : Window
     {
         if (_dots[0] is null)
             return;
-        var current = (int)ViewModel.Step;
+        var count = ViewModel.DotCount;
+        var current = ViewModel.DotIndex;
         var blue = Lookup("AppBlueBrush");
         for (var i = 0; i < _dots.Length; i++)
         {
             var dot = _dots[i];
+            dot.Visibility = i < count ? Visibility.Visible : Visibility.Collapsed;
             dot.Background = i <= current ? blue : Lookup("AppTertiaryLabelBrush");
             dot.Opacity = i < current ? 0.55 : 1;
             var width = i == current ? 22.0 : 7.0;
@@ -257,6 +260,9 @@ public sealed partial class MainWindow : Window
         {
             AppLog.Warn("Could not open settings.", ex);
         }
+
+        // The download folder may have changed; it is also where saved apps live.
+        await ViewModel.Library.RefreshAsync();
     }
 
     private async void OnClosing(AppWindow sender, AppWindowClosingEventArgs args)

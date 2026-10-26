@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="AppBridge.Views.StartView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:AppBridge.Controls">
+
+  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Disabled">
+    <StackPanel MaxWidth="560" Padding="24,0,24,32" VerticalAlignment="Center">
+      <controls:HeroBadge HorizontalAlignment="Center" Margin="0,0,0,10" Glyph="&#xE895;" Tone="Blue" />
+      <TextBlock x:Uid="Start_Title" Style="{StaticResource LargeTitleStyle}" Text="Transfer Your Apps" />
+      <TextBlock x:Uid="Start_Subtitle" Style="{StaticResource HeroSubtitleStyle}" Text="From your old iPhone to your new one, now or later." />
+
+      <Border Style="{StaticResource GroupCardStyle}" Margin="0,30,0,0" Padding="4">
+        <StackPanel>
+          <controls:ChoiceRow x:Uid="Start_Now" Glyph="&#xE8EA;" Tone="Blue" Title="Transfer Now"
+                              Subtitle="{x:Bind ViewModel.NowSubtitle, Mode=OneWay}"
+                              IsRowEnabled="{x:Bind ViewModel.CanDownload, Mode=OneWay}"
+                              Command="{x:Bind ViewModel.TransferNowCommand}" />
+          <Rectangle Style="{StaticResource SeparatorStyle}" Margin="68,0,0,0" />
+          <controls:ChoiceRow x:Uid="Start_Later" Glyph="&#xE823;" Tone="Indigo" Title="Transfer Later"
+                              Subtitle="{x:Bind ViewModel.LaterSubtitle, Mode=OneWay}"
+                              SubtitleIsAccent="{x:Bind ViewModel.LaterSubtitleIsAccent, Mode=OneWay}"
+                              Command="{x:Bind ViewModel.TransferLaterCommand}" />
+        </StackPanel>
+      </Border>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

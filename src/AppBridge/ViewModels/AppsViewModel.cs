@@ -1,92 +1,24 @@
-using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using AppBridge.Core;
 using AppBridge.Core.Devices;
+using AppBridge.Core.Library;
 using AppBridge.Services;
 using Microsoft.UI.Dispatching;
 
 namespace AppBridge.ViewModels;
 
-/// <summary>Step 2: the App Store apps found on the source iPhone and which ones to copy.</summary>
-public sealed partial class AppsViewModel : ObservableObject
+/// <summary>Step 2: the App Store apps found on the source iPhone and which ones to copy or save.</summary>
+public sealed partial class AppsViewModel(IDeviceService devices, IconCache icons, DispatcherQueue dispatcher) : AppListViewModel
 {
-    private readonly IDeviceService _devices;
-    private readonly IconCache _icons;
-    private readonly DispatcherQueue _dispatcher;
-    private List<AppItemViewModel> _all = [];
     private CancellationTokenSource? _loading;
-
-    public AppsViewModel(IDeviceService devices, IconCache icons, DispatcherQueue dispatcher)
-    {
-        _devices = devices;
-        _icons = icons;
-        _dispatcher = dispatcher;
-    }
-
-    public ObservableCollection<AppItemViewModel> Visible { get; } = [];
+    private int _notFromStore;
 
     public string? LoadedFromUdid { get; private set; }
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ShowList), nameof(ShowEmpty))]
-    public partial bool IsLoading { get; set; }
+    public override string LoadingText => Loc.Get("Apps_LoadingText");
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(HasError), nameof(ShowList), nameof(ShowEmpty))]
-    public partial string? Error { get; set; }
+    public override string EmptyText => Loc.Get("Apps_EmptyText");
 
-    [ObservableProperty]
-    public partial string SearchText { get; set; } = "";
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SelectionSummary), nameof(HasSelection), nameof(SelectAllText))]
-    public partial int SelectedCount { get; set; }
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(NotFromStoreText), nameof(HasNotFromStore))]
-    public partial int NotFromStoreCount { get; set; }
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ShowList), nameof(ShowEmpty))]
-    public partial int TotalCount { get; set; }
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ShowNoMatches))]
-    public partial int VisibleCount { get; set; }
-
-    public bool HasError => !string.IsNullOrEmpty(Error);
-
-    public bool ShowList => !IsLoading && !HasError && TotalCount > 0;
-
-    public bool ShowEmpty => !IsLoading && !HasError && TotalCount == 0;
-
-    public bool ShowNoMatches => ShowList && VisibleCount == 0;
-
-    public bool HasSelection => SelectedCount > 0;
-
-    public bool HasNotFromStore => NotFromStoreCount > 0;
-
-    public string NotFromStoreText => Loc.Plural("Apps_NotFromStore", NotFromStoreCount);
-
-    public string SelectAllText => SelectionScope.Count > 0 && SelectionScope.All(a => a.IsSelected) ? Loc.Get("Apps_DeselectAll") : Loc.Get("Apps_SelectAll");
-
-    /// <summary>While searching, Select All applies to the matching apps only.</summary>
-    private IReadOnlyList<AppItemViewModel> SelectionScope => string.IsNullOrWhiteSpace(SearchText) ? _all : Visible;
-
-    public string SelectionSummary
-    {
-        get
-        {
-            if (SelectedCount == 0)
-                return Loc.Get("Apps_NoneSelected");
-            var bytes = _all.Where(a => a.IsSelected).Sum(a => a.App.SizeBytes ?? 0);
-            var count = Loc.Plural("Apps_SelectedCount", SelectedCount);
-            return bytes > 0 ? $"{count}  ·  {Format.Bytes(bytes)}" : count;
-        }
-    }
-
-    public IReadOnlyList<InstalledApp> SelectedApps => _all.Where(a => a.IsSelected).Select(a => a.App).ToList();
+    public IReadOnlyList<InstalledApp> SelectedApps => All.Where(a => a.IsSelected).Select(a => a.App).ToList();
 
     public async Task LoadAsync(DeviceItemViewModel source)
     {
@@ -96,24 +28,18 @@ public sealed partial class AppsViewModel : ObservableObject
         _loading?.Cancel();
         _loading = new CancellationTokenSource();
         var token = _loading.Token;
+        LoadedFromUdid = null;
 
         IsLoading = true;
         Error = null;
         Clear();
         try
         {
-            var apps = await _devices.GetUserAppsAsync(source.Udid, token);
-            NotFromStoreCount = apps.Count(a => !a.IsFromAppStore);
-            _all = apps.Where(a => a.IsFromAppStore).Select(a => new AppItemViewModel(a)).ToList();
-            foreach (var item in _all)
-                item.PropertyChanged += (_, e) =>
-                {
-                    if (e.PropertyName == nameof(AppItemViewModel.IsSelected))
-                        SelectedCount = _all.Count(a => a.IsSelected);
-                };
-            TotalCount = _all.Count;
+            var apps = await devices.GetUserAppsAsync(source.Udid, token);
+            _notFromStore = apps.Count(a => !a.IsFromAppStore);
+            SetItems(apps.Where(a => a.IsFromAppStore).Select(a => new AppItemViewModel(a)).ToList());
+            UpdateFootnote();
             LoadedFromUdid = source.Udid;
-            ApplyFilter();
             _ = LoadIconsAsync(source.Udid, token);
         }
         catch (OperationCanceledException)
@@ -137,6 +63,16 @@ public sealed partial class AppsViewModel : ObservableObject
         }
     }
 
+    /// <summary>Marks apps already saved on this PC at the same or a newer version; null clears the marks.</summary>
+    public void ShowSaved(LibraryScan? library)
+    {
+        foreach (var item in All)
+        {
+            var saved = library?.Apps.FirstOrDefault(s => s.BundleId == item.App.BundleId);
+            item.Caption = saved is not null && SavedAppLibrary.CompareVersions(saved.Version, item.App.Version) >= 0 ? Loc.Get("Apps_AlreadySaved") : null;
+        }
+    }
+
     public void Reset()
     {
         _loading?.Cancel();
@@ -146,63 +82,21 @@ public sealed partial class AppsViewModel : ObservableObject
         Clear();
     }
 
-    public void ClearSelection()
-    {
-        foreach (var item in _all)
-            item.IsSelected = false;
-    }
-
-    [RelayCommand]
-    private void ToggleSelectAll()
-    {
-        var scope = SelectionScope.ToList();
-        var select = scope.Any(a => !a.IsSelected);
-        foreach (var item in scope)
-            item.IsSelected = select;
-    }
-
-    partial void OnSearchTextChanged(string value)
-    {
-        ApplyFilter();
-        OnPropertyChanged(nameof(SelectAllText));
-    }
-
-    private void Clear()
-    {
-        _all = [];
-        Visible.Clear();
-        TotalCount = 0;
-        VisibleCount = 0;
-        SelectedCount = 0;
-        NotFromStoreCount = 0;
-    }
-
-    private void ApplyFilter()
-    {
-        var matches = _all.Where(a => a.Matches(SearchText.Trim())).ToList();
-        Visible.Clear();
-        for (var i = 0; i < matches.Count; i++)
-        {
-            matches[i].ShowSeparator = i > 0;
-            Visible.Add(matches[i]);
-        }
-
-        VisibleCount = matches.Count;
-    }
+    private void UpdateFootnote() => Footnote = _notFromStore > 0 ? Loc.Plural("Apps_NotFromStore", _notFromStore) : "";
 
     private async Task LoadIconsAsync(string udid, CancellationToken token)
     {
         try
         {
-            var ids = _all.Select(a => a.App.BundleId).ToList();
-            await _devices.LoadIconsAsync(udid, ids, (bundleId, png) =>
+            var ids = All.Select(a => a.App.BundleId).ToList();
+            await devices.LoadIconsAsync(udid, ids, (bundleId, png) =>
             {
-                _icons.Store(bundleId, png);
-                _dispatcher.TryEnqueue(async () =>
+                icons.Store(bundleId, png);
+                dispatcher.TryEnqueue(async () =>
                 {
-                    var item = _all.FirstOrDefault(a => a.App.BundleId == bundleId);
+                    var item = All.FirstOrDefault(a => a.App.BundleId == bundleId);
                     if (item is not null)
-                        item.Icon = await _icons.GetAsync(bundleId);
+                        item.Icon = await icons.GetAsync(bundleId);
                 });
             }, token);
         }

@@ -73,6 +73,20 @@ public sealed partial class HeroBadge : UserControl
         story.Begin();
     }
 
+    /// <summary>The badge gradient for <paramref name="tone"/>, for smaller tiles that match the heroes.</summary>
+    public static Brush ToneBrush(string? tone)
+    {
+        if (new Windows.UI.ViewManagement.AccessibilitySettings().HighContrast)
+            return new SolidColorBrush((Color)Application.Current.Resources["SystemColorHighlightColor"]);
+        var (from, to) = Tones.TryGetValue(tone ?? "", out var colors) ? colors : Tones["Blue"];
+        return new LinearGradientBrush
+        {
+            StartPoint = new Windows.Foundation.Point(0.15, 0),
+            EndPoint = new Windows.Foundation.Point(0.85, 1),
+            GradientStops = { new GradientStop { Color = from, Offset = 0 }, new GradientStop { Color = to, Offset = 1 } },
+        };
+    }
+
     private void Update()
     {
         if (Tile is null)

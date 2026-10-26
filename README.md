@@ -17,7 +17,7 @@
   <a href="README.en.md"><img src="https://img.shields.io/badge/README-English-lightgrey" alt="English README"></a>
 </p>
 
-**AppBridge** переносит ваши приложения из App Store с одного iPhone на другой прямо с компьютера на Windows. Подключите оба телефона, отметьте нужные приложения и нажмите «Установить» — AppBridge скачает оригинальные приложения у Apple с вашим Apple Account и установит их по USB. Бесплатно, без джейлбрейка и без рекламы.
+**AppBridge** переносит ваши приложения из App Store с одного iPhone на другой прямо с компьютера на Windows. Подключите оба телефона, отметьте нужные приложения и нажмите «Установить» — AppBridge скачает оригинальные приложения у Apple с вашим Apple Account и установит их по USB. Нового iPhone ещё нет? Сохраните приложения на компьютер сейчас и установите их потом. Бесплатно, без джейлбрейка и без рекламы.
 
 <p align="center">
   <picture>
@@ -30,6 +30,10 @@
 
 ## Как это работает
 
+На первом экране выберите **«Перенести сейчас»**, если оба iPhone под рукой, или **«Перенести потом»**, если новый телефон появится позже.
+
+### Перенести сейчас
+
 1. **Подключите iPhone с приложениями.** AppBridge покажет все приложения, установленные из App Store.
 2. **Отметьте нужные.** Есть поиск и «Выбрать все».
 3. **Подключите второй iPhone.** Оба телефона можно держать подключёнными или подключать по очереди.
@@ -37,6 +41,20 @@
 
 <p align="center">
   <img src="docs/media/how-it-works-ru.svg" width="880" alt="Схема: iPhone с приложениями → AppBridge на ПК ← App Store; AppBridge → другой iPhone">
+</p>
+
+### Перенести потом
+
+Два шага, между которыми может пройти хоть месяц:
+
+1. **Сохранить приложения.** Подключите старый iPhone, отметьте приложения и войдите в App Store — AppBridge скачает их в папку `Загрузки\AppBridge`. Так можно сохранить и приложения, которые могут пропасть из App Store.
+2. **Установить на новый iPhone.** Подключите новый телефон, и AppBridge покажет сохранённые приложения: что уже установлено, что обновится и что не подойдёт (например, если нужна более новая iOS). Входить в Apple Account на компьютере для этого не нужно.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/media/later-ru-dark.gif">
+    <img src="docs/media/later-ru-light.gif" width="760" alt="Перенести потом: установка сохранённых приложений на новый iPhone">
+  </picture>
 </p>
 
 ## Скриншоты
@@ -90,9 +108,61 @@
   </tr>
 </table>
 
+**Перенести потом**
+
+<table>
+  <tr>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/later-1-start.png">
+        <img src="docs/screenshots/ru-light/later-1-start.png" alt="Стартовый экран: перенести сейчас или потом">
+      </picture>
+      <br><sub><b>Начало</b></sub>
+    </td>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/later-2-hub.png">
+        <img src="docs/screenshots/ru-light/later-2-hub.png" alt="Сохранить приложения или установить на новый iPhone">
+      </picture>
+      <br><sub><b>Перенести потом</b></sub>
+    </td>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/save-3-done.png">
+        <img src="docs/screenshots/ru-light/save-3-done.png" alt="Приложения сохранены на компьютере">
+      </picture>
+      <br><sub><b>Приложения сохранены</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/later-3-new-iphone.png">
+        <img src="docs/screenshots/ru-light/later-3-new-iphone.png" alt="Подключение нового iPhone">
+      </picture>
+      <br><sub><b>Новый iPhone</b></sub>
+    </td>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/later-4-saved.png">
+        <img src="docs/screenshots/ru-light/later-4-saved.png" alt="Сохранённые приложения, проверенные для нового iPhone">
+      </picture>
+      <br><sub><b>Сохранённые приложения</b></sub>
+    </td>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/later-6-done.png">
+        <img src="docs/screenshots/ru-light/later-6-done.png" alt="Сохранённые приложения установлены">
+      </picture>
+      <br><sub><b>Установлено</b></sub>
+    </td>
+  </tr>
+</table>
+
 ## Возможности
 
 - **Четыре простых шага** и одна кнопка на каждом экране.
+- **Перенести сейчас или потом.** Сохраните приложения на компьютер, пока под рукой старый iPhone, и установите их на новый, когда он появится, — без входа в Apple Account на компьютере. AppBridge сам выберет версию, которая подойдёт к iOS нового телефона.
 - **Оригинальные приложения от Apple.** Каждое приложение скачивается с серверов Apple с вашим Apple Account — ничего не берётся со сторонних сайтов.
 - **Всё по USB.** Не нужны iTunes, Python и командная строка: AppBridge сам находит iPhone, показывает запрос «Доверять этому компьютеру?», читает список приложений с иконками и устанавливает их.
 - **Быстро.** Скачивание и установка идут параллельно, по каждому приложению видно прогресс, а если что-то не установилось — понятная причина и кнопка «Повторить».
@@ -147,6 +217,12 @@
 </details>
 
 <details>
+<summary><b>Нового iPhone ещё нет. Как перенести приложения потом?</b></summary>
+
+Выберите «Перенести потом» → «Сохранить приложения», подключите старый iPhone и сохраните нужные приложения. Когда появится новый телефон, откройте AppBridge, выберите «Перенести потом» → «Установить на новый iPhone» и подключите его. Чтобы приложения открывались, войдите на новом iPhone в App Store с тем же Apple Account, с которым они сохранены. Файлы `.ipa`, оставшиеся после переноса в версии 1.0 или скопированные в эту папку, тоже появятся в списке.
+</details>
+
+<details>
 <summary><b>Безопасно ли вводить пароль Apple Account?</b></summary>
 
 Пароль передаётся напрямую во встроенный открытый [ipatool](https://github.com/majd/ipatool), который входит в Apple. AppBridge нигде его не сохраняет, не пишет в журналы и никуда больше не отправляет. Сеанс App Store хранится в зашифрованном виде, а ключ защищён Windows (DPAPI) для вашей учётной записи; кнопка «Выйти» удаляет его. У AppBridge нет своих серверов, рекламы и телеметрии. Подробнее — в [SECURITY.md](SECURITY.md).
@@ -182,7 +258,8 @@
 | | Установщик | Портативная версия |
 |---|---|---|
 | Настройки, журналы, сеанс App Store | `%LOCALAPPDATA%\AppBridge` | `Data\` рядом с `AppBridge.exe` |
-| Скачанные приложения (`.ipa`) | `Загрузки\AppBridge` (меняется в настройках) | `Data\Downloads` |
+| Скачанные и сохранённые приложения (`.ipa`) | `Загрузки\AppBridge` (меняется в настройках) | `Data\Downloads` |
+| Иконки сохранённых приложений | `%LOCALAPPDATA%\AppBridge\Icons` | `Data\Icons` |
 
 В файлах `.ipa` есть email вашего Apple Account (так Apple оформляет покупки) — не передавайте их другим.
 </details>
@@ -208,10 +285,10 @@ dotnet test tests/AppBridge.Core.Tests
 dotnet run --project src/AppBridge -p:Platform=x64
 
 # Портативный ZIP и установщик в artifacts/release
-./build/build.ps1 -Version 1.0.0
+./build/build.ps1 -Version 1.1.0
 ```
 
-Запуск с ключом `--demo` (или с переменной `APPBRIDGE_DEMO=1`) включает демонстрационный режим со смоделированными iPhone и App Store — удобно для работы над интерфейсом без устройств и Apple Account.
+Запуск с ключом `--demo` (или с переменной `APPBRIDGE_DEMO=1`) включает демонстрационный режим со смоделированными iPhone и App Store — удобно для работы над интерфейсом без устройств и Apple Account. Ключ `--demo-saved` добавляет несколько сохранённых приложений для «Перенести потом».
 
 Тег вида `v1.2.3` запускает [GitHub Actions](.github/workflows/release.yml): сборка, тесты и публикация релиза с установщиком, портативной версией и контрольными суммами.
 

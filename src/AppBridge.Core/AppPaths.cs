@@ -29,6 +29,9 @@ public sealed class AppPaths
 
     public string LogsDirectory => Path.Combine(DataDirectory, "Logs");
 
+    /// <summary>Home-screen icons read from iPhones, so saved apps keep theirs.</summary>
+    public string IconsDirectory => Path.Combine(DataDirectory, "Icons");
+
     /// <summary>Private home folder for ipatool so its session never mixes with other installs.</summary>
     public string IpatoolHome => Path.Combine(DataDirectory, "ipatool");
 
