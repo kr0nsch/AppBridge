@@ -143,7 +143,7 @@ public sealed partial class MainViewModel : ObservableObject
     {
         WizardStep.Source => Source?.IsReady == true,
         WizardStep.Apps => Apps.HasSelection && !Apps.IsLoading,
-        WizardStep.Target => Target?.IsReady == true && Target != Source,
+        WizardStep.Target => Target?.IsReady == true && !IsSource(Target),
         WizardStep.Install => Install.State != InstallState.Ready || (Account.IsSignedIn && Target?.IsReady == true),
         _ => false,
     };
@@ -158,7 +158,7 @@ public sealed partial class MainViewModel : ObservableObject
     public string FooterHint => Step switch
     {
         WizardStep.Apps => Apps.SelectionSummary,
-        WizardStep.Target when Target is not null && Target == Source => Loc.Get("Target_SameDevice"),
+        WizardStep.Target when Target is not null && IsSource(Target) => Loc.Get("Target_SameDevice"),
         WizardStep.Install when Install.IsReady && Target?.IsReady != true => Loc.Get("Install_TargetMissing"),
         _ => "",
     };
@@ -228,7 +228,7 @@ public sealed partial class MainViewModel : ObservableObject
             return;
         if (IsSourceStep)
             Source = device;
-        else if (IsTargetStep && device != Source)
+        else if (IsTargetStep && !IsSource(device))
             Target = device;
         RefreshAll();
     }
@@ -262,18 +262,21 @@ public sealed partial class MainViewModel : ObservableObject
         var ready = Devices.Devices.Where(d => d.IsReady).ToList();
         if (IsSourceStep && Source is null && ready.Count > 0)
             Source = ready[0];
-        if (IsTargetStep && (Target is null || Target == Source))
-            Target = ready.FirstOrDefault(d => d != Source);
+        if (IsTargetStep && (Target is null || IsSource(Target)))
+            Target = ready.FirstOrDefault(d => !IsSource(d));
     }
 
     private void UpdateDeviceFlags()
     {
         foreach (var device in Devices.Devices)
         {
-            device.IsSourceDevice = IsTargetStep && device == Source;
-            device.IsChosen = (IsSourceStep && device == Source) || (IsTargetStep && device == Target);
+            device.IsSourceDevice = IsTargetStep && IsSource(device);
+            device.IsChosen = (IsSourceStep && device.Udid == Source?.Udid) || (IsTargetStep && device.Udid == Target?.Udid);
         }
     }
+
+    /// <summary>Compares by UDID: a replugged iPhone comes back as a new list item.</summary>
+    private bool IsSource(DeviceItemViewModel? device) => device is not null && device.Udid == Source?.Udid;
 
     private void OnChildChanged(object? sender, PropertyChangedEventArgs e)
     {

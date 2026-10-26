@@ -69,7 +69,10 @@ public sealed partial class AppsViewModel : ObservableObject
 
     public string NotFromStoreText => Loc.Plural("Apps_NotFromStore", NotFromStoreCount);
 
-    public string SelectAllText => _all.Count > 0 && SelectedCount == _all.Count ? Loc.Get("Apps_DeselectAll") : Loc.Get("Apps_SelectAll");
+    public string SelectAllText => SelectionScope.Count > 0 && SelectionScope.All(a => a.IsSelected) ? Loc.Get("Apps_DeselectAll") : Loc.Get("Apps_SelectAll");
+
+    /// <summary>While searching, Select All applies to the matching apps only.</summary>
+    private IReadOnlyList<AppItemViewModel> SelectionScope => string.IsNullOrWhiteSpace(SearchText) ? _all : Visible;
 
     public string SelectionSummary
     {
@@ -152,12 +155,17 @@ public sealed partial class AppsViewModel : ObservableObject
     [RelayCommand]
     private void ToggleSelectAll()
     {
-        var select = SelectedCount != _all.Count;
-        foreach (var item in _all)
+        var scope = SelectionScope.ToList();
+        var select = scope.Any(a => !a.IsSelected);
+        foreach (var item in scope)
             item.IsSelected = select;
     }
 
-    partial void OnSearchTextChanged(string value) => ApplyFilter();
+    partial void OnSearchTextChanged(string value)
+    {
+        ApplyFilter();
+        OnPropertyChanged(nameof(SelectAllText));
+    }
 
     private void Clear()
     {
