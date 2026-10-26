@@ -75,6 +75,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           $version = "${{ steps.version.outputs.value }}"
-          $files = Get-ChildItem artifacts/release -File | ForEach-Object { $_.FullName }
-          $draft = if ("${{ github.event_name }}" -eq "workflow_dispatch") { @("--draft", "--target", "${{ github.sha }}") } else { @("--verify-tag") }
-          gh release create "v$version" @files --title "FreeReturn $version" --notes-file artifacts/release-notes.md @draft
+          [string[]] $files = Get-ChildItem artifacts/release -File | ForEach-Object { $_.FullName }
+          # Typed arrays: a one-element array would otherwise collapse into a string.
+          [string[]] $mode = if ("${{ github.event_name }}" -eq "workflow_dispatch") { "--draft", "--target", "${{ github.sha }}" } else { , "--verify-tag" }
+          gh release create "v$version" $files --title "FreeReturn $version" --notes-file artifacts/release-notes.md $mode
+          if ($LASTEXITCODE -ne 0) { throw "gh release create failed" }
