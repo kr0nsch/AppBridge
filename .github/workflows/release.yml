@@ -11,6 +11,8 @@ on:
 
 permissions:
   contents: write
+  id-token: write       # Sigstore signing of build provenance
+  attestations: write
 
 jobs:
   release:
@@ -18,6 +20,8 @@ jobs:
     env:
       DOTNET_NOLOGO: "1"
       DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+      # Authenticode signing turns on automatically once these repository secrets exist.
+      HAS_SIGNING_CERT: ${{ secrets.WINDOWS_SIGNING_CERT != '' }}
     steps:
       - uses: actions/checkout@v7
 
@@ -38,9 +42,28 @@ jobs:
         run: |
           if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) { choco install innosetup --no-progress -y }
 
+      - name: Import code-signing certificate
+        if: env.HAS_SIGNING_CERT == 'true'
+        shell: pwsh
+        env:
+          CERT_BASE64: ${{ secrets.WINDOWS_SIGNING_CERT }}
+        run: |
+          $pfx = Join-Path $env:RUNNER_TEMP "signing.pfx"
+          [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:CERT_BASE64))
+          "FREERETURN_SIGN_PFX=$pfx" >> $env:GITHUB_ENV
+
       - name: Build installer and portable ZIP
         shell: pwsh
+        env:
+          FREERETURN_SIGN_PASSWORD: ${{ secrets.WINDOWS_SIGNING_CERT_PASSWORD }}
         run: ./build/build.ps1 -Version ${{ steps.version.outputs.value }}
+
+      - name: Sign build provenance (Sigstore)
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-path: |
+            artifacts/release/FreeReturn-*.exe
+            artifacts/release/FreeReturn-*.zip
 
       - name: Release notes from CHANGELOG
         shell: pwsh
@@ -59,7 +82,8 @@ jobs:
             "- **FreeReturn-$version-portable-x64.zip** — портативная версия: распакуйте и запустите ``FreeReturn.exe``",
             "",
             "Нужны Windows 10 версии 2004 или новее либо Windows 11 и приложение «Устройства Apple» из Microsoft Store.",
-            "Файлы пока не подписаны: если SmartScreen предупредит, нажмите **Подробнее → Выполнить в любом случае**. Контрольные суммы — в ``SHA256SUMS.txt``.",
+            "Файлы собраны GitHub Actions из этого репозитория и подписаны подписью происхождения (Sigstore). Проверка: ``gh attestation verify <файл> -R ${{ github.repository }}``. Контрольные суммы — в ``SHA256SUMS.txt``.",
+            "Если SmartScreen предупредит о неизвестном издателе, нажмите **Подробнее → Выполнить в любом случае**.",
             "",
             "---",
             "") + @($notes) + @(
@@ -69,7 +93,8 @@ jobs:
             "- **FreeReturn-$version-portable-x64.zip** — portable version, unzip and run ``FreeReturn.exe``",
             "",
             "Requires Windows 10 version 2004 or later, or Windows 11, and the Apple Devices app from Microsoft Store.",
-            "The files are not code-signed yet; if SmartScreen warns, choose **More info → Run anyway**. Checksums are in ``SHA256SUMS.txt``.")
+            "The files are built by GitHub Actions from this repository and carry a signed build provenance attestation (Sigstore). Verify with ``gh attestation verify <file> -R ${{ github.repository }}``. Checksums are in ``SHA256SUMS.txt``.",
+            "If SmartScreen warns about an unknown publisher, choose **More info → Run anyway**.")
           Set-Content -Path artifacts/release-notes.md -Value $body -Encoding utf8
 
       - name: Upload build artifacts

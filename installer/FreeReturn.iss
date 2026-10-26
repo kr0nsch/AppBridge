@@ -56,6 +56,11 @@ SolidCompression=yes
 CloseApplications=yes
 RestartApplications=no
 ShowLanguageDialog=auto
+#ifdef Sign
+; Passed by build\build.ps1 when a code-signing certificate is configured.
+SignTool=signtool
+SignedUninstaller=yes
+#endif
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl"

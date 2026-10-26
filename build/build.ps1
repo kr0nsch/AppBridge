@@ -14,7 +14,10 @@ param(
     [ValidateSet('win-x64', 'win-arm64')]
     [string[]] $RuntimeIdentifier = @('win-x64'),
     [switch] $SkipTests,
-    [switch] $SkipInstaller
+    [switch] $SkipInstaller,
+    # Optional Authenticode signing (code-signing certificate as a .pfx file).
+    [string] $SignCertificate = $env:FREERETURN_SIGN_PFX,
+    [string] $SignPassword = $env:FREERETURN_SIGN_PASSWORD
 )
 
 $ErrorActionPreference = 'Stop'
@@ -40,7 +43,26 @@ function Find-Iscc {
     return $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
 }
 
+function Find-SignTool {
+    $kits = "${env:ProgramFiles(x86)}\Windows Kits\10\bin"
+    Get-ChildItem $kits -Filter signtool.exe -Recurse -ErrorAction SilentlyContinue |
+        Where-Object { $_.Directory.Name -eq 'x64' } | Sort-Object FullName -Descending | Select-Object -First 1 -ExpandProperty FullName
+}
+
 if ($Version -notmatch '^\d+\.\d+\.\d+$') { throw "Version must look like 1.2.3 (got '$Version')." }
+
+$signTool = $null
+if ($SignCertificate) {
+    if (-not (Test-Path $SignCertificate)) { throw "Signing certificate not found: $SignCertificate" }
+    $signTool = Find-SignTool
+    if (-not $signTool) { throw 'signtool.exe (Windows SDK) was not found.' }
+    Write-Host "Authenticode signing enabled." -ForegroundColor Cyan
+}
+
+function Invoke-Sign([string[]] $Files) {
+    if (-not $signTool) { return }
+    Invoke-Checked { & $signTool sign /fd sha256 /tr http://timestamp.digicert.com /td sha256 /f $SignCertificate /p $SignPassword @Files }
+}
 
 Remove-Item -Recurse -Force $release -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Force -Path $release | Out-Null
@@ -65,6 +87,8 @@ foreach ($rid in $RuntimeIdentifier) {
             -p:Version=$Version -p:ContinuousIntegrationBuild=true -o $publish
     }
     if (-not (Test-Path (Join-Path $publish 'tools\ipatool.exe'))) { throw "ipatool.exe is missing from the $rid build." }
+    # Only FreeReturn's own binaries are signed; bundled third-party files keep their own signatures.
+    Invoke-Sign @((Join-Path $publish 'FreeReturn.exe'), (Join-Path $publish 'FreeReturn.dll'), (Join-Path $publish 'FreeReturn.Core.dll'))
 
     # Portable: same files plus the marker that keeps all data next to the app.
     $portableRoot = Join-Path $artifacts "staging\FreeReturn-$Version-portable-$arch"
@@ -84,9 +108,13 @@ foreach ($rid in $RuntimeIdentifier) {
         $iscc = Find-Iscc
         if (-not $iscc) { throw 'Inno Setup 6 (ISCC.exe) was not found. Install it or pass -SkipInstaller.' }
         Write-Host "Building installer for $rid..." -ForegroundColor Cyan
-        Invoke-Checked {
-            & $iscc /Q "/DAppVersion=$Version" "/DSourceDir=$publish" "/DArch=$arch" "/O$release" (Join-Path $root 'installer\FreeReturn.iss')
+        $isccArgs = @('/Q', "/DAppVersion=$Version", "/DSourceDir=$publish", "/DArch=$arch", "/O$release")
+        if ($signTool) {
+            # Inno Setup signs the installer and its uninstaller; $f is replaced by the file to sign.
+            $isccArgs += '/DSign=1'
+            $isccArgs += "/Ssigntool=`"$signTool`" sign /fd sha256 /tr http://timestamp.digicert.com /td sha256 /f `"$SignCertificate`" /p `"$SignPassword`" " + '$f'
         }
+        Invoke-Checked { & $iscc @isccArgs (Join-Path $root 'installer\FreeReturn.iss') }
         Write-Host "Created FreeReturn-$Version-setup-$arch.exe" -ForegroundColor Green
     }
 }

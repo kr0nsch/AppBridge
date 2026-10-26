@@ -122,7 +122,8 @@ Get the latest version from **[Releases](https://github.com/kr0nsch/FreeReturn/r
 **System requirements:** Windows 10 version 2004 or later, or Windows 11. x64 PCs; on Arm PCs, Windows 11 (through its built-in emulation).
 
 > [!NOTE]
-> The builds are not code-signed yet, so Windows SmartScreen may warn about an unknown publisher. Choose **More info → Run anyway**.
+> Every release file is built by GitHub Actions straight from this repository and carries a signed build provenance attestation (Sigstore). Verify it with `gh attestation verify <file> -R kr0nsch/FreeReturn`.
+> There is no Authenticode certificate yet, so SmartScreen may warn about an unknown publisher — choose **More info → Run anyway**.
 
 ## What you need
 

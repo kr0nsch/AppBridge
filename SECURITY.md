@@ -23,3 +23,8 @@ reproduce it. You should get a reply within a week.
   identifiers are shortened.
 - The bundled ipatool binary is downloaded from its official GitHub release and checked
   against a pinned SHA-256 checksum (`build/ipatool.json`) during every build.
+- Release files are built by GitHub Actions from the tagged commit and carry a Sigstore build
+  provenance attestation: `gh attestation verify <file> -R kr0nsch/FreeReturn`.
+- Authenticode signing of `FreeReturn.exe`, its DLLs and the installer turns on automatically
+  when the repository secrets `WINDOWS_SIGNING_CERT` (base64 .pfx) and
+  `WINDOWS_SIGNING_CERT_PASSWORD` are set.
