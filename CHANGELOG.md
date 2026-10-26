@@ -10,7 +10,7 @@ First release of the Windows app.
 
 ### Added
 - New WinUI 3 app with a four-step flow: connect the source iPhone, choose apps, connect the target iPhone, install.
-- Apple-style design with light and dark mode; English and Russian.
+- Apple-style design with light and dark mode; English and Russian. Respects Windows high-contrast themes and the "Animation effects" setting.
 - Built-in USB support for iPhones (no Python or extra tools): detection, the "Trust This Computer" prompt, reading installed apps with their icons, and installing with progress.
 - App Store sign-in with two-factor authentication, using the bundled open-source ipatool.
 - Downloads run while the previous app installs; per-app progress and clear reasons when an app can't be installed; retry for failed apps.

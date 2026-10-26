@@ -1,129 +1,234 @@
 <p align="center">
-  <img src="assets/logo.png" width="112" alt="FreeReturn icon">
-</p>
-
-<h1 align="center">FreeReturn</h1>
-
-<p align="center">
-  Copy your App Store apps from one iPhone to another, right from Windows.<br>
-  Free, open source, no jailbreak.
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/media/banner-ru-dark.png">
+    <img src="docs/media/banner-ru-light.png" width="880" alt="FreeReturn — перенос приложений из App Store на другой iPhone">
+  </picture>
 </p>
 
 <p align="center">
-  <a href="https://github.com/kr0nsch/FreeReturn/releases/latest"><img src="https://img.shields.io/github/v/release/kr0nsch/FreeReturn?label=download&color=007aff" alt="Latest release"></a>
+  <a href="https://github.com/kr0nsch/FreeReturn/releases/latest"><img src="https://img.shields.io/github/v/release/kr0nsch/FreeReturn?label=%D1%81%D0%BA%D0%B0%D1%87%D0%B0%D1%82%D1%8C&color=007aff&style=for-the-badge" alt="Скачать последнюю версию"></a>
+</p>
+
+<p align="center">
   <a href="https://github.com/kr0nsch/FreeReturn/actions/workflows/ci.yml"><img src="https://github.com/kr0nsch/FreeReturn/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078d4" alt="Windows 10 and 11">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/kr0nsch/FreeReturn?color=34c759" alt="MIT license"></a>
-  <a href="README.ru.md"><img src="https://img.shields.io/badge/README-на%20русском-lightgrey" alt="Русский"></a>
+  <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078d4" alt="Windows 10 и 11">
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/kr0nsch/FreeReturn?color=34c759" alt="Лицензия MIT"></a>
+  <a href="https://github.com/kr0nsch/FreeReturn/releases"><img src="https://img.shields.io/github/downloads/kr0nsch/FreeReturn/total?color=5856d6" alt="Загрузки"></a>
+  <a href="README.en.md"><img src="https://img.shields.io/badge/README-English-lightgrey" alt="English README"></a>
 </p>
+
+**FreeReturn** переносит ваши приложения из App Store с одного iPhone на другой прямо с компьютера на Windows. Подключите оба телефона, отметьте нужные приложения и нажмите «Установить» — FreeReturn скачает оригинальные приложения у Apple с вашим Apple Account и установит их по USB. Бесплатно, без джейлбрейка и без рекламы.
 
 <p align="center">
-  <img src="docs/screenshots/2-choose-apps.png" width="720" alt="Choosing apps to copy">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/media/demo-ru-dark.gif">
+    <img src="docs/media/demo-ru-light.gif" width="760" alt="Как работает FreeReturn: выбор iPhone, выбор приложений, вход в App Store и установка">
+  </picture>
+  <br>
+  <sub>Запись демонстрационного режима: телефоны и приложения смоделированы.</sub>
 </p>
 
-## How it works
+## Как это работает
 
-1. **Connect the iPhone with your apps.** FreeReturn reads the list of apps installed from the App Store.
-2. **Choose the apps** you want on the other iPhone.
-3. **Connect the iPhone to install on.** Both phones can stay plugged in, or swap them one after the other.
-4. **Sign in and install.** Each app is downloaded from Apple with your Apple Account and installed over USB.
+1. **Подключите iPhone с приложениями.** FreeReturn покажет все приложения, установленные из App Store.
+2. **Отметьте нужные.** Есть поиск и «Выбрать все».
+3. **Подключите второй iPhone.** Оба телефона можно держать подключёнными или подключать по очереди.
+4. **Войдите в App Store и нажмите «Установить».** Пока одно приложение устанавливается, следующее уже скачивается.
 
-The next app downloads while the previous one installs, and you can see the progress of every app.
+<p align="center">
+  <img src="docs/media/how-it-works-ru.svg" width="880" alt="Схема: iPhone с приложениями → FreeReturn на ПК ← App Store; FreeReturn → другой iPhone">
+</p>
 
-| | | |
-|:-:|:-:|:-:|
-| <img src="docs/screenshots/1-connect.png" alt="Connect the source iPhone"> | <img src="docs/screenshots/3-ready.png" alt="Ready to install"> | <img src="docs/screenshots/4-installing.png" alt="Installing"> |
-| Connect | Review and options | Install |
+## Скриншоты
 
-Light and dark mode, English and Russian are built in.
+<table>
+  <tr>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/1-connect.png">
+        <img src="docs/screenshots/ru-light/1-connect.png" alt="Подключение iPhone">
+      </picture>
+      <br><sub><b>Подключение</b></sub>
+    </td>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/2-choose-apps.png">
+        <img src="docs/screenshots/ru-light/2-choose-apps.png" alt="Выбор приложений">
+      </picture>
+      <br><sub><b>Выбор приложений</b></sub>
+    </td>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/3-target.png">
+        <img src="docs/screenshots/ru-light/3-target.png" alt="Выбор второго iPhone">
+      </picture>
+      <br><sub><b>Второй iPhone</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/5-ready.png">
+        <img src="docs/screenshots/ru-light/5-ready.png" alt="Всё готово к установке">
+      </picture>
+      <br><sub><b>Параметры</b></sub>
+    </td>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/6-installing.png">
+        <img src="docs/screenshots/ru-light/6-installing.png" alt="Установка приложений">
+      </picture>
+      <br><sub><b>Установка</b></sub>
+    </td>
+    <td width="33%" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/ru-dark/7-done.png">
+        <img src="docs/screenshots/ru-light/7-done.png" alt="Готово">
+      </picture>
+      <br><sub><b>Готово</b></sub>
+    </td>
+  </tr>
+</table>
 
-## Download
+## Возможности
 
-Get the latest version from **[Releases](https://github.com/kr0nsch/FreeReturn/releases/latest)**:
+- **Четыре простых шага** и одна кнопка на каждом экране.
+- **Оригинальные приложения от Apple.** Каждое приложение скачивается с серверов Apple с вашим Apple Account — ничего не берётся со сторонних сайтов.
+- **Всё по USB.** Не нужны iTunes, Python и командная строка: FreeReturn сам находит iPhone, показывает запрос «Доверять этому компьютеру?», читает список приложений с иконками и устанавливает их.
+- **Быстро.** Скачивание и установка идут параллельно, по каждому приложению видно прогресс, а если что-то не установилось — понятная причина и кнопка «Повторить».
+- **Версия на выбор:** последняя из App Store или та же, что на первом iPhone (если Apple её ещё выдаёт).
+- **Бесплатные приложения** можно автоматически добавить в ваш Apple Account, если их ещё нет в покупках.
+- **Светлая и тёмная тема, русский и английский язык.**
+- **Установщик и портативная версия.** Ничего дополнительно ставить не нужно: .NET и Windows App SDK уже внутри.
 
-- **`FreeReturn-<version>-setup-x64.exe`** — installer (recommended). Installs for your user account, no administrator rights needed. Adds a Start menu shortcut and an uninstaller.
-- **`FreeReturn-<version>-portable-x64.zip`** — portable version. Unzip anywhere (for example a USB stick) and run `FreeReturn.exe`. Settings and downloads stay in the `Data` folder next to it.
+## Проверено на реальных устройствах
 
-Both run on Windows 10 (version 2004 or later) and Windows 11, on x64 PCs and on Arm PCs through Windows' built-in emulation. Nothing else needs to be installed: .NET and the Windows App SDK are included.
+| Откуда | Куда | Приложения | Результат |
+|---|---|---|---|
+| iPhone 16 Pro | iPhone 14 | Сбер, VK, Почта Mail.ru | ✅ Перенесены |
+
+Проверили на своих устройствах? Расскажите в [issues](https://github.com/kr0nsch/FreeReturn/issues) — добавим в таблицу.
+
+## Скачать
+
+Последняя версия — на странице **[Releases](https://github.com/kr0nsch/FreeReturn/releases/latest)**:
+
+| Файл | Что это |
+|---|---|
+| `FreeReturn-<версия>-setup-x64.exe` | **Установщик (рекомендуется).** Ставится для текущего пользователя, права администратора не нужны. Ярлык в меню «Пуск» и удаление через «Параметры». |
+| `FreeReturn-<версия>-portable-x64.zip` | **Портативная версия.** Распакуйте куда угодно, например на флешку, и запустите `FreeReturn.exe`. Настройки и загрузки хранятся в папке `Data` рядом с программой. |
+| `SHA256SUMS.txt` | Контрольные суммы для проверки файлов. |
+
+**Системные требования:** Windows 10 версии 2004 или новее, Windows 11. ПК с процессором x64; на ПК с Arm — Windows 11 (через встроенную эмуляцию).
 
 > [!NOTE]
-> The builds are not code-signed yet, so Windows SmartScreen may warn that the publisher is unknown. Choose **More info → Run anyway**. You can compare the file with `SHA256SUMS.txt` from the same release.
+> Сборки пока не подписаны цифровой подписью, поэтому SmartScreen может предупредить о неизвестном издателе. Нажмите **Подробнее → Выполнить в любом случае**.
 
-## What you need
+## Что понадобится
 
-- **The Apple Devices app** from the [Microsoft Store](https://apps.microsoft.com/detail/9NP83LWLPZ9K) (or iTunes). It provides the driver Windows uses to talk to iPhones. FreeReturn tells you if it is missing.
-- **A USB cable** that supports data, and both iPhones unlocked. Tap **Trust** when an iPhone asks whether to trust this computer.
-- **An Apple Account** that owns the apps, or can get them for free.
-- An internet connection.
+- **Приложение «Устройства Apple»** из [Microsoft Store](https://apps.microsoft.com/detail/9NP83LWLPZ9K) (или iTunes) — в нём драйвер, через который Windows работает с iPhone. Если его нет, FreeReturn подскажет.
+- **USB-кабель** с передачей данных и разблокированные iPhone. На вопрос «Доверять этому компьютеру?» нажмите «Доверять».
+- **Apple Account**, которым приложения были получены (или который может получить их бесплатно).
+- Подключение к интернету.
 
-## Good to know
+## Вопросы и ответы
 
-- **Apps, not data.** FreeReturn installs the apps themselves. Their documents and settings come from iCloud or a backup, as usual.
-- **Your purchases only.** Apps are downloaded from Apple with the Apple Account you sign in with. Free apps can be added to your account automatically (you can turn this off). Paid apps must already be bought with that account.
-- **Version.** By default the newest version from the App Store is installed. Choose *Same as source* to request the exact version on the first iPhone, if Apple still offers it. Apps that need a newer iOS than the target iPhone has can't be installed.
-- **Removed apps.** Apps that were pulled from the App Store can only be installed while Apple still serves them to accounts that own them.
-- Apps installed outside the App Store (TestFlight, developer builds) are not shown, because they can't be downloaded again.
+<details>
+<summary><b>Переносятся ли данные приложений?</b></summary>
 
-## Privacy and security
+Нет, FreeReturn устанавливает сами приложения. Документы, переписка и настройки восстанавливаются как обычно — из iCloud, резервной копии или после входа в аккаунт внутри приложения.
+</details>
 
-- Your Apple Account password is passed straight to the bundled, open-source [ipatool](https://github.com/majd/ipatool), which signs in to Apple. FreeReturn never writes it anywhere, never logs it and never sends it anywhere else.
-- ipatool keeps its App Store session in FreeReturn's own folder, encrypted with a random passphrase that is protected by Windows (DPAPI) for your user account. **Sign Out** removes it.
-- FreeReturn has no servers, accounts, ads or telemetry. The only network traffic is ipatool talking to Apple.
-- Downloaded `.ipa` files contain your Apple Account email (Apple adds it to every purchase). Don't share them.
-- FreeReturn does not bypass Apple's protection (FairPlay): apps stay tied to your Apple Account, exactly as when installed from the App Store.
+<details>
+<summary><b>Какие приложения можно перенести?</b></summary>
 
-Where FreeReturn keeps its data:
+Те, что доступны вашему Apple Account в App Store. Бесплатные приложения FreeReturn может сам добавить в ваш аккаунт — как кнопка «Загрузить» в App Store (это можно отключить). Платные должны быть уже куплены этим аккаунтом. Приложения, удалённые из App Store, получится установить, только пока Apple выдаёт их владельцам. Приложения не из App Store (TestFlight, сборки разработчиков) не показываются: их нельзя скачать заново.
+</details>
 
-| | Installed | Portable |
+<details>
+<summary><b>Безопасно ли вводить пароль Apple Account?</b></summary>
+
+Пароль передаётся напрямую во встроенный открытый [ipatool](https://github.com/majd/ipatool), который входит в Apple. FreeReturn нигде его не сохраняет, не пишет в журналы и никуда больше не отправляет. Сеанс App Store хранится в зашифрованном виде, а ключ защищён Windows (DPAPI) для вашей учётной записи; кнопка «Выйти» удаляет его. У FreeReturn нет своих серверов, рекламы и телеметрии. Подробнее — в [SECURITY.md](SECURITY.md).
+</details>
+
+<details>
+<summary><b>Нужен ли джейлбрейк? Обходится ли защита Apple?</b></summary>
+
+Нет и нет. Приложения устанавливаются так же, как из App Store, и остаются привязаны к вашему Apple Account (защита FairPlay не обходится).
+</details>
+
+<details>
+<summary><b>iPhone не появляется в списке</b></summary>
+
+Используйте кабель с передачей данных и подключите его напрямую к компьютеру, разблокируйте iPhone и проверьте, что установлено приложение «Устройства Apple». Попробуйте другой USB-порт.
+</details>
+
+<details>
+<summary><b>Не исчезает «Нажмите „Доверять“ на iPhone»</b></summary>
+
+Разблокируйте iPhone — запрос показывается только на разблокированном экране. Если вы нажали «Не доверять», нажмите «Повторить» или переподключите кабель.
+</details>
+
+<details>
+<summary><b>«Нет в покупках этого Apple Account»</b></summary>
+
+Приложение получено другим Apple Account. Войдите под ним или включите «Получать бесплатные приложения» (для бесплатных).
+</details>
+
+<details>
+<summary><b>Где FreeReturn хранит данные?</b></summary>
+
+| | Установщик | Портативная версия |
 |---|---|---|
-| Settings, logs, App Store session | `%LOCALAPPDATA%\FreeReturn` | `Data\` next to `FreeReturn.exe` |
-| Downloaded apps (`.ipa`) | `Downloads\FreeReturn` (changeable in Settings) | `Data\Downloads` |
+| Настройки, журналы, сеанс App Store | `%LOCALAPPDATA%\FreeReturn` | `Data\` рядом с `FreeReturn.exe` |
+| Скачанные приложения (`.ipa`) | `Загрузки\FreeReturn` (меняется в настройках) | `Data\Downloads` |
 
-Found a security problem? See [SECURITY.md](SECURITY.md).
+В файлах `.ipa` есть email вашего Apple Account (так Apple оформляет покупки) — не передавайте их другим.
+</details>
 
-## Troubleshooting
+<details>
+<summary><b>Что-то пошло не так</b></summary>
 
-- **The iPhone isn't listed.** Use a cable that carries data, plug it straight into the PC, unlock the iPhone and make sure the Apple Devices app is installed. Try another USB port.
-- **"Tap Trust on the iPhone" doesn't go away.** Unlock the iPhone; the Trust prompt only appears on an unlocked screen. If you tapped *Don't Trust*, use **Try Again** or replug the cable.
-- **"Not in this Apple Account's purchases".** The app was bought with a different Apple Account. Sign in with that account, or turn on *Get free apps you don't own yet* for free apps.
-- **Two-factor code.** After you enter your password, Apple shows a code on your other devices; enter it in FreeReturn.
-- **Something else.** Open **Settings → Diagnostic logs** and attach the latest log to an [issue](https://github.com/kr0nsch/FreeReturn/issues). Logs contain no passwords.
+Откройте **Настройки → Журналы диагностики → Показать** и приложите последний журнал к [issue](https://github.com/kr0nsch/FreeReturn/issues/new/choose). Паролей и кодов в журналах нет.
+</details>
 
-## Building from source
+## Сборка из исходников
 
-Requirements: Windows 10/11, the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0), and [Inno Setup 6](https://jrsoftware.org/isinfo.php) for the installer.
+Нужны Windows 10/11, [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) и [Inno Setup 6](https://jrsoftware.org/isinfo.php) для установщика.
 
 ```powershell
-# Fetch ipatool (pinned version, SHA-256 verified)
+# ipatool (закреплённая версия, проверка SHA-256)
 ./build/Get-Ipatool.ps1
 
-# Run the tests
+# Тесты
 dotnet test tests/FreeReturn.Core.Tests
 
-# Run the app
+# Запуск
 dotnet run --project src/FreeReturn -p:Platform=x64
 
-# Build the portable ZIP and the installer into artifacts/release
+# Портативный ZIP и установщик в artifacts/release
 ./build/build.ps1 -Version 1.0.0
 ```
 
-Start the app with `--demo` (or set `FREERETURN_DEMO=1`) to use simulated iPhones and a simulated App Store. It is handy for UI work and needs no hardware or Apple Account.
+Запуск с ключом `--demo` (или с переменной `FREERETURN_DEMO=1`) включает демонстрационный режим со смоделированными iPhone и App Store — удобно для работы над интерфейсом без устройств и Apple Account.
 
-Pushing a tag like `v1.2.3` makes [GitHub Actions](.github/workflows/release.yml) build, test and publish a release with both downloads and checksums.
+Тег вида `v1.2.3` запускает [GitHub Actions](.github/workflows/release.yml): сборка, тесты и публикация релиза с установщиком, портативной версией и контрольными суммами.
 
-### Project layout
+<details>
+<summary><b>Структура проекта</b></summary>
 
-| Path | Contents |
+| Путь | Что внутри |
 |---|---|
-| `src/FreeReturn` | WinUI 3 app: views, view models, styles, translations (`Strings/`) |
-| `src/FreeReturn.Core` | Device access (USB, pairing, installation), ipatool integration, transfer pipeline |
-| `tests/FreeReturn.Core.Tests` | Unit tests, including a smoke test against the real ipatool binary |
-| `installer` | Inno Setup script and installer artwork |
-| `build` | Release script, ipatool download with checksum pinning, icon generator |
-| `legacy/python` | The original cross-platform Tkinter prototype (unmaintained) |
+| `src/FreeReturn` | Приложение WinUI 3: экраны, модели представления, стили, переводы (`Strings/`) |
+| `src/FreeReturn.Core` | Работа с iPhone по USB (доверие, список приложений, установка), интеграция с ipatool, конвейер переноса |
+| `tests/FreeReturn.Core.Tests` | Модульные тесты, в том числе проверка с настоящим ipatool |
+| `installer` | Скрипт Inno Setup и оформление установщика |
+| `build` | Сборка релиза, загрузка ipatool с проверкой контрольной суммы, генерация иконки |
+| `legacy/python` | Первый кроссплатформенный прототип на Python (не поддерживается) |
 
-FreeReturn is built with [WinUI 3](https://github.com/microsoft/microsoft-ui-xaml) / Windows App SDK, [Netimobiledevice](https://github.com/artehe/Netimobiledevice) for talking to iPhones over USB, and [ipatool](https://github.com/majd/ipatool) for App Store downloads. See [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).
+FreeReturn построен на [WinUI 3](https://github.com/microsoft/microsoft-ui-xaml) / Windows App SDK, [Netimobiledevice](https://github.com/artehe/Netimobiledevice) (работа с iPhone по USB) и [ipatool](https://github.com/majd/ipatool) (загрузки из App Store). Лицензии — в [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).
+</details>
 
-## License
+## Лицензия
 
-[MIT](LICENSE). FreeReturn is not affiliated with, authorized or endorsed by Apple Inc. iPhone and App Store are trademarks of Apple Inc. Use it only with apps you are entitled to.
+[MIT](LICENSE). FreeReturn не связан с Apple Inc. и не одобрен ею. iPhone и App Store — товарные знаки Apple Inc. Используйте программу только с приложениями, на которые у вас есть права.

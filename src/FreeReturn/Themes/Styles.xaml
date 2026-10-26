@@ -19,6 +19,16 @@
       <Color x:Key="SystemAccentColorDark3">#FF0052B0</Color>
 
       <SolidColorBrush x:Key="AppBackgroundBrush" Color="#FFF5F5F7" />
+      <LinearGradientBrush x:Key="DeviceIconBrush" StartPoint="0.15,0" EndPoint="0.85,1">
+        <GradientStop Offset="0" Color="#FF0096DC" />
+        <GradientStop Offset="1" Color="#FF3C46E6" />
+      </LinearGradientBrush>
+      <RadialGradientBrush x:Key="BackgroundGlowBrush" Center="0.5,0" GradientOrigin="0.5,0" RadiusX="0.75" RadiusY="0.6">
+        <GradientStop Offset="0" Color="#1A007AFF" />
+        <GradientStop Offset="0.6" Color="#08007AFF" />
+        <GradientStop Offset="1" Color="#00007AFF" />
+      </RadialGradientBrush>
+
       <SolidColorBrush x:Key="AppCardBrush" Color="#FFFFFFFF" />
       <SolidColorBrush x:Key="AppCardStrokeBrush" Color="#12000000" />
       <SolidColorBrush x:Key="AppSeparatorBrush" Color="#243C3C43" />
@@ -54,6 +64,16 @@
       <Color x:Key="SystemAccentColorDark3">#FF005CB3</Color>
 
       <SolidColorBrush x:Key="AppBackgroundBrush" Color="#FF0B0B0C" />
+      <LinearGradientBrush x:Key="DeviceIconBrush" StartPoint="0.15,0" EndPoint="0.85,1">
+        <GradientStop Offset="0" Color="#FF0096DC" />
+        <GradientStop Offset="1" Color="#FF3C46E6" />
+      </LinearGradientBrush>
+      <RadialGradientBrush x:Key="BackgroundGlowBrush" Center="0.5,0" GradientOrigin="0.5,0" RadiusX="0.75" RadiusY="0.6">
+        <GradientStop Offset="0" Color="#2E0A84FF" />
+        <GradientStop Offset="0.6" Color="#0D5C40E0" />
+        <GradientStop Offset="1" Color="#000A84FF" />
+      </RadialGradientBrush>
+
       <SolidColorBrush x:Key="AppCardBrush" Color="#FF1C1C1E" />
       <SolidColorBrush x:Key="AppCardStrokeBrush" Color="#14FFFFFF" />
       <SolidColorBrush x:Key="AppSeparatorBrush" Color="#33FFFFFF" />
@@ -81,6 +101,9 @@
 
     <ResourceDictionary x:Key="HighContrast">
       <SolidColorBrush x:Key="AppBackgroundBrush" Color="{ThemeResource SystemColorWindowColor}" />
+      <SolidColorBrush x:Key="DeviceIconBrush" Color="{ThemeResource SystemColorHighlightColor}" />
+      <SolidColorBrush x:Key="BackgroundGlowBrush" Color="Transparent" />
+
       <SolidColorBrush x:Key="AppCardBrush" Color="{ThemeResource SystemColorWindowColor}" />
       <SolidColorBrush x:Key="AppCardStrokeBrush" Color="{ThemeResource SystemColorWindowTextColor}" />
       <SolidColorBrush x:Key="AppSeparatorBrush" Color="{ThemeResource SystemColorWindowTextColor}" />
@@ -104,11 +127,14 @@
   <CornerRadius x:Key="GroupCornerRadius">12</CornerRadius>
   <CornerRadius x:Key="AppIconCornerRadius">9</CornerRadius>
 
+
+
   <!-- Typography -->
   <Style x:Key="LargeTitleStyle" TargetType="TextBlock">
     <Setter Property="FontFamily" Value="{StaticResource DisplayFontFamily}" />
     <Setter Property="FontSize" Value="30" />
     <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="CharacterSpacing" Value="-12" />
     <Setter Property="Foreground" Value="{ThemeResource AppLabelBrush}" />
     <Setter Property="TextAlignment" Value="Center" />
     <Setter Property="HorizontalAlignment" Value="Center" />
@@ -166,6 +192,7 @@
     <Setter Property="FontWeight" Value="SemiBold" />
     <Setter Property="Foreground" Value="{ThemeResource AppSecondaryLabelBrush}" />
     <Setter Property="Margin" Value="16,18,16,6" />
+    <Setter Property="CharacterSpacing" Value="40" />
   </Style>
 
   <!-- Containers -->
@@ -204,6 +231,11 @@
     <Setter Property="MinHeight" Value="4" />
     <Setter Property="CornerRadius" Value="2" />
     <Setter Property="Background" Value="{ThemeResource AppFillBrush}" />
+  </Style>
+
+  <!-- Rows that draw their own padding (so a selection tint can fill the whole row). -->
+  <Style x:Key="FlushRowItemStyle" TargetType="ListViewItem" BasedOn="{StaticResource InsetRowItemStyle}">
+    <Setter Property="Padding" Value="0" />
   </Style>
 
   <!-- Buttons -->

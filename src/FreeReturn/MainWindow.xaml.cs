@@ -18,6 +18,7 @@ public sealed partial class MainWindow : Window
 {
     private readonly AppServices _services;
     private readonly Border[] _dots = new Border[4];
+    private readonly Windows.UI.ViewManagement.UISettings _animations = new();
     private readonly UIElement[] _steps;
     private bool _closeConfirmed;
 
@@ -169,7 +170,7 @@ public sealed partial class MainWindow : Window
             dot.Background = i <= current ? blue : Lookup("AppTertiaryLabelBrush");
             dot.Opacity = i < current ? 0.55 : 1;
             var width = i == current ? 22.0 : 7.0;
-            if (!animate || Math.Abs(dot.Width - width) < 0.1)
+            if (!animate || !_animations.AnimationsEnabled || Math.Abs(dot.Width - width) < 0.1)
             {
                 dot.Width = width;
                 continue;

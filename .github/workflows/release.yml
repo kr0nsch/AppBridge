@@ -53,7 +53,16 @@ jobs:
             $end = ($rest | Select-String -Pattern '^## \[|^\[\d' | Select-Object -First 1).LineNumber
             if ($end) { $rest[0..($end - 2)] } else { $rest }
           } else { @("FreeReturn $version") }
-          $body = @($notes) + @(
+          $body = @(
+            "### Скачать",
+            "- **FreeReturn-$version-setup-x64.exe** — установщик (рекомендуется, права администратора не нужны)",
+            "- **FreeReturn-$version-portable-x64.zip** — портативная версия: распакуйте и запустите ``FreeReturn.exe``",
+            "",
+            "Нужны Windows 10 версии 2004 или новее либо Windows 11 и приложение «Устройства Apple» из Microsoft Store.",
+            "Файлы пока не подписаны: если SmartScreen предупредит, нажмите **Подробнее → Выполнить в любом случае**. Контрольные суммы — в ``SHA256SUMS.txt``.",
+            "",
+            "---",
+            "") + @($notes) + @(
             "",
             "### Downloads",
             "- **FreeReturn-$version-setup-x64.exe** — installer (recommended, no administrator rights needed)",

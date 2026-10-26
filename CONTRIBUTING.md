@@ -20,6 +20,7 @@ dotnet run --project src/FreeReturn -p:Platform=x64 -- --demo
 - Keep the flow simple: four steps, one primary button per screen.
 - Every user-visible string goes into `src/FreeReturn/Strings/en-US/Resources.resw` **and**
   `ru-RU/Resources.resw`. A unit test checks that both files have the same keys and placeholders.
+- Keep `README.md` (Russian, the main page) and `README.en.md` (English) in sync.
 - Never log or persist passwords, verification codes or passphrases.
 - Device and App Store code lives in `FreeReturn.Core` behind `IDeviceService`,
   `IDeviceWatcher` and `IAppStoreClient`, so it can be tested with fakes.

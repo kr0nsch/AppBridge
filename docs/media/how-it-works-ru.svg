@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="326" viewBox="0 0 880 326" role="img" aria-labelledby="title desc">
+  <title id="title">Как работает FreeReturn</title>
+  <desc id="desc">FreeReturn на ПК с Windows получает по USB список приложений с вашего iPhone, скачивает оригинальные приложения из App Store с вашим Apple Account и по USB устанавливает их на другой iPhone.</desc>
+  <style>
+    .ink   { stroke: #3a3a3c; }
+    .ink-f { fill: #3a3a3c; }
+    .acc   { stroke: #007aff; }
+    .track { stroke: #d1d1d6; }
+    .slot  { stroke: #aeaeb2; }
+    .app1 { fill: #007aff; } .app2 { fill: #34c759; } .app3 { fill: #ff9500; }
+    .app4 { fill: #ff2d55; } .app5 { fill: #5856d6; } .app6 { fill: #32ade6; }
+    text  { font-family: -apple-system, 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif; }
+    .cap  { fill: #1d1d1f; font-size: 14px; font-weight: 600; }
+    .lbl  { fill: #6e6e73; font-size: 13px; }
+    @media (prefers-color-scheme: dark) {
+      .ink   { stroke: #e5e5ea; }
+      .ink-f { fill: #e5e5ea; }
+      .acc   { stroke: #0a84ff; }
+      .track { stroke: #48484a; }
+      .slot  { stroke: #8e8e93; }
+      .app1 { fill: #0a84ff; } .app2 { fill: #30d158; } .app3 { fill: #ff9f0a; }
+      .app4 { fill: #ff375f; } .app5 { fill: #5e5ce6; } .app6 { fill: #64d2ff; }
+      .cap  { fill: #f5f5f7; }
+      .lbl  { fill: #a1a1a6; }
+    }
+  </style>
+  <defs>
+    <linearGradient id="fr" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0096c4"/>
+      <stop offset="0.5" stop-color="#007aff"/>
+      <stop offset="1" stop-color="#5c40e0"/>
+    </linearGradient>
+  </defs>
+
+  <g fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- App Store servers: a cloud with a download arrow -->
+    <path class="ink" d="M 412 68 A 16 16 0 1 1 418 37.2 A 22 22 0 0 1 461.3 32.6 A 18 18 0 1 1 466 68 Z"/>
+    <path class="acc" d="M 440 38 V 56 M 433.5 49.5 L 440 56 L 446.5 49.5"/>
+
+    <!-- iPhone with your apps -->
+    <rect class="ink" x="67" y="156" width="66" height="124" rx="15"/>
+    <rect class="ink-f" x="91" y="165" width="18" height="6" rx="3" stroke="none"/>
+    <path class="ink" d="M 91 269 h 18" stroke-width="2"/>
+    <rect class="app1" x="82" y="190" width="14" height="14" rx="4" stroke="none"/>
+    <rect class="app2" x="104" y="190" width="14" height="14" rx="4" stroke="none"/>
+    <rect class="app3" x="82" y="212" width="14" height="14" rx="4" stroke="none"/>
+    <rect class="app4" x="104" y="212" width="14" height="14" rx="4" stroke="none"/>
+    <rect class="app5" x="82" y="234" width="14" height="14" rx="4" stroke="none"/>
+    <rect class="app6" x="104" y="234" width="14" height="14" rx="4" stroke="none"/>
+
+    <!-- Windows PC running FreeReturn -->
+    <rect class="ink" x="356" y="166" width="168" height="104" rx="10"/>
+    <path class="ink" d="M 431 271 L 428 286 M 449 271 L 452 286 M 414 286 H 466"/>
+    <rect x="425" y="190" width="30" height="30" rx="8" fill="url(#fr)" stroke="none"/>
+    <path d="M 447 198 V 204 A 4.5 4.5 0 0 1 442.5 208.5 H 432.5 M 436.5 204.5 L 432.5 208.5 L 436.5 212.5" stroke="#fff" stroke-width="2.2"/>
+    <path class="track" d="M 408 238 H 472" stroke-width="4"/>
+    <path class="acc" d="M 408 238 H 450" stroke-width="4"/>
+
+    <!-- your other iPhone: apps arriving -->
+    <rect class="ink" x="747" y="156" width="66" height="124" rx="15"/>
+    <rect class="ink-f" x="771" y="165" width="18" height="6" rx="3" stroke="none"/>
+    <path class="ink" d="M 771 269 h 18" stroke-width="2"/>
+    <rect class="app1" x="762" y="190" width="14" height="14" rx="4" stroke="none"/>
+    <rect class="app2" x="784" y="190" width="14" height="14" rx="4" stroke="none"/>
+    <rect class="app3" x="762" y="212" width="14" height="14" rx="4" stroke="none"/>
+    <rect class="slot" x="784.75" y="212.75" width="12.5" height="12.5" rx="3.5" stroke-width="1.5" stroke-dasharray="3 2.4"/>
+    <rect class="slot" x="762.75" y="234.75" width="12.5" height="12.5" rx="3.5" stroke-width="1.5" stroke-dasharray="3 2.4"/>
+    <rect class="slot" x="784.75" y="234.75" width="12.5" height="12.5" rx="3.5" stroke-width="1.5" stroke-dasharray="3 2.4"/>
+
+    <!-- arrows -->
+    <path class="acc" d="M 149 218 H 340 M 333 211 L 340 218 L 333 225"/>
+    <path class="acc" d="M 440 106 V 154 M 433 147 L 440 154 L 447 147"/>
+    <path class="acc" d="M 540 218 H 731 M 724 211 L 731 218 L 724 225"/>
+  </g>
+
+  <g text-anchor="middle">
+    <text class="cap" x="440" y="92">App Store (Apple)</text>
+    <text class="cap" x="100" y="310">iPhone с приложениями</text>
+    <text class="cap" x="440" y="310">FreeReturn на ПК с Windows</text>
+    <text class="cap" x="780" y="310">Другой iPhone</text>
+    <text class="lbl" x="244.5" y="206">USB: список приложений</text>
+    <text class="lbl" x="635.5" y="206">USB: установка</text>
+  </g>
+  <text class="lbl" x="456" y="125">Оригинальные приложения<tspan x="456" dy="17">с вашим Apple Account</tspan></text>
+</svg>

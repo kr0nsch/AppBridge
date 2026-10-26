@@ -14,6 +14,9 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
+    <!-- Soft brand glow behind everything. -->
+    <Rectangle Grid.RowSpan="5" IsHitTestVisible="False" Fill="{ThemeResource BackgroundGlowBrush}" />
+
     <TitleBar x:Name="AppTitleBar" Title="FreeReturn">
       <TitleBar.IconSource>
         <ImageIconSource ImageSource="ms-appx:///Assets/AppIcon.png" />

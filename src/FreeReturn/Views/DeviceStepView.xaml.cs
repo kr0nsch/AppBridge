@@ -11,6 +11,12 @@ public sealed partial class DeviceStepView : UserControl
     {
         ViewModel = viewModel;
         InitializeComponent();
+        Loaded += (_, _) =>
+        {
+            // Decorative motion only when Windows "Animation effects" is on.
+            if (new Windows.UI.ViewManagement.UISettings().AnimationsEnabled)
+                RadarPulse.Begin();
+        };
     }
 
     public MainViewModel ViewModel { get; }

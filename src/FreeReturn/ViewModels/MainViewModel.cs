@@ -50,7 +50,7 @@ public sealed partial class MainViewModel : ObservableObject
     public bool IsToolMissing => !Services.AppStore.IsAvailable;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(StepIndex), nameof(IsSourceStep), nameof(IsAppsStep), nameof(IsTargetStep), nameof(IsInstallStep), nameof(IsDeviceStep), nameof(DeviceStepTitle), nameof(DeviceStepSubtitle), nameof(DeviceStepGlyph))]
+    [NotifyPropertyChangedFor(nameof(StepIndex), nameof(IsSourceStep), nameof(IsAppsStep), nameof(IsTargetStep), nameof(IsInstallStep), nameof(IsDeviceStep), nameof(DeviceStepTitle), nameof(DeviceStepSubtitle), nameof(DeviceStepTone))]
     public partial WizardStep Step { get; set; }
 
     [ObservableProperty]
@@ -76,7 +76,7 @@ public sealed partial class MainViewModel : ObservableObject
 
     public string DeviceStepSubtitle => Loc.Get(IsTargetStep ? "Target_Subtitle" : "Source_Subtitle");
 
-    public string DeviceStepGlyph => IsTargetStep ? "" : "";
+    public string DeviceStepTone => IsTargetStep ? "Teal" : "Blue";
 
     public string AppsSubtitle => Source is null ? "" : Loc.Format("Apps_Subtitle", Source.Name);
 
@@ -102,11 +102,22 @@ public sealed partial class MainViewModel : ObservableObject
 
     public string InstallGlyph => Install.State switch
     {
-        InstallState.Finished when Install.FailedCount == 0 && !Install.WasCanceled => "",
+        InstallState.Finished when Install.FailedCount == 0 && !Install.WasCanceled => "",
         InstallState.Finished => "",
         _ when !Account.IsSignedIn && Install.IsReady => "",
         _ => "",
     };
+
+    public string InstallTone => Install.State switch
+    {
+        InstallState.Finished when Install.FailedCount == 0 && !Install.WasCanceled => "Green",
+        InstallState.Finished => "Orange",
+        _ when !Account.IsSignedIn && Install.IsReady => "Indigo",
+        _ => "Blue",
+    };
+
+    /// <summary>Overall progress for the ring around the hero badge; -1 hides the ring.</summary>
+    public double InstallRingProgress => Install.IsRunning ? Install.OverallProgress : -1;
 
     public bool InstallGlyphIsSuccess => Install.IsFinished && Install.FailedCount == 0 && !Install.WasCanceled;
 
@@ -292,6 +303,8 @@ public sealed partial class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(InstallTitle));
         OnPropertyChanged(nameof(InstallSubtitle));
         OnPropertyChanged(nameof(InstallGlyph));
+        OnPropertyChanged(nameof(InstallTone));
+        OnPropertyChanged(nameof(InstallRingProgress));
         OnPropertyChanged(nameof(InstallGlyphIsSuccess));
         OnPropertyChanged(nameof(InstallGlyphIsWarning));
         OnPropertyChanged(nameof(InstallGlyphIsNormal));
