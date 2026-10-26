@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FreeReturn README hero banners and GitHub social previews.
+"""AppBridge README hero banners and GitHub social previews.
 
 Writes to docs/media:
 
@@ -358,7 +358,7 @@ def make_banner(repo: Path, lang: str, theme_name: str, out: Path):
     place_icon(img, x, y0, L["icon"], th)
     d = ImageDraw.Draw(img)
     base = y0 + L["icon"] + L["gap_icon_title"] + cap
-    draw_text(d, x, base, "FreeReturn", f_title, th["title"], L["title_track"])
+    draw_text(d, x, base, "AppBridge", f_title, th["title"], L["title_track"])
     base += L["gap_title_tag"]
     for i, line in enumerate(cp["tagline_lines"]):
         draw_text(d, x, base + i * L["tag_lh"], line, f_tag, th["tagline"])
@@ -367,7 +367,7 @@ def make_banner(repo: Path, lang: str, theme_name: str, out: Path):
 
     # sanity: text column must clear the front window
     right_edge = x + max(
-        text_width(f_title, "FreeReturn", L["title_track"]),
+        text_width(f_title, "AppBridge", L["title_track"]),
         *(text_width(f_tag, s) for s in cp["tagline_lines"]),
         text_width(f_meta, cp["meta"]),
     )
@@ -417,7 +417,7 @@ def make_social(repo: Path, lang: str, out: Path):
     # ---- icon + wordmark row, centred ------------------------------------
     f_title = font(S["title_px"], 600, 36)
     f_tag = font(S["tag_px"], 400)
-    tw = text_width(f_title, "FreeReturn", S["title_track"])
+    tw = text_width(f_title, "AppBridge", S["title_track"])
     row_w = S["icon"] + S["gap_icon_title"] + tw
     x0 = round((W - row_w) / 2)
     y0 = S["top"]
@@ -425,7 +425,7 @@ def make_social(repo: Path, lang: str, out: Path):
     d = ImageDraw.Draw(img)
     cap = cap_height(f_title)
     base = round(y0 + S["icon"] / 2 + cap / 2)  # wordmark caps centred on the icon
-    draw_text(d, x0 + S["icon"] + S["gap_icon_title"], base, "FreeReturn", f_title, th["title"], S["title_track"])
+    draw_text(d, x0 + S["icon"] + S["gap_icon_title"], base, "AppBridge", f_title, th["title"], S["title_track"])
 
     # ---- tagline, one line, centred --------------------------------------
     tag_w = text_width(f_tag, cp["tagline"])
@@ -447,7 +447,7 @@ def make_social(repo: Path, lang: str, out: Path):
 # --------------------------------------------------------------------------
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--repo", type=Path, default=DEFAULT_REPO, help="FreeReturn repository root")
+    ap.add_argument("--repo", type=Path, default=DEFAULT_REPO, help="AppBridge repository root")
     ap.add_argument("--out", type=Path, default=DEFAULT_REPO / "docs" / "media", help="output folder (default: docs/media)")
     args = ap.parse_args()
 

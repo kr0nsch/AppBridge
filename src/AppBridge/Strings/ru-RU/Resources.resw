@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Source_Title" xml:space="preserve">
+    <value>Подключите iPhone с вашими приложениями</value>
+  </data>
+  <data name="Source_Subtitle" xml:space="preserve">
+    <value>Используйте USB-кабель. Разблокируйте iPhone и нажмите «Доверять», если он спросит, доверять ли этому компьютеру.</value>
+  </data>
+  <data name="Target_Title" xml:space="preserve">
+    <value>Подключите iPhone, на который нужно установить</value>
+  </data>
+  <data name="Target_Subtitle" xml:space="preserve">
+    <value>Первый iPhone можно отключить или оставить подключённым. Выберите, куда установить приложения.</value>
+  </data>
+  <data name="Target_SameDevice" xml:space="preserve">
+    <value>Выберите другой iPhone, а не тот, с которого берутся приложения.</value>
+  </data>
+  <data name="Service_Title.Text" xml:space="preserve">
+    <value>Нужно приложение «Устройства Apple»</value>
+  </data>
+  <data name="Service_Body.Text" xml:space="preserve">
+    <value>Установите бесплатное приложение «Устройства Apple» из Microsoft Store, чтобы Windows могла работать с iPhone, затем переподключите iPhone.</value>
+  </data>
+  <data name="Service_Get.Content" xml:space="preserve">
+    <value>Установить</value>
+  </data>
+  <data name="Device_Retry.Content" xml:space="preserve">
+    <value>Повторить</value>
+  </data>
+  <data name="Devices_Searching.Text" xml:space="preserve">
+    <value>Поиск подключённого iPhone…</value>
+  </data>
+  <data name="Devices_Help.Content" xml:space="preserve">
+    <value>iPhone не появляется?</value>
+  </data>
+  <data name="Help_Title.Text" xml:space="preserve">
+    <value>Если iPhone нет в списке</value>
+  </data>
+  <data name="Help_Cable.Text" xml:space="preserve">
+    <value>• Используйте кабель с передачей данных, подключённый прямо к компьютеру.</value>
+  </data>
+  <data name="Help_Unlock.Text" xml:space="preserve">
+    <value>• Разблокируйте iPhone и оставьте его на экране «Домой».</value>
+  </data>
+  <data name="Help_Trust.Text" xml:space="preserve">
+    <value>• На вопрос «Доверять этому компьютеру?» нажмите «Доверять» и введите код-пароль.</value>
+  </data>
+  <data name="Help_AppleDevices.Text" xml:space="preserve">
+    <value>• Убедитесь, что установлено приложение «Устройства Apple» (или iTunes).</value>
+  </data>
+  <data name="Device_IosVersion" xml:space="preserve">
+    <value>iOS {0}</value>
+  </data>
+  <data name="Device_FreeSpace" xml:space="preserve">
+    <value>свободно {0}</value>
+  </data>
+  <data name="Device_Status_Connecting" xml:space="preserve">
+    <value>Подключение…</value>
+  </data>
+  <data name="Device_Status_TapTrust" xml:space="preserve">
+    <value>Нажмите «Доверять» на iPhone</value>
+  </data>
+  <data name="Device_Status_Unlock" xml:space="preserve">
+    <value>Разблокируйте iPhone</value>
+  </data>
+  <data name="Device_Status_Denied" xml:space="preserve">
+    <value>Компьютеру не доверяют</value>
+  </data>
+  <data name="Device_Status_Error" xml:space="preserve">
+    <value>Не удалось подключиться</value>
+  </data>
+  <data name="Device_Status_Reconnect" xml:space="preserve">
+    <value>Переподключите iPhone</value>
+  </data>
+  <data name="Device_Role_Source" xml:space="preserve">
+    <value>Источник</value>
+  </data>
+  <data name="Apps_Title.Text" xml:space="preserve">
+    <value>Выберите приложения</value>
+  </data>
+  <data name="Apps_Subtitle" xml:space="preserve">
+    <value>Приложения из App Store на «{0}». Отметьте те, которые нужно установить на другой iPhone.</value>
+  </data>
+  <data name="Apps_Search.PlaceholderText" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="Apps_Loading.Text" xml:space="preserve">
+    <value>Читаем список приложений с iPhone…</value>
+  </data>
+  <data name="Apps_TryAgain.Content" xml:space="preserve">
+    <value>Повторить</value>
+  </data>
+  <data name="Apps_Empty.Text" xml:space="preserve">
+    <value>На этом iPhone не найдено приложений из App Store.</value>
+  </data>
+  <data name="Apps_NoMatches.Text" xml:space="preserve">
+    <value>Ничего не найдено</value>
+  </data>
+  <data name="Apps_SelectAll" xml:space="preserve">
+    <value>Выбрать все</value>
+  </data>
+  <data name="Apps_DeselectAll" xml:space="preserve">
+    <value>Снять выбор</value>
+  </data>
+  <data name="Apps_NoneSelected" xml:space="preserve">
+    <value>Выберите хотя бы одно приложение</value>
+  </data>
+  <data name="Apps_SelectedCount_One" xml:space="preserve">
+    <value>Выбрано {0} приложение</value>
+  </data>
+  <data name="Apps_SelectedCount_Few" xml:space="preserve">
+    <value>Выбрано {0} приложения</value>
+  </data>
+  <data name="Apps_SelectedCount_Many" xml:space="preserve">
+    <value>Выбрано {0} приложений</value>
+  </data>
+  <data name="Apps_Count_One" xml:space="preserve">
+    <value>{0} приложение</value>
+  </data>
+  <data name="Apps_Count_Few" xml:space="preserve">
+    <value>{0} приложения</value>
+  </data>
+  <data name="Apps_Count_Many" xml:space="preserve">
+    <value>{0} приложений</value>
+  </data>
+  <data name="Apps_NotFromStore_One" xml:space="preserve">
+    <value>{0} приложение не показано: оно установлено не из App Store.</value>
+  </data>
+  <data name="Apps_NotFromStore_Few" xml:space="preserve">
+    <value>{0} приложения не показаны: они установлены не из App Store.</value>
+  </data>
+  <data name="Apps_NotFromStore_Many" xml:space="preserve">
+    <value>{0} приложений не показаны: они установлены не из App Store.</value>
+  </data>
+  <data name="Apps_Error_Disconnected" xml:space="preserve">
+    <value>iPhone отключился. Подключите его снова и повторите.</value>
+  </data>
+  <data name="Apps_Error_Generic" xml:space="preserve">
+    <value>Не удалось прочитать список приложений: {0}</value>
+  </data>
+  <data name="App_Version" xml:space="preserve">
+    <value>Версия {0}</value>
+  </data>
+  <data name="Unit_KB" xml:space="preserve">
+    <value>КБ</value>
+  </data>
+  <data name="Unit_MB" xml:space="preserve">
+    <value>МБ</value>
+  </data>
+  <data name="Unit_GB" xml:space="preserve">
+    <value>ГБ</value>
+  </data>
+  <data name="Unit_TB" xml:space="preserve">
+    <value>ТБ</value>
+  </data>
+  <data name="Account_SignIn" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="Account_SignOut" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="Account_Verify" xml:space="preserve">
+    <value>Подтвердить</value>
+  </data>
+  <data name="Account_Error_Code" xml:space="preserve">
+    <value>Код не подошёл. Введите последний полученный код и попробуйте снова.</value>
+  </data>
+  <data name="Account_Error_Network" xml:space="preserve">
+    <value>Не удалось связаться с Apple. Проверьте подключение к интернету.</value>
+  </data>
+  <data name="Account_Error_Generic" xml:space="preserve">
+    <value>Не удалось войти. Попробуйте ещё раз.</value>
+  </data>
+  <data name="Account_Error_Password" xml:space="preserve">
+    <value>Неверно введены Apple Account или пароль.</value>
+  </data>
+  <data name="Account_Error_Disabled" xml:space="preserve">
+    <value>Этот Apple Account заблокирован или отключён. Разблокируйте его на iforgot.apple.com.</value>
+  </data>
+  <data name="Account_Error_Apple" xml:space="preserve">
+    <value>Ответ Apple: {0}.</value>
+  </data>
+  <data name="Account_Error_Expired" xml:space="preserve">
+    <value>Сеанс Apple Account истёк. Чтобы продолжить, введите пароль ещё раз.</value>
+  </data>
+  <data name="SignIn_DialogTitle" xml:space="preserve">
+    <value>Вход в App Store</value>
+  </data>
+  <data name="SignIn_EmailLabel.Text" xml:space="preserve">
+    <value>Apple Account</value>
+  </data>
+  <data name="SignIn_Email.PlaceholderText" xml:space="preserve">
+    <value>name@example.com</value>
+  </data>
+  <data name="SignIn_PasswordLabel.Text" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="SignIn_Password.PlaceholderText" xml:space="preserve">
+    <value>Обязательно</value>
+  </data>
+  <data name="SignIn_CodeLabel.Text" xml:space="preserve">
+    <value>Код</value>
+  </data>
+  <data name="SignIn_Code.PlaceholderText" xml:space="preserve">
+    <value>6 цифр</value>
+  </data>
+  <data name="SignIn_CodeHint.Text" xml:space="preserve">
+    <value>Введите код проверки, показанный на других ваших устройствах Apple или отправленный на доверенный номер.</value>
+  </data>
+  <data name="SignIn_UseAnother.Content" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="SignIn_FirstTime.Text" xml:space="preserve">
+    <value>Первый вход может занять около минуты.</value>
+  </data>
+  <data name="SignIn_Privacy.Text" xml:space="preserve">
+    <value>Приложения скачиваются у Apple с вашим собственным Apple Account. Пароль передаётся только в Apple через открытый ipatool, AppBridge его не сохраняет.</value>
+  </data>
+  <data name="SignIn_Email.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Apple Account</value>
+  </data>
+  <data name="SignIn_Password.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="SignIn_Code.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Код проверки</value>
+  </data>
+  <data name="Apps_Search.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Поиск приложений</value>
+  </data>
+  <data name="Options_FreeToggle.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Получать бесплатные приложения</value>
+  </data>
+  <data name="Options_KeepToggle.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Сохранять скачанные файлы</value>
+  </data>
+  <data name="Settings_LanguageBox.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="Install_Title_SignIn" xml:space="preserve">
+    <value>Войдите в App Store</value>
+  </data>
+  <data name="Install_Subtitle_SignIn" xml:space="preserve">
+    <value>Приложения скачиваются у Apple, поэтому войдите с Apple Account, которым они были получены.</value>
+  </data>
+  <data name="Install_Title_Ready" xml:space="preserve">
+    <value>Всё готово к установке</value>
+  </data>
+  <data name="Install_Subtitle_Ready" xml:space="preserve">
+    <value>{0} будут скачаны из App Store и установлены на «{1}».</value>
+  </data>
+  <data name="Install_Title_Running" xml:space="preserve">
+    <value>Установка приложений</value>
+  </data>
+  <data name="Install_Subtitle_Running" xml:space="preserve">
+    <value>Готово {0} из {1}. Не отключайте «{2}» и держите его разблокированным.</value>
+  </data>
+  <data name="Install_Title_Done" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="Install_Subtitle_Done" xml:space="preserve">
+    <value>{0} установлены на «{1}». Они уже на экране «Домой».</value>
+  </data>
+  <data name="Install_Title_Problems" xml:space="preserve">
+    <value>Завершено с ошибками</value>
+  </data>
+  <data name="Install_Title_Stopped" xml:space="preserve">
+    <value>Установка остановлена</value>
+  </data>
+  <data name="Install_Subtitle_Problems" xml:space="preserve">
+    <value>Установлено: {0}, не установлено: {1}. Причины указаны ниже.</value>
+  </data>
+  <data name="Install_TargetMissing" xml:space="preserve">
+    <value>Подключите iPhone, на который нужно установить приложения.</value>
+  </data>
+  <data name="Summary_From.Text" xml:space="preserve">
+    <value>Откуда</value>
+  </data>
+  <data name="Summary_To.Text" xml:space="preserve">
+    <value>Куда</value>
+  </data>
+  <data name="Summary_Apps.Text" xml:space="preserve">
+    <value>Приложения</value>
+  </data>
+  <data name="Summary_Account.Text" xml:space="preserve">
+    <value>Apple Account</value>
+  </data>
+  <data name="Summary_SignOut.Content" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="Options_Header.Text" xml:space="preserve">
+    <value>ПАРАМЕТРЫ</value>
+  </data>
+  <data name="Options_Version.Text" xml:space="preserve">
+    <value>Версия</value>
+  </data>
+  <data name="Options_VersionLatest.Content" xml:space="preserve">
+    <value>Последняя</value>
+  </data>
+  <data name="Options_VersionSame.Content" xml:space="preserve">
+    <value>Как на исходном</value>
+  </data>
+  <data name="Options_Free.Text" xml:space="preserve">
+    <value>Получать бесплатные приложения</value>
+  </data>
+  <data name="Options_FreeHint.Text" xml:space="preserve">
+    <value>Добавляет их в ваш Apple Account — так же, как кнопка «Загрузить» в App Store.</value>
+  </data>
+  <data name="Options_Keep.Text" xml:space="preserve">
+    <value>Сохранять скачанные файлы</value>
+  </data>
+  <data name="Options_KeepHint.Text" xml:space="preserve">
+    <value>Файлы .ipa останутся на компьютере для повторной установки.</value>
+  </data>
+  <data name="Options_Footnote.Text" xml:space="preserve">
+    <value>Установить можно только приложения, доступные вашему Apple Account в App Store. Держите iPhone разблокированным и подключённым.</value>
+  </data>
+  <data name="Transfer_Waiting" xml:space="preserve">
+    <value>В очереди</value>
+  </data>
+  <data name="Transfer_Downloading" xml:space="preserve">
+    <value>Загрузка…</value>
+  </data>
+  <data name="Transfer_DownloadingPercent" xml:space="preserve">
+    <value>Загрузка… {0}%</value>
+  </data>
+  <data name="Transfer_DownloadingBytes" xml:space="preserve">
+    <value>Загрузка… {0}</value>
+  </data>
+  <data name="Transfer_Preparing" xml:space="preserve">
+    <value>Подготовка…</value>
+  </data>
+  <data name="Transfer_ReadyToInstall" xml:space="preserve">
+    <value>Скачано, ожидает установки</value>
+  </data>
+  <data name="Transfer_Uploading" xml:space="preserve">
+    <value>Копирование на iPhone… {0}%</value>
+  </data>
+  <data name="Transfer_Installing" xml:space="preserve">
+    <value>Установка…</value>
+  </data>
+  <data name="Transfer_Completed" xml:space="preserve">
+    <value>Установлено</value>
+  </data>
+  <data name="Transfer_NotStarted" xml:space="preserve">
+    <value>Не установлено</value>
+  </data>
+  <data name="Failure_NotSignedIn" xml:space="preserve">
+    <value>Войдите в App Store заново</value>
+  </data>
+  <data name="Failure_NotPurchased" xml:space="preserve">
+    <value>Нет в покупках этого Apple Account</value>
+  </data>
+  <data name="Failure_PaidApp" xml:space="preserve">
+    <value>Платное приложение, не купленное этим Apple Account</value>
+  </data>
+  <data name="Failure_NotAvailable" xml:space="preserve">
+    <value>Больше не доступно в App Store</value>
+  </data>
+  <data name="Failure_Network" xml:space="preserve">
+    <value>Проблема с сетью, повторите</value>
+  </data>
+  <data name="Failure_OsTooOld" xml:space="preserve">
+    <value>Требуется более новая версия iOS</value>
+  </data>
+  <data name="Failure_NotEnoughSpace" xml:space="preserve">
+    <value>Недостаточно места на iPhone</value>
+  </data>
+  <data name="Failure_DeviceDisconnected" xml:space="preserve">
+    <value>iPhone был отключён</value>
+  </data>
+  <data name="Failure_NotTrusted" xml:space="preserve">
+    <value>iPhone не доверяет этому компьютеру</value>
+  </data>
+  <data name="Failure_DeviceLocked" xml:space="preserve">
+    <value>Разблокируйте iPhone и повторите</value>
+  </data>
+  <data name="Failure_InstallFailed" xml:space="preserve">
+    <value>iPhone отказался устанавливать</value>
+  </data>
+  <data name="Failure_Unknown" xml:space="preserve">
+    <value>Что-то пошло не так</value>
+  </data>
+  <data name="Footer_Continue" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="Footer_Install" xml:space="preserve">
+    <value>Установить</value>
+  </data>
+  <data name="Footer_Stop" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
+  <data name="Footer_Done" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="Footer_Retry" xml:space="preserve">
+    <value>Повторить</value>
+  </data>
+  <data name="Footer_Back.Text" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="TitleBar_Account.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Apple Account</value>
+  </data>
+  <data name="TitleBar_Settings.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="TitleBar_Settings.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="ToolMissing.Text" xml:space="preserve">
+    <value>Не найден нужный компонент (ipatool), поэтому скачивание невозможно. Переустановите AppBridge.</value>
+  </data>
+  <data name="Close_Title" xml:space="preserve">
+    <value>Остановить установку?</value>
+  </data>
+  <data name="Close_Body" xml:space="preserve">
+    <value>Приложения ещё устанавливаются. Если выйти сейчас, оставшиеся приложения не будут установлены.</value>
+  </data>
+  <data name="Close_Quit" xml:space="preserve">
+    <value>Остановить и выйти</value>
+  </data>
+  <data name="Close_Continue" xml:space="preserve">
+    <value>Продолжить установку</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>Что-то пошло не так</value>
+  </data>
+  <data name="Error_Body" xml:space="preserve">
+    <value>AppBridge столкнулся с проблемой: {0}
+
+Подробности сохранены в журнал диагностики.</value>
+  </data>
+  <data name="Common_OK" xml:space="preserve">
+    <value>ОК</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="Settings_Dialog.Title" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="Settings_Dialog.CloseButtonText" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="Settings_General.Text" xml:space="preserve">
+    <value>ОСНОВНЫЕ</value>
+  </data>
+  <data name="Settings_Language.Text" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="Settings_LanguageSystem" xml:space="preserve">
+    <value>Как в Windows</value>
+  </data>
+  <data name="Settings_Appearance.Text" xml:space="preserve">
+    <value>Оформление</value>
+  </data>
+  <data name="Settings_ThemeSystem.Content" xml:space="preserve">
+    <value>Авто</value>
+  </data>
+  <data name="Settings_ThemeLight.Content" xml:space="preserve">
+    <value>Светлое</value>
+  </data>
+  <data name="Settings_ThemeDark.Content" xml:space="preserve">
+    <value>Тёмное</value>
+  </data>
+  <data name="Settings_RestartHint.Text" xml:space="preserve">
+    <value>Перезапустите AppBridge, чтобы сменить язык.</value>
+  </data>
+  <data name="Settings_Restart.Content" xml:space="preserve">
+    <value>Перезапустить</value>
+  </data>
+  <data name="Settings_Downloads.Text" xml:space="preserve">
+    <value>ЗАГРУЗКИ</value>
+  </data>
+  <data name="Settings_Folder.Text" xml:space="preserve">
+    <value>Папка</value>
+  </data>
+  <data name="Settings_Open.Content" xml:space="preserve">
+    <value>Открыть</value>
+  </data>
+  <data name="Settings_Change.Content" xml:space="preserve">
+    <value>Изменить…</value>
+  </data>
+  <data name="Settings_About.Text" xml:space="preserve">
+    <value>О ПРОГРАММЕ</value>
+  </data>
+  <data name="Settings_Version.Text" xml:space="preserve">
+    <value>Версия</value>
+  </data>
+  <data name="Settings_Source.Text" xml:space="preserve">
+    <value>Исходный код</value>
+  </data>
+  <data name="Settings_Licenses.Text" xml:space="preserve">
+    <value>Лицензии open source</value>
+  </data>
+  <data name="Settings_View.Content" xml:space="preserve">
+    <value>Показать</value>
+  </data>
+  <data name="Settings_Logs.Text" xml:space="preserve">
+    <value>Журналы диагностики</value>
+  </data>
+  <data name="Settings_OpenLogs.Content" xml:space="preserve">
+    <value>Показать</value>
+  </data>
+  <data name="Settings_Disclaimer.Text" xml:space="preserve">
+    <value>AppBridge — бесплатная программа с открытым исходным кодом. Она не связана с Apple Inc. и не одобрена ею. iPhone и App Store — товарные знаки Apple Inc.</value>
+  </data>
+</root>

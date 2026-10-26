@@ -50,20 +50,20 @@ jobs:
         run: |
           $pfx = Join-Path $env:RUNNER_TEMP "signing.pfx"
           [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:CERT_BASE64))
-          "FREERETURN_SIGN_PFX=$pfx" >> $env:GITHUB_ENV
+          "APPBRIDGE_SIGN_PFX=$pfx" >> $env:GITHUB_ENV
 
       - name: Build installer and portable ZIP
         shell: pwsh
         env:
-          FREERETURN_SIGN_PASSWORD: ${{ secrets.WINDOWS_SIGNING_CERT_PASSWORD }}
+          APPBRIDGE_SIGN_PASSWORD: ${{ secrets.WINDOWS_SIGNING_CERT_PASSWORD }}
         run: ./build/build.ps1 -Version ${{ steps.version.outputs.value }}
 
       - name: Sign build provenance (Sigstore)
         uses: actions/attest-build-provenance@v4
         with:
           subject-path: |
-            artifacts/release/FreeReturn-*.exe
-            artifacts/release/FreeReturn-*.zip
+            artifacts/release/AppBridge-*.exe
+            artifacts/release/AppBridge-*.zip
 
       - name: Release notes from CHANGELOG
         shell: pwsh
@@ -75,11 +75,11 @@ jobs:
             $rest = $lines[$start..($lines.Count - 1)]
             $end = ($rest | Select-String -Pattern '^## \[|^\[\d' | Select-Object -First 1).LineNumber
             if ($end) { $rest[0..($end - 2)] } else { $rest }
-          } else { @("FreeReturn $version") }
+          } else { @("AppBridge $version") }
           $body = @(
             "### Скачать",
-            "- **FreeReturn-$version-setup-x64.exe** — установщик (рекомендуется, права администратора не нужны)",
-            "- **FreeReturn-$version-portable-x64.zip** — портативная версия: распакуйте и запустите ``FreeReturn.exe``",
+            "- **AppBridge-$version-setup-x64.exe** — установщик (рекомендуется, права администратора не нужны)",
+            "- **AppBridge-$version-portable-x64.zip** — портативная версия: распакуйте и запустите ``AppBridge.exe``",
             "",
             "Нужны Windows 10 версии 2004 или новее либо Windows 11 и приложение «Устройства Apple» из Microsoft Store.",
             "Файлы собраны GitHub Actions из этого репозитория и подписаны подписью происхождения (Sigstore). Проверка: ``gh attestation verify <файл> -R ${{ github.repository }}``. Контрольные суммы — в ``SHA256SUMS.txt``.",
@@ -89,8 +89,8 @@ jobs:
             "") + @($notes) + @(
             "",
             "### Downloads",
-            "- **FreeReturn-$version-setup-x64.exe** — installer (recommended, no administrator rights needed)",
-            "- **FreeReturn-$version-portable-x64.zip** — portable version, unzip and run ``FreeReturn.exe``",
+            "- **AppBridge-$version-setup-x64.exe** — installer (recommended, no administrator rights needed)",
+            "- **AppBridge-$version-portable-x64.zip** — portable version, unzip and run ``AppBridge.exe``",
             "",
             "Requires Windows 10 version 2004 or later, or Windows 11, and the Apple Devices app from Microsoft Store.",
             "The files are built by GitHub Actions from this repository and carry a signed build provenance attestation (Sigstore). Verify with ``gh attestation verify <file> -R ${{ github.repository }}``. Checksums are in ``SHA256SUMS.txt``.",
@@ -100,7 +100,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: FreeReturn-${{ steps.version.outputs.value }}
+          name: AppBridge-${{ steps.version.outputs.value }}
           path: artifacts/release/*
 
       - name: Publish GitHub release
@@ -112,5 +112,5 @@ jobs:
           [string[]] $files = Get-ChildItem artifacts/release -File | ForEach-Object { $_.FullName }
           # Typed arrays: a one-element array would otherwise collapse into a string.
           [string[]] $mode = if ("${{ github.event_name }}" -eq "workflow_dispatch") { "--draft", "--target", "${{ github.sha }}" } else { , "--verify-tag" }
-          gh release create "v$version" $files --title "FreeReturn $version" --notes-file artifacts/release-notes.md $mode
+          gh release create "v$version" $files --title "AppBridge $version" --notes-file artifacts/release-notes.md $mode
           if ($LASTEXITCODE -ne 0) { throw "gh release create failed" }

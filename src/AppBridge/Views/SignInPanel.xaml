@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="AppBridge.Views.SignInPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <UserControl.Resources>
+    <!-- Keep grouped form fields flat when hovered or focused, like iOS; the caret shows focus. -->
+    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="Transparent" />
+    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="Transparent" />
+    <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="Transparent" />
+    <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="Transparent" />
+  </UserControl.Resources>
+
+  <StackPanel MaxWidth="460" HorizontalAlignment="Stretch">
+    <Border Style="{StaticResource GroupCardStyle}" Padding="16,2">
+      <StackPanel>
+        <Grid ColumnSpacing="12">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock x:Uid="SignIn_EmailLabel" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center" Text="Apple Account" />
+          <TextBox x:Uid="SignIn_Email" x:Name="EmailBox" Grid.Column="1" Style="{StaticResource FormTextBoxStyle}" PlaceholderText="name@example.com"
+                   InputScope="EmailSmtpAddress" IsSpellCheckEnabled="False" IsEnabled="{x:Bind Account.IsIdle, Mode=OneWay}"
+                   Text="{x:Bind Account.InputEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+        <Rectangle Style="{StaticResource SeparatorStyle}" Margin="0,0,-16,0" />
+        <Grid ColumnSpacing="12">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock x:Uid="SignIn_PasswordLabel" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center" Text="Password" />
+          <PasswordBox x:Uid="SignIn_Password" Grid.Column="1" Style="{StaticResource FormPasswordBoxStyle}" PlaceholderText="Required"
+                       IsEnabled="{x:Bind Account.IsIdle, Mode=OneWay}" KeyDown="OnFieldKeyDown"
+                       Password="{x:Bind Account.InputPassword, Mode=TwoWay}" />
+        </Grid>
+        <StackPanel Visibility="{x:Bind Account.IsCodeRequired, Mode=OneWay}">
+          <Rectangle Style="{StaticResource SeparatorStyle}" Margin="0,0,-16,0" />
+          <Grid ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="110" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Uid="SignIn_CodeLabel" Style="{StaticResource RowBodyStyle}" VerticalAlignment="Center" Text="Code" />
+            <TextBox x:Uid="SignIn_Code" x:Name="CodeBox" Grid.Column="1" Style="{StaticResource FormTextBoxStyle}" PlaceholderText="6-digit code"
+                     InputScope="Number" MaxLength="8" IsEnabled="{x:Bind Account.IsIdle, Mode=OneWay}" KeyDown="OnFieldKeyDown"
+                     Text="{x:Bind Account.InputCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+          </Grid>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <TextBlock x:Uid="SignIn_CodeHint" Style="{StaticResource FootnoteStyle}" Margin="16,8,16,0"
+               Visibility="{x:Bind Account.IsCodeRequired, Mode=OneWay}"
+               Text="Enter the verification code shown on your other Apple devices, or sent to your trusted phone number." />
+
+    <TextBlock Style="{StaticResource FootnoteStyle}" Foreground="{ThemeResource AppRedBrush}" Margin="16,8,16,0"
+               Visibility="{x:Bind Account.HasError, Mode=OneWay}" Text="{x:Bind Account.Error, Mode=OneWay}" />
+
+    <Button Style="{StaticResource PillButtonStyle}" HorizontalAlignment="Center" Margin="0,22,0,0"
+            AutomationProperties.Name="{x:Bind Account.SignInButtonText, Mode=OneWay}"
+            Command="{x:Bind Account.SignInCommand, Mode=OneWay}">
+      <StackPanel Orientation="Horizontal" Spacing="10">
+        <ProgressRing Width="16" Height="16" MinWidth="16" MinHeight="16" Foreground="White"
+                      IsActive="{x:Bind Account.IsBusy, Mode=OneWay}" Visibility="{x:Bind Account.IsBusy, Mode=OneWay}" />
+        <TextBlock Text="{x:Bind Account.SignInButtonText, Mode=OneWay}" />
+      </StackPanel>
+    </Button>
+
+    <HyperlinkButton x:Uid="SignIn_UseAnother" HorizontalAlignment="Center" Margin="0,6,0,0" Content="Cancel"
+                     Visibility="{x:Bind Account.IsCodeRequired, Mode=OneWay}" Command="{x:Bind Account.CancelCodeCommand, Mode=OneWay}" />
+
+    <TextBlock x:Uid="SignIn_FirstTime" Style="{StaticResource FootnoteStyle}" HorizontalAlignment="Center" TextAlignment="Center" Margin="16,10,16,0"
+               Visibility="{x:Bind Account.IsBusy, Mode=OneWay}" Text="The first sign-in can take a minute." />
+
+    <Grid Margin="16,22,16,0" ColumnSpacing="10">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <FontIcon Glyph="&#xE72E;" FontSize="14" Foreground="{ThemeResource AppSecondaryLabelBrush}" VerticalAlignment="Top" Margin="0,2,0,0" />
+      <TextBlock x:Uid="SignIn_Privacy" Grid.Column="1" Style="{StaticResource FootnoteStyle}"
+                 Text="Apps are downloaded from Apple with your own Apple Account. Your password goes only to Apple, through the open-source ipatool, and AppBridge never stores it." />
+    </Grid>
+  </StackPanel>
+</UserControl>

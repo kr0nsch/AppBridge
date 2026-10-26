@@ -2,11 +2,11 @@
   <PropertyGroup>
     <!-- CI overrides this from the release tag: dotnet publish -p:Version=1.2.3 -->
     <Version>1.0.0</Version>
-    <Product>FreeReturn</Product>
-    <Company>FreeReturn contributors</Company>
-    <Authors>FreeReturn contributors</Authors>
-    <Copyright>Copyright (c) 2026 FreeReturn contributors</Copyright>
-    <RepositoryUrl>https://github.com/kr0nsch/FreeReturn</RepositoryUrl>
+    <Product>AppBridge</Product>
+    <Company>AppBridge contributors</Company>
+    <Authors>AppBridge contributors</Authors>
+    <Copyright>Copyright (c) 2026 AppBridge contributors</Copyright>
+    <RepositoryUrl>https://github.com/kr0nsch/AppBridge</RepositoryUrl>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>

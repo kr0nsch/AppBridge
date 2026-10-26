@@ -2,7 +2,7 @@
 .SYNOPSIS
   Downloads the pinned ipatool release and verifies its SHA-256 checksum.
 .DESCRIPTION
-  The executable is extracted to artifacts\tools\<rid>\ipatool.exe, where the FreeReturn
+  The executable is extracted to artifacts\tools\<rid>\ipatool.exe, where the AppBridge
   project picks it up. Version and checksums live in build\ipatool.json.
 #>
 [CmdletBinding()]

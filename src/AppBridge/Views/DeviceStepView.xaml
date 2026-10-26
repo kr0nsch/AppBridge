@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="AppBridge.Views.DeviceStepView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="using:AppBridge.ViewModels"
+    xmlns:views="using:AppBridge.Views"
+    xmlns:controls="using:AppBridge.Controls">
+
+  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Disabled">
+    <StackPanel MaxWidth="600" Padding="24,0,24,32" VerticalAlignment="Center">
+
+      <!-- Hero -->
+      <controls:HeroBadge HorizontalAlignment="Center" Margin="0,0,0,10" Glyph="&#xE8EA;"
+                          Tone="{x:Bind ViewModel.DeviceStepTone, Mode=OneWay}" />
+      <TextBlock Style="{StaticResource LargeTitleStyle}" Text="{x:Bind ViewModel.DeviceStepTitle, Mode=OneWay}" />
+      <TextBlock Style="{StaticResource HeroSubtitleStyle}" Text="{x:Bind ViewModel.DeviceStepSubtitle, Mode=OneWay}" />
+
+      <!-- Apple Mobile Device service missing -->
+      <Border Style="{StaticResource GroupCardStyle}" Margin="0,28,0,0" Padding="16,14"
+              Visibility="{x:Bind ViewModel.Devices.IsServiceMissing, Mode=OneWay}">
+        <Grid ColumnSpacing="14">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <Grid Width="36" Height="36" VerticalAlignment="Center">
+            <Border CornerRadius="9" Background="{ThemeResource AppOrangeBrush}" />
+            <FontIcon Glyph="&#xE7BA;" FontSize="17" Foreground="White" />
+          </Grid>
+          <StackPanel Grid.Column="1" VerticalAlignment="Center">
+            <TextBlock x:Uid="Service_Title" Style="{StaticResource RowTitleStyle}" Text="Apple Devices is required" />
+            <TextBlock x:Uid="Service_Body" Style="{StaticResource FootnoteStyle}" Text="Install the free Apple Devices app from Microsoft Store so Windows can talk to iPhones, then reconnect your iPhone." />
+          </StackPanel>
+          <Button x:Uid="Service_Get" Grid.Column="2" Style="{StaticResource SmallPillButtonStyle}" VerticalAlignment="Center"
+                  Content="Get" Click="OnGetAppleDevicesClick" />
+        </Grid>
+      </Border>
+
+      <!-- Devices -->
+      <Border Style="{StaticResource GroupCardStyle}" Margin="0,28,0,0" Padding="0,4">
+        <Grid>
+          <ListView ItemsSource="{x:Bind ViewModel.Devices.Devices}"
+                    Visibility="{x:Bind ViewModel.Devices.HasDevices, Mode=OneWay}"
+                    SelectionMode="None" IsItemClickEnabled="True" ItemClick="OnDeviceClick"
+                    ItemContainerStyle="{StaticResource FlushRowItemStyle}">
+            <ListView.ItemContainerTransitions>
+              <TransitionCollection>
+                <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="16" />
+                <AddDeleteThemeTransition />
+              </TransitionCollection>
+            </ListView.ItemContainerTransitions>
+            <ListView.ItemTemplate>
+              <DataTemplate x:DataType="vm:DeviceItemViewModel">
+                <Grid MinHeight="68" CornerRadius="8" Background="{x:Bind views:Ui.TintIf(IsChosen), Mode=OneWay}"
+                      Opacity="{x:Bind views:Ui.DimIf(IsSourceDevice), Mode=OneWay}">
+                  <Rectangle Style="{StaticResource SeparatorStyle}" Margin="62,0,0,0" Visibility="{x:Bind ShowSeparator, Mode=OneWay}" />
+                  <Grid ColumnSpacing="14" Padding="12,10">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="38" Height="38" VerticalAlignment="Center">
+                      <Border CornerRadius="10" Background="{ThemeResource DeviceIconBrush}" />
+                      <FontIcon Glyph="&#xE8EA;" FontSize="19" Foreground="White" />
+                    </Grid>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                      <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Style="{StaticResource RowTitleStyle}" Text="{x:Bind Name, Mode=OneWay}" />
+                        <Border Style="{StaticResource PillStyle}" Visibility="{x:Bind HasRole, Mode=OneWay}">
+                          <TextBlock Text="{x:Bind RoleText, Mode=OneWay}" FontSize="11" Foreground="{ThemeResource AppSecondaryLabelBrush}" />
+                        </Border>
+                      </StackPanel>
+                      <TextBlock Style="{StaticResource RowSubtitleStyle}" Text="{x:Bind Subtitle, Mode=OneWay}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                      <ProgressRing Width="16" Height="16" MinWidth="16" MinHeight="16" IsActive="{x:Bind IsBusy, Mode=OneWay}"
+                                    Visibility="{x:Bind IsBusy, Mode=OneWay}" />
+                      <FontIcon Glyph="{x:Bind StatusGlyph}" FontSize="14" Foreground="{ThemeResource AppOrangeBrush}"
+                                Visibility="{x:Bind ShowStatusIcon, Mode=OneWay}" />
+                      <TextBlock Text="{x:Bind StatusText, Mode=OneWay}" FontSize="13" MaxWidth="200" TextTrimming="CharacterEllipsis"
+                                 Foreground="{ThemeResource AppSecondaryLabelBrush}" VerticalAlignment="Center" />
+                      <Button x:Uid="Device_Retry" Style="{StaticResource SmallPillButtonStyle}" Content="Try Again"
+                              Visibility="{x:Bind CanRetry, Mode=OneWay}" Command="{x:Bind RetryCommand}" />
+                    </StackPanel>
+                    <FontIcon Grid.Column="3" Glyph="&#xE73E;" FontSize="16" FontWeight="Bold" Foreground="{ThemeResource AppBlueBrush}"
+                              Visibility="{x:Bind IsChosen, Mode=OneWay}" Margin="4,0,2,0" />
+                  </Grid>
+                </Grid>
+              </DataTemplate>
+            </ListView.ItemTemplate>
+          </ListView>
+
+          <!-- Waiting for the first device -->
+          <StackPanel Visibility="{x:Bind ViewModel.Devices.IsEmpty, Mode=OneWay}" Padding="24,22,24,26" Spacing="10" HorizontalAlignment="Center">
+            <!-- Radar pulse around a phone while waiting for the first iPhone. -->
+            <Grid Width="96" Height="96" HorizontalAlignment="Center">
+              <Grid.Resources>
+                    <Storyboard x:Name="RadarPulse" RepeatBehavior="Forever">
+                      <DoubleAnimation Storyboard.TargetName="PulseA" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" From="0.35" To="1" Duration="0:0:2.2" />
+                      <DoubleAnimation Storyboard.TargetName="PulseA" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" From="0.35" To="1" Duration="0:0:2.2" />
+                      <DoubleAnimation Storyboard.TargetName="PulseA" Storyboard.TargetProperty="Opacity" From="0.7" To="0" Duration="0:0:2.2" />
+                      <DoubleAnimation Storyboard.TargetName="PulseB" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" From="0.35" To="1" Duration="0:0:2.2" BeginTime="0:0:1.1" />
+                      <DoubleAnimation Storyboard.TargetName="PulseB" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" From="0.35" To="1" Duration="0:0:2.2" BeginTime="0:0:1.1" />
+                      <DoubleAnimation Storyboard.TargetName="PulseB" Storyboard.TargetProperty="Opacity" From="0.7" To="0" Duration="0:0:2.2" BeginTime="0:0:1.1" />
+                    </Storyboard>
+              </Grid.Resources>
+              <Ellipse x:Name="PulseA" Stroke="{ThemeResource AppBlueBrush}" StrokeThickness="2" Opacity="0" RenderTransformOrigin="0.5,0.5">
+                <Ellipse.RenderTransform><ScaleTransform /></Ellipse.RenderTransform>
+              </Ellipse>
+              <Ellipse x:Name="PulseB" Stroke="{ThemeResource AppBlueBrush}" StrokeThickness="2" Opacity="0" RenderTransformOrigin="0.5,0.5">
+                <Ellipse.RenderTransform><ScaleTransform /></Ellipse.RenderTransform>
+              </Ellipse>
+              <Border Width="40" Height="40" CornerRadius="11" Background="{ThemeResource DeviceIconBrush}">
+                <FontIcon Glyph="&#xE8EA;" FontSize="20" Foreground="White" />
+              </Border>
+            </Grid>
+            <TextBlock x:Uid="Devices_Searching" Style="{StaticResource RowBodyStyle}" Foreground="{ThemeResource AppSecondaryLabelBrush}"
+                       HorizontalAlignment="Center" Text="Looking for a connected iPhone…" />
+          </StackPanel>
+        </Grid>
+      </Border>
+
+      <HyperlinkButton x:Uid="Devices_Help" HorizontalAlignment="Center" Margin="0,14,0,0" Content="iPhone not showing up?" Click="OnHelpClick">
+        <FlyoutBase.AttachedFlyout>
+          <Flyout Placement="Bottom">
+            <StackPanel MaxWidth="360" Spacing="10">
+              <TextBlock x:Uid="Help_Title" Style="{StaticResource RowTitleStyle}" Text="If your iPhone isn't listed" />
+              <TextBlock x:Uid="Help_Cable" Style="{StaticResource FootnoteStyle}" Text="• Use a cable that supports data, plugged directly into the PC." />
+              <TextBlock x:Uid="Help_Unlock" Style="{StaticResource FootnoteStyle}" Text="• Unlock the iPhone and keep it on the Home Screen." />
+              <TextBlock x:Uid="Help_Trust" Style="{StaticResource FootnoteStyle}" Text="• When asked “Trust This Computer?”, tap Trust and enter the passcode." />
+              <TextBlock x:Uid="Help_AppleDevices" Style="{StaticResource FootnoteStyle}" Text="• Make sure the Apple Devices app (or iTunes) is installed." />
+            </StackPanel>
+          </Flyout>
+        </FlyoutBase.AttachedFlyout>
+      </HyperlinkButton>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

@@ -1,4 +1,4 @@
-"""Regenerates FreeReturn's icon files and installer artwork from build/icon.py.
+"""Regenerates AppBridge's icon files and installer artwork from build/icon.py.
 
 Usage: python build/generate-icons.py   (requires Pillow)
 """
@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from icon import draw  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-APP_ASSETS = ROOT / "src" / "FreeReturn" / "Assets"
+APP_ASSETS = ROOT / "src" / "AppBridge" / "Assets"
 INSTALLER = ROOT / "installer"
 DOCS = ROOT / "assets"
 
@@ -55,7 +55,7 @@ def installer_images() -> None:
 def main() -> None:
     APP_ASSETS.mkdir(parents=True, exist_ok=True)
     DOCS.mkdir(parents=True, exist_ok=True)
-    save_ico(APP_ASSETS / "FreeReturn.ico")
+    save_ico(APP_ASSETS / "AppBridge.ico")
     draw(256).save(APP_ASSETS / "AppIcon.png")
     draw(512).save(DOCS / "logo.png")
     draw(1024).save(DOCS / "logo-1024.png")

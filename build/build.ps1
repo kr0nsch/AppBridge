@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Builds FreeReturn release artifacts: a portable ZIP and an installer per architecture.
+  Builds AppBridge release artifacts: a portable ZIP and an installer per architecture.
 .EXAMPLE
   ./build/build.ps1 -Version 1.0.0
   ./build/build.ps1 -Version 1.1.0 -RuntimeIdentifier win-x64, win-arm64
@@ -16,8 +16,8 @@ param(
     [switch] $SkipTests,
     [switch] $SkipInstaller,
     # Optional Authenticode signing (code-signing certificate as a .pfx file).
-    [string] $SignCertificate = $env:FREERETURN_SIGN_PFX,
-    [string] $SignPassword = $env:FREERETURN_SIGN_PASSWORD
+    [string] $SignCertificate = $env:APPBRIDGE_SIGN_PFX,
+    [string] $SignPassword = $env:APPBRIDGE_SIGN_PASSWORD
 )
 
 $ErrorActionPreference = 'Stop'
@@ -70,7 +70,7 @@ New-Item -ItemType Directory -Force -Path $release | Out-Null
 if (-not $SkipTests) {
     & (Join-Path $PSScriptRoot 'Get-Ipatool.ps1') -RuntimeIdentifier win-x64
     Write-Host "Running tests..." -ForegroundColor Cyan
-    Invoke-Checked { dotnet test (Join-Path $root 'tests\FreeReturn.Core.Tests\FreeReturn.Core.Tests.csproj') -c Release }
+    Invoke-Checked { dotnet test (Join-Path $root 'tests\AppBridge.Core.Tests\AppBridge.Core.Tests.csproj') -c Release }
 }
 
 foreach ($rid in $RuntimeIdentifier) {
@@ -83,24 +83,24 @@ foreach ($rid in $RuntimeIdentifier) {
     Write-Host "Publishing $rid..." -ForegroundColor Cyan
     Remove-Item -Recurse -Force $publish -ErrorAction SilentlyContinue
     Invoke-Checked {
-        dotnet publish (Join-Path $root 'src\FreeReturn\FreeReturn.csproj') -c Release -r $rid -p:Platform=$platform `
+        dotnet publish (Join-Path $root 'src\AppBridge\AppBridge.csproj') -c Release -r $rid -p:Platform=$platform `
             -p:Version=$Version -p:ContinuousIntegrationBuild=true -o $publish
     }
     if (-not (Test-Path (Join-Path $publish 'tools\ipatool.exe'))) { throw "ipatool.exe is missing from the $rid build." }
-    # Only FreeReturn's own binaries are signed; bundled third-party files keep their own signatures.
-    Invoke-Sign @((Join-Path $publish 'FreeReturn.exe'), (Join-Path $publish 'FreeReturn.dll'), (Join-Path $publish 'FreeReturn.Core.dll'))
+    # Only AppBridge's own binaries are signed; bundled third-party files keep their own signatures.
+    Invoke-Sign @((Join-Path $publish 'AppBridge.exe'), (Join-Path $publish 'AppBridge.dll'), (Join-Path $publish 'AppBridge.Core.dll'))
 
     # Portable: same files plus the marker that keeps all data next to the app.
-    $portableRoot = Join-Path $artifacts "staging\FreeReturn-$Version-portable-$arch"
-    $portableApp = Join-Path $portableRoot 'FreeReturn'
+    $portableRoot = Join-Path $artifacts "staging\AppBridge-$Version-portable-$arch"
+    $portableApp = Join-Path $portableRoot 'AppBridge'
     Remove-Item -Recurse -Force $portableRoot -ErrorAction SilentlyContinue
     New-Item -ItemType Directory -Force -Path $portableApp | Out-Null
     Copy-Item -Path (Join-Path $publish '*') -Destination $portableApp -Recurse
     Set-Content -Path (Join-Path $portableApp 'portable.txt') -Encoding utf8 -Value @(
-        'This file makes FreeReturn portable: settings, logs, the App Store sign-in and',
-        'downloaded apps are kept in the Data folder next to FreeReturn.exe.',
+        'This file makes AppBridge portable: settings, logs, the App Store sign-in and',
+        'downloaded apps are kept in the Data folder next to AppBridge.exe.',
         'Delete this file to use the per-user locations instead.')
-    $zip = Join-Path $release "FreeReturn-$Version-portable-$arch.zip"
+    $zip = Join-Path $release "AppBridge-$Version-portable-$arch.zip"
     Compress-Archive -Path $portableApp -DestinationPath $zip -CompressionLevel Optimal
     Write-Host "Created $zip" -ForegroundColor Green
 
@@ -114,8 +114,8 @@ foreach ($rid in $RuntimeIdentifier) {
             $isccArgs += '/DSign=1'
             $isccArgs += "/Ssigntool=`"$signTool`" sign /fd sha256 /tr http://timestamp.digicert.com /td sha256 /f `"$SignCertificate`" /p `"$SignPassword`" " + '$f'
         }
-        Invoke-Checked { & $iscc @isccArgs (Join-Path $root 'installer\FreeReturn.iss') }
-        Write-Host "Created FreeReturn-$Version-setup-$arch.exe" -ForegroundColor Green
+        Invoke-Checked { & $iscc @isccArgs (Join-Path $root 'installer\AppBridge.iss') }
+        Write-Host "Created AppBridge-$Version-setup-$arch.exe" -ForegroundColor Green
     }
 }
 

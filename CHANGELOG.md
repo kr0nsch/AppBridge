@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to FreeReturn are listed here. The format follows
+All notable changes to AppBridge are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
@@ -21,4 +21,4 @@ First release of the Windows app.
 ### Changed
 - The original Python/Tkinter prototype moved to `legacy/python`.
 
-[1.0.0]: https://github.com/kr0nsch/FreeReturn/releases/tag/v1.0.0
+[1.0.0]: https://github.com/kr0nsch/AppBridge/releases/tag/v1.0.0

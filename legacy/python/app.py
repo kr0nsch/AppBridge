@@ -1,4 +1,4 @@
-"""FreeReturn: a local graphical wrapper for ipatool + pymobiledevice3.
+"""AppBridge: a local graphical wrapper for ipatool + pymobiledevice3.
 
 This app NEVER requests, stores, transmits, or logs Apple Account credentials.
 Apple authentication is handled by ipatool in a separate OS terminal.
@@ -26,15 +26,15 @@ from core import (
 )
 
 ROOT = Path(__file__).resolve().parent
-DEFAULT_FOLDER = Path.home() / "Downloads" / "FreeReturn"
+DEFAULT_FOLDER = Path.home() / "Downloads" / "AppBridge"
 IPATOOL_URL = "https://github.com/majd/ipatool/releases/latest"
 MOBILE_URL = "https://github.com/doronz88/pymobiledevice3"
 
 
-class FreeReturn(tk.Tk):
+class AppBridge(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
-        self.title("FreeReturn — приложения на iPhone без оплаты")
+        self.title("AppBridge — приложения на iPhone без оплаты")
         self.geometry("790x730")
         self.minsize(680, 630)
         self.configure(bg="#f5f7fb")
@@ -68,7 +68,7 @@ class FreeReturn(tk.Tk):
     def _layout(self) -> None:
         holder = ttk.Frame(self, padding=(25, 19))
         holder.pack(fill="both", expand=True)
-        ttk.Label(holder, text="FreeReturn", style="Heading.TLabel").pack(anchor="w")
+        ttk.Label(holder, text="AppBridge", style="Heading.TLabel").pack(anchor="w")
         ttk.Label(holder, text="Бесплатное восстановление приложений из Apple Account · Mac / Windows · USB", style="Sub.TLabel").pack(anchor="w", pady=(0, 16))
         self._card(holder, "1   Подготовка", self._setup_card)
         self._card(holder, "2   Скачать оригинальный IPA", self._download_card)
@@ -132,7 +132,7 @@ class FreeReturn(tk.Tk):
         self._write("Пароль и коды Apple Account вводятся только в отдельном терминале ipatool.")
 
     def show_tools(self) -> None:
-        messagebox.showinfo("Что установить", "1. Скачайте ipatool (ссылка откроется в браузере), положите исполняемый файл рядом с app.py или добавьте в PATH.\n\n2. В терминале выполните:\npython -m pip install -U pymobiledevice3\n\n3. На Windows установите Apple Devices из Microsoft Store.\n\nПосле этого перезапустите FreeReturn.")
+        messagebox.showinfo("Что установить", "1. Скачайте ipatool (ссылка откроется в браузере), положите исполняемый файл рядом с app.py или добавьте в PATH.\n\n2. В терминале выполните:\npython -m pip install -U pymobiledevice3\n\n3. На Windows установите Apple Devices из Microsoft Store.\n\nПосле этого перезапустите AppBridge.")
         webbrowser.open(IPATOOL_URL)
 
     def _run(self, label: str, args: list[str], on_success=None) -> None:
@@ -193,7 +193,7 @@ class FreeReturn(tk.Tk):
         if not ipatool:
             messagebox.showerror("Не найден ipatool", "Скачайте ipatool по кнопке «Где взять инструменты?». ")
             return
-        self._write("Вход Apple Account откроется в отдельном терминале. FreeReturn не получает пароль.")
+        self._write("Вход Apple Account откроется в отдельном терминале. AppBridge не получает пароль.")
         if sys.platform == "darwin":
             command = shlex.quote(ipatool) + " auth login"
             command = command.replace("\\", "\\\\").replace('"', '\\"')
@@ -249,4 +249,4 @@ class FreeReturn(tk.Tk):
 
 
 if __name__ == "__main__":
-    FreeReturn().mainloop()
+    AppBridge().mainloop()

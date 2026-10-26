@@ -1,4 +1,4 @@
-"""FreeReturn app icon.
+"""AppBridge app icon.
 
 Two iPhones overlap like a "copy" symbol.  The one behind (top right) is the
 source: it holds the app tile, and its outline runs down its right side,

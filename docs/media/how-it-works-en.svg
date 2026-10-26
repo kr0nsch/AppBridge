@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="880" height="326" viewBox="0 0 880 326" role="img" aria-labelledby="title desc">
-  <title id="title">How FreeReturn works</title>
-  <desc id="desc">FreeReturn on a Windows PC reads the list of apps from your iPhone over USB, downloads the original apps from the App Store with your Apple Account, and installs them on your other iPhone over USB.</desc>
+  <title id="title">How AppBridge works</title>
+  <desc id="desc">AppBridge on a Windows PC reads the list of apps from your iPhone over USB, downloads the original apps from the App Store with your Apple Account, and installs them on your other iPhone over USB.</desc>
   <style>
     .ink   { stroke: #3a3a3c; }
     .ink-f { fill: #3a3a3c; }
@@ -48,7 +48,7 @@
     <rect class="app5" x="82" y="234" width="14" height="14" rx="4" stroke="none"/>
     <rect class="app6" x="104" y="234" width="14" height="14" rx="4" stroke="none"/>
 
-    <!-- Windows PC running FreeReturn -->
+    <!-- Windows PC running AppBridge -->
     <rect class="ink" x="356" y="166" width="168" height="104" rx="10"/>
     <path class="ink" d="M 431 271 L 428 286 M 449 271 L 452 286 M 414 286 H 466"/>
     <rect x="425" y="190" width="30" height="30" rx="8" fill="url(#fr)" stroke="none"/>
@@ -76,7 +76,7 @@
   <g text-anchor="middle">
     <text class="cap" x="440" y="92">App Store (Apple)</text>
     <text class="cap" x="100" y="310">iPhone with your apps</text>
-    <text class="cap" x="440" y="310">FreeReturn on a Windows PC</text>
+    <text class="cap" x="440" y="310">AppBridge on a Windows PC</text>
     <text class="cap" x="780" y="310">Your other iPhone</text>
     <text class="lbl" x="244.5" y="206">USB: list of apps</text>
     <text class="lbl" x="635.5" y="206">USB: install</text>
